@@ -1,0 +1,19 @@
+{
+  "name": "FormatPulse — Local-First Data & Schema Engine",
+  "short_name": "FormatPulse",
+  "description": "Zero-server data conversion, schema inference (TypeScript, Zod, OpenAPI, Prisma, Pydantic) and PII anonymization in your browser.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "categories": ["developer", "utilities", "productivity"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

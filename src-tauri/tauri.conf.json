@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "FormatPulse",
+  "version": "1.2.0",
+  "identifier": "com.formatpulse.app",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:5173",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "FormatPulse — Zero-Knowledge Local Data Studio",
+        "width": 1380,
+        "height": 860,
+        "minWidth": 960,
+        "minHeight": 640,
+        "decorations": true,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "icon": [
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "nsis": {
+        "oneClick": false,
+        "perMachine": false,
+        "installMode": "currentUser"
+      }
+    }
+  }
+}
