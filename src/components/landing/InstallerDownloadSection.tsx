@@ -12,6 +12,7 @@ import {
   Layers,
 } from 'lucide-react';
 import { APP_VERSION, OFFICIAL_SHA256, REPOSITORY_URL } from '@/constants/version';
+import { openExternalUrl } from '@/core/desktopBridge';
 import { useAppStore } from '@/store/useAppStore';
 
 export const InstallerDownloadSection: React.FC = () => {
@@ -215,6 +216,10 @@ export const InstallerDownloadSection: React.FC = () => {
                 href={REPOSITORY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  void openExternalUrl(REPOSITORY_URL);
+                }}
                 className="hover:text-white transition-colors flex items-center gap-1 text-accent"
               >
                 <span>Audit GitHub Source</span>

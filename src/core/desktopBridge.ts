@@ -157,3 +157,52 @@ export async function sendDesktopNotification(title: string, body: string): Prom
 
   return false;
 }
+
+// ── Native External URL Dispatcher ──────────────────────────────────────────
+
+/**
+ * Safely opens an external URL in the user's default system browser (Chrome/Edge/Firefox).
+ * In Tauri desktop mode: invokes the native `open_external_url` OS command without WebView2 lockup.
+ * In Web/PWA mode: uses window.open with secure rel="noopener,noreferrer" attributes.
+ */
+export async function openExternalUrl(url: string): Promise<boolean> {
+  if (typeof window === 'undefined' || !url) return false;
+
+  // 1. In Tauri native desktop executable, dispatch via native command
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const win = window as any;
+    if (typeof win.__TAURI_INTERNALS__?.invoke === 'function') {
+      await win.__TAURI_INTERNALS__.invoke('open_external_url', { url });
+      return true;
+    }
+    if (typeof win.__TAURI__?.core?.invoke === 'function') {
+      await win.__TAURI__.core.invoke('open_external_url', { url });
+      return true;
+    }
+  } catch (err) {
+    console.warn('[DesktopBridge] Native Tauri invoke failed, falling back to browser navigation:', err);
+  }
+
+  // 2. Standard browser window.open
+  try {
+    const openedWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    if (openedWindow) return true;
+  } catch {
+    // Popup blocker active
+  }
+
+  // 3. Fallback anchor click
+  try {
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.target = '_blank';
+    anchor.rel = 'noopener noreferrer';
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    return true;
+  } catch {
+    return false;
+  }
+}

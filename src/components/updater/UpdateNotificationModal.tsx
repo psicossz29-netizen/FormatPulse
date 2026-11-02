@@ -15,6 +15,7 @@ import {
   CURRENT_APP_VERSION,
   type ReleaseManifest,
 } from '@/services/updaterService';
+import { openExternalUrl } from '@/core/desktopBridge';
 import { cn } from '@/lib/utils';
 
 export const UpdateNotificationModal: React.FC = () => {
@@ -156,6 +157,12 @@ export const UpdateNotificationModal: React.FC = () => {
                   href={updateResult.manifest.downloadUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (updateResult.manifest?.downloadUrl) {
+                      void openExternalUrl(updateResult.manifest.downloadUrl);
+                    }
+                  }}
                   className="flex-1 flex items-center justify-center gap-2 h-9 bg-accent hover:bg-accent-hover text-white text-xs font-semibold rounded-xs transition-colors shadow-sm"
                 >
                   <Download className="w-3.5 h-3.5" />

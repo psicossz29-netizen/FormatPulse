@@ -7,11 +7,13 @@ import {
   Loader2,
   RotateCcw,
   CheckCircle2,
+  Copy,
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { activateLicense, clearLicenseFromStorage } from '@/services/licenseService';
 import { verifyLicenseKey, getTierLabel, getTierSeats } from '@/services/licenseVerification';
 import { buildCheckoutUrl, PRICING_PLANS } from '@/services/checkoutService';
+import { openExternalUrl } from '@/core/desktopBridge';
 import type { LicenseTier } from '@/types';
 import { cn } from '@/lib/utils';
 import { FormatPulseLogo } from '@/components/brand/FormatPulseLogo';
@@ -43,8 +45,40 @@ export const ProLicenseModal: React.FC = () => {
   const [selectedPlanTab, setSelectedPlanTab] = useState<'individual' | 'team' | 'enterprise'>('individual');
   const [keyInput, setKeyInput] = useState('');
   const [isValidating, setIsValidating] = useState(false);
+  const [isOpeningCheckout, setIsOpeningCheckout] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activatedTier, setActivatedTier] = useState<LicenseTier | null>(null);
+
+  const handleOpenCheckout = useCallback(async (tier: 'individual' | 'team' | 'enterprise') => {
+    const url = buildCheckoutUrl(tier);
+    setIsOpeningCheckout(true);
+    try {
+      await openExternalUrl(url);
+    } finally {
+      setTimeout(() => setIsOpeningCheckout(false), 1500);
+    }
+  }, []);
+
+  const handleCopyLink = useCallback(async (tier: 'individual' | 'team' | 'enterprise') => {
+    const url = buildCheckoutUrl(tier);
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(url);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = url;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 3000);
+    } catch {
+      // ignore
+    }
+  }, []);
 
   // Real-time detection of tier as user types
   const detectedTier = useMemo(() => {
@@ -198,50 +232,83 @@ export const ProLicenseModal: React.FC = () => {
             /* ── FREE / ACTIVATION VIEW ──────────────────────────────── */
             <div className="space-y-4">
               {/* Plan Selection Tabs */}
-              <div className="grid grid-cols-3 gap-1 p-1 bg-zinc-950 border border-zinc-800 rounded-xs">
+              <div className="grid grid-cols-3 gap-1.5 p-1.5 bg-zinc-950 border border-zinc-800 rounded-xs">
                 <button
                   type="button"
-                  onClick={() => setSelectedPlanTab('individual')}
+                  onClick={() => {
+                    if (selectedPlanTab === 'individual') {
+                      void handleOpenCheckout('individual');
+                    } else {
+                      setSelectedPlanTab('individual');
+                    }
+                  }}
                   className={cn(
-                    'flex flex-col items-center py-2 px-1 text-center transition-colors rounded-xs',
+                    'group relative flex flex-col items-center py-2.5 px-1.5 text-center transition-all rounded-xs border',
                     selectedPlanTab === 'individual'
-                      ? 'bg-zinc-800 text-white shadow-sm'
-                      : 'text-zinc-400 hover:text-zinc-200',
+                      ? 'bg-zinc-800/90 border-accent/60 text-white shadow-sm ring-1 ring-accent/40'
+                      : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900',
                   )}
                 >
                   <span className="text-2xs font-mono uppercase tracking-wider text-accent font-semibold">Pro Lifetime</span>
-                  <span className="text-xs font-bold font-mono">$14 USD</span>
-                  <span className="text-3xs text-zinc-500">1 Developer</span>
+                  <span className="text-sm font-bold font-mono text-zinc-100">$14 USD</span>
+                  <span className="text-3xs text-zinc-400">1 Developer</span>
+                  {selectedPlanTab === 'individual' && (
+                    <span className="mt-1 text-3xs font-mono text-accent flex items-center gap-0.5">
+                      Selected · Click to Pay ➔
+                    </span>
+                  )}
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => setSelectedPlanTab('team')}
+                  onClick={() => {
+                    if (selectedPlanTab === 'team') {
+                      void handleOpenCheckout('team');
+                    } else {
+                      setSelectedPlanTab('team');
+                    }
+                  }}
                   className={cn(
-                    'flex flex-col items-center py-2 px-1 text-center transition-colors rounded-xs',
+                    'group relative flex flex-col items-center py-2.5 px-1.5 text-center transition-all rounded-xs border',
                     selectedPlanTab === 'team'
-                      ? 'bg-zinc-800 text-white shadow-sm'
-                      : 'text-zinc-400 hover:text-zinc-200',
+                      ? 'bg-zinc-800/90 border-emerald-500/60 text-white shadow-sm ring-1 ring-emerald-500/40'
+                      : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900',
                   )}
                 >
                   <span className="text-2xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">Team Pack</span>
-                  <span className="text-xs font-bold font-mono">$79 USD</span>
-                  <span className="text-3xs text-zinc-500">5 Seats</span>
+                  <span className="text-sm font-bold font-mono text-zinc-100">$79 USD</span>
+                  <span className="text-3xs text-zinc-400">5 Seats</span>
+                  {selectedPlanTab === 'team' && (
+                    <span className="mt-1 text-3xs font-mono text-emerald-400 flex items-center gap-0.5">
+                      Selected · Click to Pay ➔
+                    </span>
+                  )}
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => setSelectedPlanTab('enterprise')}
+                  onClick={() => {
+                    if (selectedPlanTab === 'enterprise') {
+                      void handleOpenCheckout('enterprise');
+                    } else {
+                      setSelectedPlanTab('enterprise');
+                    }
+                  }}
                   className={cn(
-                    'flex flex-col items-center py-2 px-1 text-center transition-colors rounded-xs',
+                    'group relative flex flex-col items-center py-2.5 px-1.5 text-center transition-all rounded-xs border',
                     selectedPlanTab === 'enterprise'
-                      ? 'bg-zinc-800 text-white shadow-sm'
-                      : 'text-zinc-400 hover:text-zinc-200',
+                      ? 'bg-zinc-800/90 border-cyan-500/60 text-white shadow-sm ring-1 ring-cyan-500/40'
+                      : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900',
                   )}
                 >
                   <span className="text-2xs font-mono uppercase tracking-wider text-cyan-400 font-semibold">Enterprise</span>
-                  <span className="text-xs font-bold font-mono">$199 USD</span>
-                  <span className="text-3xs text-zinc-500">Air-Gapped Intranet</span>
+                  <span className="text-sm font-bold font-mono text-zinc-100">$199 USD</span>
+                  <span className="text-3xs text-zinc-400">Air-Gapped Intranet</span>
+                  {selectedPlanTab === 'enterprise' && (
+                    <span className="mt-1 text-3xs font-mono text-cyan-400 flex items-center gap-0.5">
+                      Selected · Click to Pay ➔
+                    </span>
+                  )}
                 </button>
               </div>
 
@@ -277,29 +344,46 @@ export const ProLicenseModal: React.FC = () => {
 
               {/* Checkout CTA */}
               <div className="space-y-2">
-                <a
-                  href={buildCheckoutUrl(selectedPlanTab)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  disabled={isOpeningCheckout}
+                  onClick={() => void handleOpenCheckout(selectedPlanTab)}
                   className={cn(
-                    'flex items-center justify-center gap-2 h-9 w-full text-white text-xs font-semibold tracking-tight transition-all rounded-xs shadow-md',
+                    'flex items-center justify-center gap-2 h-10 w-full text-white text-xs font-semibold tracking-tight transition-all rounded-xs shadow-md cursor-pointer disabled:opacity-75',
                     selectedPlanTab === 'enterprise'
-                      ? 'bg-cyan-600 hover:bg-cyan-500'
+                      ? 'bg-cyan-600 hover:bg-cyan-500 active:bg-cyan-700'
                       : selectedPlanTab === 'team'
-                        ? 'bg-emerald-600 hover:bg-emerald-500'
-                        : 'bg-accent hover:bg-accent-hover',
+                        ? 'bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700'
+                        : 'bg-accent hover:bg-accent-hover active:bg-orange-600',
                   )}
                 >
-                  <Zap className="w-3.5 h-3.5" strokeWidth={2.5} />
-                  <span>
-                    Buy {PRICING_PLANS[selectedPlanTab].name} — ${PRICING_PLANS[selectedPlanTab].priceUSD} USD Lifetime
-                  </span>
-                  <ExternalLink className="w-3 h-3 opacity-70" strokeWidth={2} />
-                </a>
+                  {isOpeningCheckout ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-white" />
+                      <span>Opening Polar Checkout in Browser...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="w-3.5 h-3.5" strokeWidth={2.5} />
+                      <span>
+                        Proceed to Polar Checkout — ${PRICING_PLANS[selectedPlanTab].priceUSD} USD Lifetime
+                      </span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-80" strokeWidth={2} />
+                    </>
+                  )}
+                </button>
 
-                <div className="flex items-center justify-between text-3xs font-mono text-zinc-500 px-1">
-                  <span>One-time purchase · 0% subscription</span>
-                  <span>14-day money-back guarantee</span>
+                <div className="flex items-center justify-between text-3xs font-mono px-1">
+                  <span className="text-zinc-500">Opens in system browser (Chrome/Edge/Firefox)</span>
+                  <button
+                    type="button"
+                    onClick={() => void handleCopyLink(selectedPlanTab)}
+                    className="flex items-center gap-1 text-zinc-400 hover:text-accent transition-colors focus:outline-none"
+                    title="Copy Polar checkout URL to clipboard"
+                  >
+                    <Copy className="w-3 h-3" />
+                    <span>{copiedLink ? '✓ Polar URL Copied!' : 'Copy Direct Checkout Link'}</span>
+                  </button>
                 </div>
               </div>
 

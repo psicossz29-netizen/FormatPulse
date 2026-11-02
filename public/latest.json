@@ -1,18 +1,19 @@
 {
-  "version": "1.2.2",
+  "version": "1.2.3",
   "releaseDate": "2026-11-02",
-  "title": "FormatPulse v1.2.2 — Spaceship UI, Desktop Menu Bar & Preferences Engine",
+  "title": "FormatPulse v1.2.3 — Native System Browser Link Opener & Direct Polar Checkout",
   "highlights": [
+    "Native System Browser Opener for external Polar checkout links in desktop .exe",
+    "Direct 1-click Polar Checkout button & instant clipboard link copy fallback",
     "Native Desktop Menu Bar (File, Edit, View, Tools, Preferences, Help)",
     "Antigravity-Style Dynamic Preferences Modal (⌘,)",
     "Spaceship.com-inspired visual architecture and live in-page sandbox",
     "Real-time reactive theme accent switcher (Orange, Emerald, Cyan, Zinc)",
     "Dynamic editor font sizing (12px, 13px, 14px, 16px) and word wrap toggle",
-    "Removal of web overview redirect from desktop runtime",
     "100% offline air-gapped cryptographic verification receipt"
   ],
   "mandatory": false,
-  "downloadUrl": "https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.2/FormatPulse_1.2.2_x64-setup.exe",
-  "sha256": "0d4ae51299774b8e7001246071a3110d910f3c1c2168fb7a7d465cfd13046c39",
+  "downloadUrl": "https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.3/FormatPulse_1.2.3_x64-setup.exe",
+  "sha256": "pending_build",
   "assetSize": "1.28 MB"
 }

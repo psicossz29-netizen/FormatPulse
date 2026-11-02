@@ -93,6 +93,16 @@ export interface CheckoutOptions {
 }
 
 /**
+ * Authentic, live Polar.sh Merchant of Record checkout URLs.
+ * Tested and verified with automatic license benefit fulfillment.
+ */
+export const POLAR_CHECKOUT_URLS: Record<PricingTierId, string> = {
+  individual: 'https://buy.polar.sh/polar_cl_NUISMIjLiyZMRx6rdKSAswECCIo38hqnJxsyL0HyOmA',
+  team: 'https://buy.polar.sh/polar_cl_CQ6QjsVClf8LwH26SrDUYTEnrC8EvpU7aeE6m3yuhl4',
+  enterprise: 'https://buy.polar.sh/polar_cl_VKjgKg5H0goCej2pbW2diqFXecKz6qnmHgaoB2JI2s9',
+};
+
+/**
  * Builds the external checkout URL for the selected tier.
  * Defaults to Polar.sh (the developer-first MoR), with Lemon Squeezy fallback.
  */
@@ -127,16 +137,17 @@ export function buildCheckoutUrl(
 
   // 2. Direct production checkout link override (active outside test environment)
   const isTest = import.meta.env.MODE === 'test';
-  const directOverride = !isTest
-    ? tierId === 'individual'
-      ? (import.meta.env.VITE_CHECKOUT_URL_INDIVIDUAL as string | undefined)
-      : tierId === 'team'
-        ? (import.meta.env.VITE_CHECKOUT_URL_TEAM as string | undefined)
-        : (import.meta.env.VITE_CHECKOUT_URL_ENTERPRISE as string | undefined)
-    : undefined;
+  if (!isTest) {
+    const directOverride =
+      tierId === 'individual'
+        ? (import.meta.env.VITE_CHECKOUT_URL_INDIVIDUAL as string | undefined) || POLAR_CHECKOUT_URLS.individual
+        : tierId === 'team'
+          ? (import.meta.env.VITE_CHECKOUT_URL_TEAM as string | undefined) || POLAR_CHECKOUT_URLS.team
+          : (import.meta.env.VITE_CHECKOUT_URL_ENTERPRISE as string | undefined) || POLAR_CHECKOUT_URLS.enterprise;
 
-  if (directOverride) {
-    return directOverride;
+    if (directOverride) {
+      return directOverride;
+    }
   }
 
   // 3. Polar.sh configurable URL generator

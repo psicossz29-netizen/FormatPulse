@@ -1,6 +1,6 @@
 [package]
 name = "formatpulse"
-version = "1.2.2"
+version = "1.2.3"
 description = "FormatPulse — Zero-Knowledge Local Data Studio"
 authors = ["FormatPulse Security Engineering <security@formatpulse.internal>"]
 edition = "2021"

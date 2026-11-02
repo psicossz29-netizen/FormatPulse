@@ -4,6 +4,7 @@ import {
   getRuntimeEnvironment,
   saveExportedFile,
   sendDesktopNotification,
+  openExternalUrl,
 } from '../desktopBridge';
 
 describe('FormatPulse Desktop Bridge', () => {
@@ -53,6 +54,32 @@ describe('FormatPulse Desktop Bridge', () => {
     it('returns false when Notification API is not permitted', async () => {
       const result = await sendDesktopNotification('Test Title', 'Test Message');
       expect(result).toBe(false);
+    });
+  });
+
+  describe('External URL Dispatcher', () => {
+    it('invokes native open_external_url command when running in Tauri desktop', async () => {
+      const invokeMock = vi.fn().mockResolvedValue(undefined);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).__TAURI_INTERNALS__ = { invoke: invokeMock };
+
+      const res = await openExternalUrl('https://buy.polar.sh/polar_cl_test');
+      expect(res).toBe(true);
+      expect(invokeMock).toHaveBeenCalledWith('open_external_url', {
+        url: 'https://buy.polar.sh/polar_cl_test',
+      });
+    });
+
+    it('falls back to window.open in web runtime', async () => {
+      const openMock = vi.spyOn(window, 'open').mockReturnValue({} as Window);
+      const res = await openExternalUrl('https://formatpulse.vercel.app');
+      expect(res).toBe(true);
+      expect(openMock).toHaveBeenCalledWith(
+        'https://formatpulse.vercel.app',
+        '_blank',
+        'noopener,noreferrer',
+      );
+      openMock.mockRestore();
     });
   });
 });

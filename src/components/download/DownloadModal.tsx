@@ -13,11 +13,11 @@ import {
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { FormatPulseLogo } from '@/components/brand/FormatPulseLogo';
+import { APP_VERSION, OFFICIAL_SHA256 } from '@/constants/version';
+import { openExternalUrl } from '@/core/desktopBridge';
 
-const EXE_URL =
-  'https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.1/FormatPulse_1.2.1_x64-setup.exe';
-const SHA256_HASH =
-  '7b9751df5dcd672c8a226a3006fca18d342739a3df037631e6b59eaf13777a69';
+const EXE_URL = `https://github.com/psicossz29-netizen/FormatPulse/releases/download/v${APP_VERSION}/FormatPulse_${APP_VERSION}_x64-setup.exe`;
+const SHA256_HASH = OFFICIAL_SHA256;
 
 export const DownloadModal: React.FC = () => {
   const showDownloadModal = useAppStore((s) => s.showDownloadModal);
@@ -224,6 +224,10 @@ export const DownloadModal: React.FC = () => {
             href="https://github.com/psicossz29-netizen/FormatPulse/releases"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => {
+              e.preventDefault();
+              void openExternalUrl('https://github.com/psicossz29-netizen/FormatPulse/releases');
+            }}
             className="flex items-center gap-1 hover:text-zinc-300 transition-colors"
           >
             <span>Ver Release en GitHub</span>

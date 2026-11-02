@@ -3,6 +3,7 @@ import { Terminal, ArrowUp, Mail, ExternalLink, ShieldCheck, Download } from 'lu
 import { useAppStore } from '@/store/useAppStore';
 import { FormatPulseLogo } from '@/components/brand/FormatPulseLogo';
 import { APP_VERSION, SUPPORT_EMAIL, REPOSITORY_URL } from '@/constants/version';
+import { openExternalUrl } from '@/core/desktopBridge';
 
 export const LandingFooter: React.FC = () => {
   const setViewMode = useAppStore((s) => s.setViewMode);
@@ -71,6 +72,10 @@ export const LandingFooter: React.FC = () => {
             href={REPOSITORY_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => {
+              e.preventDefault();
+              void openExternalUrl(REPOSITORY_URL);
+            }}
             className="hover:text-white transition-colors flex items-center gap-1"
           >
             <span>GitHub</span>
@@ -79,6 +84,10 @@ export const LandingFooter: React.FC = () => {
 
           <a
             href={`mailto:${SUPPORT_EMAIL}?subject=FormatPulse%20Support%20Inquiry`}
+            onClick={(e) => {
+              e.preventDefault();
+              void openExternalUrl(`mailto:${SUPPORT_EMAIL}?subject=FormatPulse%20Support%20Inquiry`);
+            }}
             className="hover:text-white transition-colors flex items-center gap-1"
           >
             <Mail className="w-3.5 h-3.5" />

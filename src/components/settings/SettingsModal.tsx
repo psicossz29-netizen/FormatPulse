@@ -22,6 +22,7 @@ import {
 } from '@/store/useSettingsStore';
 import { APP_VERSION, APP_BUILD_DATE } from '@/constants/version';
 import { checkForUpdates, type ReleaseManifest } from '@/services/updaterService';
+import { openExternalUrl } from '@/core/desktopBridge';
 import { cn } from '@/lib/utils';
 
 type SettingsTab =
@@ -658,6 +659,12 @@ export const SettingsModal: React.FC = () => {
                         href={manifestInfo.downloadUrl}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (manifestInfo?.downloadUrl) {
+                            void openExternalUrl(manifestInfo.downloadUrl);
+                          }
+                        }}
                         className="inline-flex items-center gap-1.5 mt-2 px-3 py-1 bg-accent hover:bg-accent-hover text-white text-2xs font-bold rounded-xs transition-colors"
                       >
                         <span>Download Update</span>

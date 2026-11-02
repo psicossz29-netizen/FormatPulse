@@ -20,6 +20,7 @@ import {
 import { useAppStore } from '@/store/useAppStore';
 import { useSettingsStore, type ThemeAccent } from '@/store/useSettingsStore';
 import { APP_VERSION, PRODUCTION_WEB_URL, SUPPORT_EMAIL } from '@/constants/version';
+import { openExternalUrl } from '@/core/desktopBridge';
 import { PRESETS } from '@/core/presets';
 import { cn } from '@/lib/utils';
 
@@ -466,7 +467,11 @@ export const AppMenuBar: React.FC = () => {
               href={PRODUCTION_WEB_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => setActiveMenu(null)}
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveMenu(null);
+                void openExternalUrl(PRODUCTION_WEB_URL);
+              }}
               className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
             >
               <span>FormatPulse Website</span>
@@ -474,7 +479,11 @@ export const AppMenuBar: React.FC = () => {
             </a>
             <a
               href={`mailto:${SUPPORT_EMAIL}?subject=FormatPulse%20Support`}
-              onClick={() => setActiveMenu(null)}
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveMenu(null);
+                void openExternalUrl(`mailto:${SUPPORT_EMAIL}?subject=FormatPulse%20Support`);
+              }}
               className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
             >
               <span>Email Support</span>

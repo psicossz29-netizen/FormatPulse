@@ -1,6 +1,7 @@
 import React from 'react';
 import { Zap, Check, Shield, ExternalLink, Key, Building2, Users } from 'lucide-react';
 import { PRICING_PLANS, buildCheckoutUrl } from '@/services/checkoutService';
+import { openExternalUrl } from '@/core/desktopBridge';
 import { useAppStore } from '@/store/useAppStore';
 
 export const PricingSection: React.FC = () => {
@@ -79,6 +80,10 @@ export const PricingSection: React.FC = () => {
                 href={buildCheckoutUrl('individual')}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  void openExternalUrl(buildCheckoutUrl('individual'));
+                }}
                 className="w-full h-12 bg-accent hover:bg-accent-hover text-white font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all rounded-full shadow-[0_0_25px_rgba(255,79,0,0.35)] hover:scale-[1.01]"
               >
                 <span>Get Pro License ($14 USD)</span>
@@ -134,6 +139,10 @@ export const PricingSection: React.FC = () => {
                 href={buildCheckoutUrl('team')}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  void openExternalUrl(buildCheckoutUrl('team'));
+                }}
                 className="w-full h-12 bg-zinc-800 hover:bg-zinc-700 text-white font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all rounded-full border border-white/10 hover:border-white/20 hover:scale-[1.01]"
               >
                 <span>Purchase Team Pack ($79 USD)</span>
@@ -186,6 +195,10 @@ export const PricingSection: React.FC = () => {
                 href={buildCheckoutUrl('enterprise')}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  void openExternalUrl(buildCheckoutUrl('enterprise'));
+                }}
                 className="w-full h-12 bg-white hover:bg-zinc-100 text-zinc-950 font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all rounded-full shadow-lg hover:scale-[1.01]"
               >
                 <span>Deploy Enterprise ($199 USD)</span>
