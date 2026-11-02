@@ -5,7 +5,6 @@ import {
   Zap,
   ExternalLink,
   Loader2,
-  KeyRound,
   RotateCcw,
   CheckCircle2,
 } from 'lucide-react';
@@ -15,6 +14,7 @@ import { verifyLicenseKey, getTierLabel, getTierSeats } from '@/services/license
 import { buildCheckoutUrl, PRICING_PLANS } from '@/services/checkoutService';
 import type { LicenseTier } from '@/types';
 import { cn } from '@/lib/utils';
+import { FormatPulseLogo } from '@/components/brand/FormatPulseLogo';
 
 // ── Feature Comparison Data ──────────────────────────────────────────────────
 
@@ -123,7 +123,7 @@ export const ProLicenseModal: React.FC = () => {
         {/* Header */}
         <div className="flex items-center justify-between h-10 px-4 border-b border-zinc-800 bg-zinc-950">
           <div className="flex items-center gap-2">
-            <KeyRound className="w-4 h-4 text-accent" strokeWidth={2} />
+            <FormatPulseLogo size={16} animate={false} />
             <span className="text-xs font-semibold text-zinc-200 tracking-tight">
               FormatPulse License Engine
             </span>

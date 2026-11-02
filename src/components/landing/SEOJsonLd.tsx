@@ -11,7 +11,7 @@ export const SEOJsonLd: React.FC = () => {
         url: 'https://formatpulse.dev',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Any (Web Browser, PWA, macOS, Windows, Linux)',
-        softwareVersion: '1.2.0',
+        softwareVersion: '1.2.1',
         description:
           'Local-first data conversion, multi-language schema inference (TypeScript, Zod, OpenAPI, Prisma, Pydantic, Rust, Go), and PII anonymization engine running 100% in-browser with zero server telemetry.',
         offers: {

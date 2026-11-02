@@ -1,40 +1,68 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="og-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e0e11"/>
+      <stop offset="100%" stop-color="#060608"/>
+    </linearGradient>
+    <linearGradient id="og-logo-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1c20"/>
+      <stop offset="100%" stop-color="#09090b"/>
+    </linearGradient>
+    <linearGradient id="og-pulse" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff4f00"/>
+      <stop offset="70%" stop-color="#ff6b26"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+
   <!-- Background -->
-  <rect width="1200" height="630" fill="#09090B"/>
-  
-  <!-- Subtle Grid Lines -->
-  <line x1="0" y1="100" x2="1200" y2="100" stroke="#18181B" stroke-width="1"/>
-  <line x1="0" y1="200" x2="1200" y2="200" stroke="#18181B" stroke-width="1"/>
-  <line x1="0" y1="300" x2="1200" y2="300" stroke="#18181B" stroke-width="1"/>
-  <line x1="0" y1="400" x2="1200" y2="400" stroke="#18181B" stroke-width="1"/>
-  <line x1="0" y1="500" x2="1200" y2="500" stroke="#18181B" stroke-width="1"/>
-  <line x1="200" y1="0" x2="200" y2="630" stroke="#18181B" stroke-width="1"/>
-  <line x1="400" y1="0" x2="400" y2="630" stroke="#18181B" stroke-width="1"/>
-  <line x1="600" y1="0" x2="600" y2="630" stroke="#18181B" stroke-width="1"/>
-  <line x1="800" y1="0" x2="800" y2="630" stroke="#18181B" stroke-width="1"/>
-  <line x1="1000" y1="0" x2="1000" y2="630" stroke="#18181B" stroke-width="1"/>
+  <rect width="1200" height="630" fill="url(#og-bg)"/>
 
-  <!-- Brand Accent Corner -->
-  <rect x="80" y="80" width="12" height="12" fill="#FF4F00"/>
+  <!-- Subtle Precision Matrix Grid -->
+  <line x1="0" y1="100" x2="1200" y2="100" stroke="#18181b" stroke-width="1"/>
+  <line x1="0" y1="200" x2="1200" y2="200" stroke="#18181b" stroke-width="1"/>
+  <line x1="0" y1="300" x2="1200" y2="300" stroke="#18181b" stroke-width="1"/>
+  <line x1="0" y1="400" x2="1200" y2="400" stroke="#18181b" stroke-width="1"/>
+  <line x1="0" y1="500" x2="1200" y2="500" stroke="#18181b" stroke-width="1"/>
+  <line x1="200" y1="0" x2="200" y2="630" stroke="#18181b" stroke-width="1"/>
+  <line x1="400" y1="0" x2="400" y2="630" stroke="#18181b" stroke-width="1"/>
+  <line x1="600" y1="0" x2="600" y2="630" stroke="#18181b" stroke-width="1"/>
+  <line x1="800" y1="0" x2="800" y2="630" stroke="#18181b" stroke-width="1"/>
+  <line x1="1000" y1="0" x2="1000" y2="630" stroke="#18181b" stroke-width="1"/>
 
-  <!-- Badge -->
-  <rect x="110" y="74" width="230" height="26" rx="2" fill="#18181B" stroke="#27272A"/>
-  <text x="122" y="91" fill="#10B981" font-family="monospace" font-size="12" font-weight="600">● 100% CLIENT-SIDE ISOLATED</text>
+  <!-- Top Status Badge -->
+  <rect x="80" y="68" width="260" height="30" rx="3" fill="#141418" stroke="#27272a"/>
+  <circle cx="98" cy="83" r="4" fill="#10b981"/>
+  <text x="110" y="87" fill="#10b981" font-family="monospace" font-size="12" font-weight="700">● 100% CLIENT-SIDE AIR-GAPPED</text>
 
-  <!-- Title -->
-  <text x="80" y="210" fill="#FAFAFA" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="76" font-weight="800" letter-spacing="-2">FORMATPULSE</text>
+  <!-- Big Title -->
+  <text x="80" y="195" fill="#f4f4f5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="78" font-weight="900" letter-spacing="-2">FORMAT<tspan fill="#ff4f00">PULSE</tspan></text>
 
-  <!-- Tagline -->
-  <text x="80" y="275" fill="#A1A1AA" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="32" font-weight="500" letter-spacing="-0.5">Zero-Knowledge Local Data Studio &amp; Code Synthesis</text>
+  <!-- Subtitle -->
+  <text x="80" y="255" fill="#a1a1aa" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="500" letter-spacing="-0.5">Zero-Knowledge Local Data Studio &amp; AST Code Synthesis</text>
 
-  <!-- Features List Pill Box -->
-  <rect x="80" y="340" width="1040" height="180" rx="4" fill="#121215" stroke="#27272A"/>
+  <!-- Large FormatPulse Logo Mark Emblem on Right -->
+  <g transform="translate(930, 95) scale(0.38)">
+    <rect x="32" y="32" width="448" height="448" rx="104" fill="url(#og-logo-bg)" stroke="#27272a" stroke-width="10"/>
+    <rect x="52" y="52" width="408" height="408" rx="88" fill="none" stroke="#ff4f00" stroke-opacity="0.25" stroke-width="3" stroke-dasharray="14 10"/>
+    <path d="M192 152 L124 256 L192 360" stroke="#ff4f00" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M320 152 L388 256 L320 360" stroke="#ff4f00" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M148 256 H206 L236 168 L276 344 L306 256 H364" stroke="#ffffff" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M148 256 H206 L236 168 L276 344 L306 256 H364" stroke="url(#og-pulse)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="364" cy="256" r="26" fill="#10b981" fill-opacity="0.25"/>
+    <circle cx="364" cy="256" r="14" fill="#10b981" stroke="#09090b" stroke-width="3"/>
+    <circle cx="364" cy="256" r="5" fill="#ffffff"/>
+  </g>
 
-  <text x="110" y="390" fill="#E4E4E7" font-family="monospace" font-size="18" font-weight="600">> JSON ⇄ CSV ⇄ YAML Transformations (100% In-Browser)</text>
-  <text x="110" y="430" fill="#E4E4E7" font-family="monospace" font-size="18" font-weight="600">> AST Code Generators: TypeScript, Zod, OpenAPI, SQL, Prisma, Rust, Go</text>
-  <text x="110" y="470" fill="#E4E4E7" font-family="monospace" font-size="18" font-weight="600">> PII Sanitizer &amp; Cloud Secrets Anonymization · Formula Injection Defense</text>
+  <!-- Feature Grid Card -->
+  <rect x="80" y="315" width="1040" height="205" rx="6" fill="#121216" stroke="#27272a"/>
+
+  <text x="115" y="365" fill="#e4e4e7" font-family="monospace" font-size="18" font-weight="600">> JSON ⇄ CSV ⇄ YAML Conversion · 0 Server Telemetry</text>
+  <text x="115" y="410" fill="#e4e4e7" font-family="monospace" font-size="18" font-weight="600">> AST Generators: TypeScript, Zod, OpenAPI, SQL, Prisma, Rust Serde, Go</text>
+  <text x="115" y="455" fill="#e4e4e7" font-family="monospace" font-size="18" font-weight="600">> Enterprise PII &amp; Cloud Secrets Anonymization · CSV Formula Defense</text>
+  <text x="115" y="495" fill="#a1a1aa" font-family="monospace" font-size="16">> Multi-File Batch ZIP Exporter · Web Worker Engine (>100MB)</text>
 
   <!-- Footer Meta -->
-  <text x="80" y="570" fill="#71717A" font-family="monospace" font-size="14">v1.2.0 · Windows Native .exe · Web / PWA · Zero Network IO · GDPR &amp; HIPAA Air-Gapped Ready</text>
-  <text x="1000" y="570" fill="#FF4F00" font-family="monospace" font-size="14" font-weight="700">formatpulse.com</text>
+  <text x="80" y="580" fill="#71717a" font-family="monospace" font-size="14">v1.2.0 · Windows Native .exe · Web App · 100% Offline Cryptographic Licensing</text>
+  <text x="960" y="580" fill="#ff4f00" font-family="monospace" font-size="15" font-weight="700">formatpulse.vercel.app</text>
 </svg>

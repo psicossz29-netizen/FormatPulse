@@ -1,6 +1,7 @@
 import React from 'react';
 import { Terminal, Shield, ArrowRight, Zap, Download } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
+import { FormatPulseLogo } from '@/components/brand/FormatPulseLogo';
 
 export const LandingNav: React.FC = () => {
   const setViewMode = useAppStore((s) => s.setViewMode);
@@ -13,12 +14,9 @@ export const LandingNav: React.FC = () => {
       <div className="flex items-center gap-3">
         <button
           onClick={() => setViewMode('workspace')}
-          className="flex items-center gap-2 group text-left focus:outline-none"
+          className="flex items-center focus:outline-none"
         >
-          <div className="w-2.5 h-2.5 rounded-full bg-accent group-hover:scale-110 transition-transform" />
-          <span className="font-mono text-xs font-bold tracking-tight text-zinc-100">
-            FORMATPULSE <span className="text-zinc-600 font-normal">// v1.2</span>
-          </span>
+          <FormatPulseLogo size={26} showText={true} version="v1.2" />
         </button>
 
         <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-sm bg-emerald-950/50 border border-emerald-800/60 text-emerald-400 text-2xs font-mono">
@@ -64,15 +62,15 @@ export const LandingNav: React.FC = () => {
         )}
 
         <a
-          href="https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.0/FormatPulse_1.2.0_x64-setup.exe"
-          download="FormatPulse_1.2.0_x64-setup.exe"
+          href="https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.1/FormatPulse_1.2.1_x64-setup.exe"
+          download="FormatPulse_1.2.1_x64-setup.exe"
           target="_blank"
           rel="noopener noreferrer"
           className="hidden md:flex items-center gap-1.5 h-7 px-2.5 text-2xs font-mono text-zinc-300 bg-zinc-900 border border-zinc-700 hover:bg-zinc-800 transition-colors rounded-sm"
           title="Direct download of FormatPulse native Windows x64 executable"
         >
           <Download className="w-3 h-3 text-accent" />
-          <span>.exe v1.2</span>
+          <span>.exe v1.2.1</span>
         </a>
 
         <button

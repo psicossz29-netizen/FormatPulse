@@ -14,6 +14,7 @@ import {
 import { useAppStore } from '@/store/useAppStore';
 import { convert } from '@/core/converters';
 import { cn } from '@/lib/utils';
+import { FormatPulseLogo } from '@/components/brand/FormatPulseLogo';
 
 export type LegalTab = 'terms' | 'privacy' | 'refund' | 'security' | 'compliance';
 
@@ -108,7 +109,8 @@ export const LegalModal: React.FC = () => {
         {/* Header */}
         <div className="flex items-center justify-between h-10 px-4 border-b border-zinc-800 bg-surface-raised flex-none">
           <div className="flex items-center gap-2">
-            <Shield className="w-4 h-4 text-emerald-400" strokeWidth={2} />
+            <FormatPulseLogo size={16} animate={false} />
+            <Shield className="w-3.5 h-3.5 text-emerald-400" strokeWidth={2} />
             <span className="text-xs font-semibold text-zinc-100 font-mono tracking-tight">
               LEGAL_COMPLIANCE_ARCHIVE // FORMATPULSE
             </span>

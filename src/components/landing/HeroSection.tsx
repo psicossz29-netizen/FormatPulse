@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Terminal, Shield, ArrowRight, Activity, Lock, Cpu, Check, Copy, Download } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
+import { FormatPulseLogo } from '@/components/brand/FormatPulseLogo';
 
 const HERO_EXAMPLES = [
   {
@@ -76,8 +77,8 @@ export const HeroSection: React.FC = () => {
 
       <div className="max-w-6xl mx-auto relative z-10 flex flex-col items-center text-center">
         {/* ── Status Pill ──────────────────────────────────────────────── */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 mb-6">
-          <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-sm bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 mb-6 shadow-sm">
+          <FormatPulseLogo size={18} animate={false} />
           <span className="text-accent font-semibold">SWISS PRECISION ARCHITECTURE</span>
           <span className="text-zinc-600">//</span>
           <span className="text-zinc-400">ZERO SERVER TELEMETRY</span>
@@ -105,8 +106,8 @@ export const HeroSection: React.FC = () => {
           </button>
 
           <a
-            href="https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.0/FormatPulse_1.2.0_x64-setup.exe"
-            download="FormatPulse_1.2.0_x64-setup.exe"
+            href="https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.1/FormatPulse_1.2.1_x64-setup.exe"
+            download="FormatPulse_1.2.1_x64-setup.exe"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 h-10 px-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-mono text-xs transition-colors rounded-sm"

@@ -1,6 +1,7 @@
 import React from 'react';
 import { FileUp, Zap, Search, ShieldCheck, GitCompare, Globe, Layers } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
+import { FormatPulseLogo } from '@/components/brand/FormatPulseLogo';
 import {
   INPUT_FORMATS,
   OUTPUT_FORMATS,
@@ -46,8 +47,8 @@ export const TopCommandBar: React.FC = () => {
   return (
     <header className="h-10 flex-none flex items-center border-b border-zinc-800 bg-surface-base select-none">
       {/* ── Logo ────────────────────────────────────────────────────────── */}
-      <div className="flex items-center gap-1.5 px-3 border-r border-zinc-800 h-full">
-        <div className="w-2 h-2 rounded-full bg-accent" />
+      <div className="flex items-center gap-2 px-3 border-r border-zinc-800 h-full">
+        <FormatPulseLogo size={18} animate={false} />
         <span className="text-xs font-semibold tracking-tight text-zinc-300 font-mono">
           FORMATPULSE
         </span>
