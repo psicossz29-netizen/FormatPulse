@@ -1,8 +1,14 @@
 // ── FormatPulse Auto-Updater & Version Engine ────────────────────────────────
 // Zero-telemetry semver version comparison and release manifest checker.
 
-export const CURRENT_APP_VERSION = '1.2.0';
-export const DEFAULT_MANIFEST_URL = '/latest.json';
+import { APP_VERSION, LATEST_RELEASE_API } from '@/constants/version';
+
+export const CURRENT_APP_VERSION = APP_VERSION;
+export const DEFAULT_MANIFEST_URL =
+  typeof window !== 'undefined' &&
+  ('__TAURI_INTERNALS__' in window || '__TAURI__' in window)
+    ? LATEST_RELEASE_API
+    : '/latest.json';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 

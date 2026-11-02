@@ -1,7 +1,18 @@
 import React from 'react';
-import { FileUp, Zap, Search, ShieldCheck, GitCompare, Globe, Layers } from 'lucide-react';
+import {
+  FileUp,
+  Zap,
+  Search,
+  ShieldCheck,
+  GitCompare,
+  Globe,
+  Layers,
+  Settings,
+  RefreshCw,
+} from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { FormatPulseLogo } from '@/components/brand/FormatPulseLogo';
+import { APP_VERSION, isDesktopEnvironment } from '@/constants/version';
 import {
   INPUT_FORMATS,
   OUTPUT_FORMATS,
@@ -21,9 +32,12 @@ export const TopCommandBar: React.FC = () => {
   const setShowHealthInspector = useAppStore((s) => s.setShowHealthInspector);
   const setShowDiffModal = useAppStore((s) => s.setShowDiffModal);
   const setShowBatchModal = useAppStore((s) => s.setShowBatchModal);
+  const setShowUpdateModal = useAppStore((s) => s.setShowUpdateModal);
+  const setShowSettingsModal = useAppStore((s) => s.setShowSettingsModal);
   const setViewMode = useAppStore((s) => s.setViewMode);
   const licenseTier = useAppStore((s) => s.licenseTier);
   const activePresetId = useAppStore((s) => s.activePresetId);
+  const isDesktop = isDesktopEnvironment();
 
   const handleFileLoad = () => {
     const input = document.createElement('input');
@@ -52,7 +66,7 @@ export const TopCommandBar: React.FC = () => {
         <span className="text-xs font-semibold tracking-tight text-zinc-300 font-mono">
           FORMATPULSE
         </span>
-        <span className="text-2xs text-zinc-600 font-mono">// v1.0</span>
+        <span className="text-2xs text-zinc-500 font-mono">// v{APP_VERSION}</span>
       </div>
 
       {/* ── Input Format Selector ───────────────────────────────────────── */}
@@ -121,14 +135,38 @@ export const TopCommandBar: React.FC = () => {
       {/* ── Spacer ──────────────────────────────────────────────────────── */}
       <div className="flex-1" />
 
-      {/* ── Landing Page / Overview ─────────────────────────────────────── */}
+      {/* ── Desktop vs Web Navigation / Updates ─────────────────────────── */}
+      {!isDesktop ? (
+        <button
+          onClick={() => setViewMode('landing')}
+          className="h-full px-2.5 flex items-center gap-1.5 text-xs text-zinc-400 font-medium border-l border-zinc-800 hover:bg-zinc-800/80 hover:text-zinc-200 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:ring-inset"
+          title="View Landing Page & Documentation"
+        >
+          <Globe className="w-3.5 h-3.5 text-zinc-400" strokeWidth={2} />
+          <span className="hidden xl:inline">Overview</span>
+        </button>
+      ) : (
+        <button
+          onClick={() => setShowUpdateModal(true)}
+          className="h-full px-2.5 flex items-center gap-1.5 text-xs text-zinc-400 font-medium border-l border-zinc-800 hover:bg-zinc-800/80 hover:text-blue-400 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:ring-inset"
+          title="Check for Application Updates"
+        >
+          <RefreshCw className="w-3.5 h-3.5 text-blue-400" strokeWidth={2} />
+          <span className="hidden xl:inline">Updates</span>
+        </button>
+      )}
+
+      {/* ── Settings / Preferences Modal (Antigravity Style) ─────────────── */}
       <button
-        onClick={() => setViewMode('landing')}
+        onClick={() => setShowSettingsModal(true)}
         className="h-full px-2.5 flex items-center gap-1.5 text-xs text-zinc-400 font-medium border-l border-zinc-800 hover:bg-zinc-800/80 hover:text-zinc-200 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:ring-inset"
-        title="View Landing Page & Documentation"
+        title="Settings & Preferences (⌘, / Ctrl+,)"
       >
-        <Globe className="w-3.5 h-3.5 text-zinc-400" strokeWidth={2} />
-        <span className="hidden xl:inline">Overview</span>
+        <Settings className="w-3.5 h-3.5 text-zinc-400" strokeWidth={2} />
+        <span className="hidden xl:inline">Settings</span>
+        <kbd className="hidden 2xl:inline px-1 py-0.5 text-3xs font-mono text-zinc-500 bg-zinc-800/80 border border-zinc-700/60 rounded-xs">
+          ⌘,
+        </kbd>
       </button>
 
       {/* ── Data Health & Security Inspector ────────────────────────────── */}

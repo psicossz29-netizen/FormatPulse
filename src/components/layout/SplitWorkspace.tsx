@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Copy, Download, Trash2, AlertTriangle, Archive } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
+import { useSettingsStore } from '@/store/useSettingsStore';
 import { FORMAT_LABELS } from '@/types';
 import { cn } from '@/lib/utils';
 import { ProPaywall } from '@/components/monetization/ProPaywall';
@@ -60,6 +61,10 @@ const CodePanel: React.FC<CodePanelProps> = ({
   const handleClear = useCallback(() => {
     onChange?.('');
   }, [onChange]);
+
+  const fontSize = useSettingsStore((s) => s.fontSize);
+  const wordWrap = useSettingsStore((s) => s.wordWrap);
+  const lineHeightPx = Math.round(fontSize * 1.45);
 
   // Generate line numbers
   const lines = Math.max(lineCount, 1);
@@ -126,7 +131,8 @@ const CodePanel: React.FC<CodePanelProps> = ({
             {Array.from({ length: lines }, (_, i) => (
               <div
                 key={i}
-                className="text-2xs font-mono text-zinc-700 text-right pr-2 leading-[18px]"
+                className="text-2xs font-mono text-zinc-700 text-right pr-2"
+                style={{ height: lineHeightPx, lineHeight: `${lineHeightPx}px` }}
               >
                 {i + 1}
               </div>
@@ -137,8 +143,15 @@ const CodePanel: React.FC<CodePanelProps> = ({
         {/* Text area / display */}
         {readonly ? (
           <pre
-            className="h-full overflow-auto p-2 text-xs font-mono leading-[18px] text-zinc-300 whitespace-pre"
-            style={{ paddingLeft: gutterWidth + 8 }}
+            className={cn(
+              'h-full overflow-auto p-2 font-mono text-zinc-300',
+              wordWrap ? 'whitespace-pre-wrap break-words' : 'whitespace-pre',
+            )}
+            style={{
+              paddingLeft: gutterWidth + 8,
+              fontSize: `${fontSize}px`,
+              lineHeight: `${lineHeightPx}px`,
+            }}
           >
             {value || (
               <span className="text-zinc-600 italic">Output will appear here…</span>
@@ -153,10 +166,15 @@ const CodePanel: React.FC<CodePanelProps> = ({
             autoComplete="off"
             autoCorrect="off"
             className={cn(
-              'absolute inset-0 w-full h-full resize-none bg-transparent p-2 text-xs font-mono leading-[18px] text-zinc-200',
+              'absolute inset-0 w-full h-full resize-none bg-transparent p-2 font-mono text-zinc-200',
               'placeholder:text-zinc-700 focus:outline-none caret-accent',
+              wordWrap ? 'whitespace-pre-wrap break-words' : 'whitespace-pre',
             )}
-            style={{ paddingLeft: gutterWidth + 8 }}
+            style={{
+              paddingLeft: gutterWidth + 8,
+              fontSize: `${fontSize}px`,
+              lineHeight: `${lineHeightPx}px`,
+            }}
             placeholder="Paste or type data here, or load a file…"
           />
         )}

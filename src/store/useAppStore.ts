@@ -51,6 +51,7 @@ interface AppState {
   showUpdateModal: boolean;
   showBatchModal: boolean;
   showDownloadModal: boolean;
+  showSettingsModal: boolean;
   copyFeedback: 'idle' | 'copied';
   viewMode: 'workspace' | 'landing';
 
@@ -80,6 +81,7 @@ interface AppState {
   setShowUpdateModal: (show: boolean) => void;
   setShowBatchModal: (show: boolean) => void;
   setShowDownloadModal: (show: boolean) => void;
+  setShowSettingsModal: (show: boolean) => void;
   setCopyFeedback: (feedback: 'idle' | 'copied') => void;
   loadPreset: (presetId: string) => void;
   clearWorkspace: () => void;
@@ -183,6 +185,7 @@ const INITIAL_STATE = {
   showUpdateModal: false,
   showBatchModal: false,
   showDownloadModal: false,
+  showSettingsModal: false,
   copyFeedback: 'idle' as const,
   viewMode: detectInitialViewMode(),
 } as const;
@@ -190,7 +193,13 @@ const INITIAL_STATE = {
 export const useAppStore = create<AppState>((set) => ({
   ...INITIAL_STATE,
 
-  setViewMode: (mode) => set({ viewMode: mode }),
+  setViewMode: (mode) => {
+    // Desktop application stays permanently in workspace mode
+    if (typeof window !== 'undefined' && ('__TAURI_INTERNALS__' in window || '__TAURI__' in window)) {
+      if (mode === 'landing') return;
+    }
+    set({ viewMode: mode });
+  },
 
   setInputFormat: (format) =>
     set({ inputFormat: format, error: null, isPreviewMode: false, activePresetId: null }),
@@ -240,6 +249,7 @@ export const useAppStore = create<AppState>((set) => ({
   setShowUpdateModal: (show) => set({ showUpdateModal: show }),
   setShowBatchModal: (show) => set({ showBatchModal: show }),
   setShowDownloadModal: (show) => set({ showDownloadModal: show }),
+  setShowSettingsModal: (show) => set({ showSettingsModal: show }),
   setCopyFeedback: (feedback) => set({ copyFeedback: feedback }),
 
   loadPreset: (presetId) => {

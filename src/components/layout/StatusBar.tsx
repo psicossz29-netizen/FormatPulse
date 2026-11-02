@@ -1,6 +1,7 @@
 import React from 'react';
-import { Shield, FileText, ShieldAlert } from 'lucide-react';
+import { Shield, FileText, ShieldAlert, Settings } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
+import { APP_VERSION } from '@/constants/version';
 import { cn } from '@/lib/utils';
 
 function formatBytes(bytes: number): string {
@@ -21,6 +22,7 @@ export const StatusBar: React.FC = () => {
   const setShowLegalModal = useAppStore((s) => s.setShowLegalModal);
   const setShowHealthInspector = useAppStore((s) => s.setShowHealthInspector);
   const setShowLicenseModal = useAppStore((s) => s.setShowLicenseModal);
+  const setShowSettingsModal = useAppStore((s) => s.setShowSettingsModal);
 
   return (
     <footer className="h-6 flex-none flex items-center justify-between border-t border-zinc-800 bg-surface-base text-2xs font-mono select-none px-2">
@@ -121,6 +123,17 @@ export const StatusBar: React.FC = () => {
         >
           <FileText className="w-3 h-3" strokeWidth={2} />
           <span>Privacy</span>
+        </button>
+
+        <span className="text-zinc-700">│</span>
+
+        <button
+          onClick={() => setShowSettingsModal(true)}
+          className="flex items-center gap-1 text-zinc-500 hover:text-zinc-300 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent rounded-sm"
+          title="Open Settings (⌘,)"
+        >
+          <Settings className="w-3 h-3 text-zinc-500" strokeWidth={2} />
+          <span>v{APP_VERSION}</span>
         </button>
       </div>
     </footer>

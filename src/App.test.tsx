@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 import { useAppStore } from '@/store/useAppStore';
+import { APP_VERSION } from '@/constants/version';
 
 describe('App Shell', () => {
   beforeEach(() => {
@@ -78,7 +79,17 @@ describe('App Shell', () => {
 
   it('renders the version tag', () => {
     render(<App />);
-    expect(screen.getByText('// v1.0')).toBeInTheDocument();
+    expect(screen.getByText(`// v${APP_VERSION}`)).toBeInTheDocument();
+  });
+
+  it('renders the desktop menu bar items', () => {
+    render(<App />);
+    expect(screen.getByText('File')).toBeInTheDocument();
+    expect(screen.getByText('Edit')).toBeInTheDocument();
+    expect(screen.getByText('View')).toBeInTheDocument();
+    expect(screen.getByText('Tools')).toBeInTheDocument();
+    expect(screen.getByText('Preferences')).toBeInTheDocument();
+    expect(screen.getByText('Help')).toBeInTheDocument();
   });
 
   it('renders the command palette launcher button', () => {

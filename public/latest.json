@@ -1,15 +1,16 @@
 {
   "version": "1.2.1",
   "releaseDate": "2026-11-02",
-  "title": "FormatPulse v1.2.1 — Custom Brand Identity & Enhanced NSIS Installer",
+  "title": "FormatPulse v1.2.1 — Swiss Tactile Desktop Studio & Dynamic Preferences",
   "highlights": [
-    "Custom Swiss precision brand identity and interactive vector logo emblem",
-    "High-resolution installer graphics (NSIS branding header and sidebar)",
-    "Favicon and OpenGraph visual assets upgrade",
-    "Zero-knowledge local converter and code synthesis studio"
+    "Dynamic Client Preferences & Settings Engine (Antigravity-grade)",
+    "Desktop Native Menu Bar (File, Edit, View, Tools, Settings, Help)",
+    "Polar.sh MoR payment checkout & automated instant license provisioning",
+    "SmartScreen mitigation with authentic SHA-256 cryptographic verification",
+    "Zero-knowledge local converter and high-throughput Web Worker pipeline"
   ],
   "mandatory": false,
   "downloadUrl": "https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.1/FormatPulse_1.2.1_x64-setup.exe",
-  "sha256": "8f3a9e2d7c4b1a6e5f0d8c3b7a1e9f2d5c4b1a6e7f0d8c3b5a1e9f2d7c4b1a6e",
+  "sha256": "7b9751df5dcd672c8a226a3006fca18d342739a3df037631e6b59eaf13777a69",
   "assetSize": "8.4 MB"
 }

@@ -13,9 +13,9 @@ export default {
     extend: {
       colors: {
         accent: {
-          DEFAULT: '#FF4F00',
-          hover: '#E64700',
-          muted: 'rgba(255, 79, 0, 0.12)',
+          DEFAULT: 'var(--color-accent, #FF4F00)',
+          hover: 'var(--color-accent-hover, #E64700)',
+          muted: 'var(--color-accent-muted, rgba(255, 79, 0, 0.12))',
         },
         success: {
           DEFAULT: '#10B981',
