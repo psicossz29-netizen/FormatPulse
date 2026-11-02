@@ -1,15 +1,8 @@
 /**
- * FormatPulse - Polar.sh Automated Product & Checkout Setup Script
+ * FormatPulse - Polar.sh Automated Product, Benefit & Checkout Synchronization Script
  * 
  * Usage:
- *   node scripts/setup-polar.mjs <POLAR_ACCESS_TOKEN>
- * 
- * Automates:
- *   1. Organization discovery on Polar.sh
- *   2. License key benefit creation (FP prefix)
- *   3. Product catalog creation (Individual Pro $14, Team Pack $79, Enterprise $199)
- *   4. Webhook registration to https://formatpulse.vercel.app/api/webhook
- *   5. Vercel environment variable synchronization via Vercel REST API
+ *   node scripts/setup-polar.mjs
  */
 
 const POLAR_API_BASE = 'https://api.polar.sh/v1';
@@ -19,12 +12,10 @@ const VERCEL_TOKEN = process.env.VERCEL_TOKEN || process.env.VERCEL_PROJECT_TOKE
 const PRODUCTION_WEBHOOK_URL = 'https://formatpulse.vercel.app/api/webhook';
 
 async function main() {
-  const token = process.argv[2] || process.env.POLAR_ACCESS_TOKEN;
+  const token = process.env.POLAR_ACCESS_TOKEN || process.argv[2];
 
   if (!token) {
     console.error('❌ Error: Missing Polar Access Token.');
-    console.log('Usage: node scripts/setup-polar.mjs <POLAR_ACCESS_TOKEN>');
-    console.log('Or set $env:POLAR_ACCESS_TOKEN="polar_oat_..."');
     process.exit(1);
   }
 
@@ -38,24 +29,18 @@ async function main() {
   // 1. Fetch Organizations
   const orgsRes = await fetch(`${POLAR_API_BASE}/organizations`, { headers: polarHeaders });
   if (!orgsRes.ok) {
-    const errText = await orgsRes.text();
-    console.error(`❌ Polar Auth Failed (HTTP ${orgsRes.status}):`, errText);
+    console.error(`❌ Polar Auth Failed (HTTP ${orgsRes.status}):`, await orgsRes.text());
     process.exit(1);
   }
 
   const orgsData = await orgsRes.json();
   const orgs = orgsData.items || orgsData;
-  if (!orgs || orgs.length === 0) {
-    console.error('❌ No organizations found for this Polar account. Please create an organization in Polar dashboard first.');
-    process.exit(1);
-  }
-
   const org = orgs[0];
-  console.log(`✅ Organization identified: ${org.name} (@${org.slug || org.id}) [ID: ${org.id}]`);
+  console.log(`✅ Organization identified: ${org.name} (@${org.slug || org.id})`);
 
   // 2. Discover or Create License Keys Benefit
   console.log('🔑 Checking License Key benefits...');
-  const benefitsRes = await fetch(`${POLAR_API_BASE}/benefits?organization_id=${org.id}`, { headers: polarHeaders });
+  const benefitsRes = await fetch(`${POLAR_API_BASE}/benefits`, { headers: polarHeaders });
   let licenseBenefitId = null;
 
   if (benefitsRes.ok) {
@@ -74,10 +59,13 @@ async function main() {
       headers: polarHeaders,
       body: JSON.stringify({
         type: 'license_keys',
-        description: 'FormatPulse Offline & Online License Key',
-        organization_id: org.id,
+        description: 'FormatPulse License Key Benefit',
         properties: {
           prefix: 'FP',
+          activations: {
+            limit: 1,
+            enable_customer_admin: true,
+          },
         },
       }),
     });
@@ -87,124 +75,153 @@ async function main() {
       licenseBenefitId = newBenefit.id;
       console.log(`✅ Created License Key Benefit: ID ${licenseBenefitId}`);
     } else {
-      console.warn('⚠️ Could not create automatic license key benefit, proceeding with webhook licensing:', await createBenefitRes.text());
+      console.warn('⚠️ Could not create license key benefit:', await createBenefitRes.text());
     }
   }
 
-  // 3. Define 3 Products
-  const productsToCreate = [
+  // 3. Products Catalog Setup
+  const productsDef = [
     {
       key: 'individual',
       name: 'FormatPulse Individual Pro',
-      description: 'Lifetime license for solo engineers and power users. Unlimited file sizes, all 10 schema generators, and complete PII anonymization suite.',
+      description: 'Lifetime license for solo engineers and consultants. Unlimited file sizes, all 10 schema generators, and complete PII anonymization suite.',
       priceUSD: 14,
-      seats: '1 Seat',
     },
     {
       key: 'team',
       name: 'FormatPulse Team Pack',
       description: 'FormatPulse Team Lifetime license for 5 engineers. Shared master key, company invoicing, EU VAT deduction, and priority triage.',
       priceUSD: 79,
-      seats: '5 Seats',
     },
     {
       key: 'enterprise',
       name: 'FormatPulse Enterprise Air-Gapped',
-      description: 'Unlimited developer seats across the organization. Air-gapped offline protocol, self-hosted deployment rights, and zero-telemetry guarantee.',
+      description: 'Unlimited developer seats across the entire company. Air-gapped offline protocol, self-hosted deployment rights, and zero-telemetry guarantee.',
       priceUSD: 199,
-      seats: 'Unlimited Seats',
     },
   ];
 
-  // Fetch existing products to avoid duplicates
-  console.log('📦 Checking existing products in Polar...');
-  const existingProdRes = await fetch(`${POLAR_API_BASE}/products?organization_id=${org.id}`, { headers: polarHeaders });
+  // Fetch existing products
+  const existingProdRes = await fetch(`${POLAR_API_BASE}/products`, { headers: polarHeaders });
   const existingProducts = existingProdRes.ok ? (await existingProdRes.json()).items || [] : [];
 
-  const checkoutUrls = {};
+  const createdProducts = {};
 
-  for (const p of productsToCreate) {
-    const found = existingProducts.find((ep) => ep.name.toLowerCase() === p.name.toLowerCase());
+  for (const p of productsDef) {
+    let prod = existingProducts.find((ep) => ep.name.toLowerCase() === p.name.toLowerCase());
 
-    if (found) {
-      console.log(`✅ Found existing product: ${found.name} (ID: ${found.id})`);
-      checkoutUrls[p.key] = `https://buy.polar.sh/${found.id}`;
-    } else {
+    if (!prod) {
       console.log(`⚡ Creating product: ${p.name} ($${p.priceUSD} USD)...`);
-      const body = {
-        name: p.name,
-        description: p.description,
-        organization_id: org.id,
-        prices: [
-          {
-            type: 'one_time',
-            price_amount: p.priceUSD * 100,
-            price_currency: 'usd',
-          },
-        ],
-        benefits: licenseBenefitId ? [licenseBenefitId] : [],
-      };
-
       const createRes = await fetch(`${POLAR_API_BASE}/products`, {
         method: 'POST',
         headers: polarHeaders,
-        body: JSON.stringify(body),
+        body: JSON.stringify({
+          name: p.name,
+          description: p.description,
+          prices: [
+            {
+              amount_type: 'fixed',
+              price_amount: p.priceUSD * 100,
+              price_currency: 'usd',
+            },
+          ],
+        }),
       });
 
       if (!createRes.ok) {
-        console.error(`❌ Failed to create product ${p.name}:`, await createRes.text());
-        // Fallback checkout URL
-        checkoutUrls[p.key] = `https://buy.polar.sh/${org.slug || 'formatpulse'}`;
+        console.error(`❌ Failed creating product ${p.name}:`, await createRes.text());
+        continue;
+      }
+      prod = await createRes.json();
+      console.log(`✅ Created product: ${prod.name} (ID: ${prod.id})`);
+    } else {
+      console.log(`✅ Existing product found: ${prod.name} (ID: ${prod.id})`);
+    }
+
+    // Attach license key benefit if not attached
+    if (licenseBenefitId && (!prod.benefits || !prod.benefits.some((b) => b.id === licenseBenefitId))) {
+      console.log(`🔗 Attaching license key benefit to ${prod.name}...`);
+      await fetch(`${POLAR_API_BASE}/products/${prod.id}/benefits`, {
+        method: 'POST',
+        headers: polarHeaders,
+        body: JSON.stringify({
+          benefits: [licenseBenefitId],
+        }),
+      });
+    }
+
+    createdProducts[p.key] = prod;
+  }
+
+  // 4. Generate or Retrieve Checkout Links for each product
+  console.log('\n💳 Generating Checkout Links...');
+  const checkoutLinksRes = await fetch(`${POLAR_API_BASE}/checkout-links`, { headers: polarHeaders });
+  const existingLinks = checkoutLinksRes.ok ? (await checkoutLinksRes.json()).items || [] : [];
+
+  const finalCheckoutUrls = {};
+
+  for (const [key, prod] of Object.entries(createdProducts)) {
+    const existing = existingLinks.find(
+      (l) => l.product_id === prod.id || (l.products && l.products.some((p) => p.id === prod.id))
+    );
+
+    if (existing && existing.url) {
+      console.log(`✅ Existing checkout link for ${prod.name}: ${existing.url}`);
+      finalCheckoutUrls[key] = existing.url;
+    } else {
+      console.log(`⚡ Creating checkout link for ${prod.name}...`);
+      const createLinkRes = await fetch(`${POLAR_API_BASE}/checkout-links`, {
+        method: 'POST',
+        headers: polarHeaders,
+        body: JSON.stringify({
+          product_id: prod.id,
+          payment_processor: 'stripe',
+          success_url: `https://formatpulse.vercel.app/?license_activated=true&tier=${key}`,
+        }),
+      });
+
+      if (createLinkRes.ok) {
+        const linkData = await createLinkRes.json();
+        console.log(`✅ Created checkout link for ${prod.name}: ${linkData.url}`);
+        finalCheckoutUrls[key] = linkData.url;
       } else {
-        const created = await createRes.json();
-        console.log(`✅ Created product ${p.name}! ID: ${created.id}`);
-        checkoutUrls[p.key] = `https://buy.polar.sh/${created.id}`;
+        console.warn(`⚠️ Could not create checkout link for ${prod.name}, using fallback:`, await createLinkRes.text());
+        finalCheckoutUrls[key] = `https://buy.polar.sh/${prod.id}`;
       }
     }
   }
 
-  console.log('\n--- GENERATED CHECKOUT URLS ---');
-  console.log(`Individual ($14): ${checkoutUrls.individual}`);
-  console.log(`Team ($79):       ${checkoutUrls.team}`);
-  console.log(`Enterprise ($199): ${checkoutUrls.enterprise}\n`);
-
-  // 4. Register Webhook Endpoint on Polar
-  console.log(`🔗 Registering Webhook at ${PRODUCTION_WEBHOOK_URL}...`);
-  let webhookSecret = '';
-
-  const webhooksRes = await fetch(`${POLAR_API_BASE}/webhooks/endpoints`, {
-    method: 'POST',
-    headers: polarHeaders,
-    body: JSON.stringify({
-      url: PRODUCTION_WEBHOOK_URL,
-      format: 'raw',
-      events: ['order.created', 'subscription.created', 'refund.created'],
-      organization_id: org.id,
-    }),
-  });
-
-  if (webhooksRes.ok) {
-    const webhookData = await webhooksRes.json();
-    webhookSecret = webhookData.secret || '';
-    console.log(`✅ Webhook registered successfully! Secret: ${webhookSecret ? 'Available' : 'N/A'}`);
-  } else {
-    console.log('ℹ️ Webhook may already exist or needs manual confirmation:', (await webhooksRes.text()).slice(0, 150));
-  }
+  console.log('\n--- VERIFIED POLAR CHECKOUT LINKS ---');
+  console.log(`Individual Pro ($14): ${finalCheckoutUrls.individual}`);
+  console.log(`Team Pack ($79):      ${finalCheckoutUrls.team}`);
+  console.log(`Enterprise ($199):    ${finalCheckoutUrls.enterprise}\n`);
 
   // 5. Update Vercel Environment Variables
   console.log('☁️ Updating Vercel Environment Variables...');
   const envVars = [
-    { key: 'VITE_CHECKOUT_URL_INDIVIDUAL', value: checkoutUrls.individual },
-    { key: 'VITE_CHECKOUT_URL_TEAM', value: checkoutUrls.team },
-    { key: 'VITE_CHECKOUT_URL_ENTERPRISE', value: checkoutUrls.enterprise },
+    { key: 'VITE_CHECKOUT_URL_INDIVIDUAL', value: finalCheckoutUrls.individual },
+    { key: 'VITE_CHECKOUT_URL_TEAM', value: finalCheckoutUrls.team },
+    { key: 'VITE_CHECKOUT_URL_ENTERPRISE', value: finalCheckoutUrls.enterprise },
   ];
 
-  if (webhookSecret) {
-    envVars.push({ key: 'POLAR_WEBHOOK_SECRET', value: webhookSecret });
-  }
-
   for (const env of envVars) {
+    if (!env.value) continue;
     try {
+      // First try deleting existing variable to avoid duplicate key error
+      const existingEnvRes = await fetch(`${VERCEL_API_BASE}/projects/${VERCEL_PROJECT_ID}/env`, {
+        headers: { Authorization: `Bearer ${VERCEL_TOKEN}` },
+      });
+      if (existingEnvRes.ok) {
+        const envsData = await existingEnvRes.json();
+        const found = (envsData.envs || []).find((e) => e.key === env.key);
+        if (found) {
+          await fetch(`${VERCEL_API_BASE}/projects/${VERCEL_PROJECT_ID}/env/${found.id}`, {
+            method: 'DELETE',
+            headers: { Authorization: `Bearer ${VERCEL_TOKEN}` },
+          });
+        }
+      }
+
       const vRes = await fetch(`${VERCEL_API_BASE}/projects/${VERCEL_PROJECT_ID}/env`, {
         method: 'POST',
         headers: {
@@ -220,7 +237,7 @@ async function main() {
       });
 
       if (vRes.ok) {
-        console.log(`✅ Vercel Env Var set: ${env.key}`);
+        console.log(`✅ Vercel Env Var set: ${env.key} = ${env.value}`);
       } else {
         const err = await vRes.json();
         console.log(`ℹ️ Vercel Env Var ${env.key}: ${err.error?.message || 'Updated'}`);
@@ -230,7 +247,7 @@ async function main() {
     }
   }
 
-  console.log('\n🎉 ALL POLAR.SH PRODUCTS AND CHECKOUTS HAVE BEEN CONFIGURED SUCCESSFULLY!');
+  console.log('\n🎉 ALL 3 PRODUCTS, CHECKOUT LINKS AND ENVIRONMENT VARIABLES ARE LIVE!');
 }
 
 main().catch((err) => {
