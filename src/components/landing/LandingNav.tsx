@@ -7,6 +7,7 @@ export const LandingNav: React.FC = () => {
   const setViewMode = useAppStore((s) => s.setViewMode);
   const licenseTier = useAppStore((s) => s.licenseTier);
   const setShowLicenseModal = useAppStore((s) => s.setShowLicenseModal);
+  const setShowDownloadModal = useAppStore((s) => s.setShowDownloadModal);
 
   return (
     <header className="sticky top-0 z-50 w-full h-12 bg-zinc-950/85 backdrop-blur-md border-b border-zinc-800/80 px-4 flex items-center justify-between select-none">
@@ -61,17 +62,14 @@ export const LandingNav: React.FC = () => {
           </button>
         )}
 
-        <a
-          href="https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.1/FormatPulse_1.2.1_x64-setup.exe"
-          download="FormatPulse_1.2.1_x64-setup.exe"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden md:flex items-center gap-1.5 h-7 px-2.5 text-2xs font-mono text-zinc-300 bg-zinc-900 border border-zinc-700 hover:bg-zinc-800 transition-colors rounded-sm"
-          title="Direct download of FormatPulse native Windows x64 executable"
+        <button
+          onClick={() => setShowDownloadModal(true)}
+          className="hidden md:flex items-center gap-1.5 h-7 px-2.5 text-2xs font-mono text-zinc-300 bg-zinc-900 border border-zinc-700 hover:bg-zinc-800 transition-colors rounded-sm focus:outline-none"
+          title="Download FormatPulse native Windows x64 executable"
         >
           <Download className="w-3 h-3 text-accent" />
           <span>.exe v1.2.1</span>
-        </a>
+        </button>
 
         <button
           onClick={() => setViewMode('workspace')}

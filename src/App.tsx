@@ -9,6 +9,7 @@ import { DataHealthInspector } from '@/components/security/DataHealthInspector';
 import { DiffViewerModal } from '@/components/diff/DiffViewerModal';
 import { UpdateNotificationModal } from '@/components/updater/UpdateNotificationModal';
 import { BatchProcessingModal } from '@/components/batch/BatchProcessingModal';
+import { DownloadModal } from '@/components/download/DownloadModal';
 import { LandingPage } from '@/components/landing/LandingPage';
 import { useAppStore } from '@/store/useAppStore';
 import { useConversion } from '@/hooks/useConversion';
@@ -50,6 +51,7 @@ export const App: React.FC = () => {
       />
       <UpdateNotificationModal />
       <BatchProcessingModal />
+      <DownloadModal />
     </div>
   );
 };

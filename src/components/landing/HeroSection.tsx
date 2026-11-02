@@ -42,6 +42,7 @@ export const HeroSection: React.FC = () => {
   const setViewMode = useAppStore((s) => s.setViewMode);
   const setInputValue = useAppStore((s) => s.setInputValue);
   const setOutputFormat = useAppStore((s) => s.setOutputFormat);
+  const setShowDownloadModal = useAppStore((s) => s.setShowDownloadModal);
 
   const [activeTab, setActiveTab] = useState(0);
   const [copiedInput, setCopiedInput] = useState(false);
@@ -105,17 +106,14 @@ export const HeroSection: React.FC = () => {
             <ArrowRight className="w-4 h-4" />
           </button>
 
-          <a
-            href="https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.1/FormatPulse_1.2.1_x64-setup.exe"
-            download="FormatPulse_1.2.1_x64-setup.exe"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 h-10 px-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-mono text-xs transition-colors rounded-sm"
-            title="Direct download of FormatPulse native Windows x64 executable"
+          <button
+            onClick={() => setShowDownloadModal(true)}
+            className="flex items-center gap-2 h-10 px-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-mono text-xs transition-colors rounded-sm focus:outline-none"
+            title="Download FormatPulse native Windows x64 executable"
           >
             <Download className="w-3.5 h-3.5 text-accent" />
             <span>Download Windows .exe</span>
-          </a>
+          </button>
 
           <a
             href="#security"

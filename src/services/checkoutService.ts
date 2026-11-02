@@ -100,6 +100,18 @@ export function buildCheckoutUrl(
   tierId: PricingTierId,
   options: CheckoutOptions = {},
 ): string {
+  // 1. Direct explicit link override (e.g. from environment variables)
+  const directOverride =
+    tierId === 'individual'
+      ? (import.meta.env.VITE_CHECKOUT_URL_INDIVIDUAL as string | undefined)
+      : tierId === 'team'
+        ? (import.meta.env.VITE_CHECKOUT_URL_TEAM as string | undefined)
+        : (import.meta.env.VITE_CHECKOUT_URL_ENTERPRISE as string | undefined);
+
+  if (directOverride) {
+    return directOverride;
+  }
+
   const plan = PRICING_PLANS[tierId];
   const provider = options.provider || 'polar';
 

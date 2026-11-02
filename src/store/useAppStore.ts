@@ -50,6 +50,7 @@ interface AppState {
   showDiffModal: boolean;
   showUpdateModal: boolean;
   showBatchModal: boolean;
+  showDownloadModal: boolean;
   copyFeedback: 'idle' | 'copied';
   viewMode: 'workspace' | 'landing';
 
@@ -78,6 +79,7 @@ interface AppState {
   setShowDiffModal: (show: boolean) => void;
   setShowUpdateModal: (show: boolean) => void;
   setShowBatchModal: (show: boolean) => void;
+  setShowDownloadModal: (show: boolean) => void;
   setCopyFeedback: (feedback: 'idle' | 'copied') => void;
   loadPreset: (presetId: string) => void;
   clearWorkspace: () => void;
@@ -155,6 +157,7 @@ const INITIAL_STATE = {
   showDiffModal: false,
   showUpdateModal: false,
   showBatchModal: false,
+  showDownloadModal: false,
   copyFeedback: 'idle' as const,
   viewMode: detectInitialViewMode(),
 } as const;
@@ -211,6 +214,7 @@ export const useAppStore = create<AppState>((set) => ({
   setShowDiffModal: (show) => set({ showDiffModal: show }),
   setShowUpdateModal: (show) => set({ showUpdateModal: show }),
   setShowBatchModal: (show) => set({ showBatchModal: show }),
+  setShowDownloadModal: (show) => set({ showDownloadModal: show }),
   setCopyFeedback: (feedback) => set({ copyFeedback: feedback }),
 
   loadPreset: (presetId) => {
