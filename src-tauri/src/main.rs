@@ -14,7 +14,7 @@ pub struct DesktopSystemInfo {
 #[tauri::command]
 fn get_desktop_system_info() -> DesktopSystemInfo {
     DesktopSystemInfo {
-        version: "1.2.1",
+        version: "1.2.2",
         platform: "windows-x64",
         airgapped: true,
         zero_telemetry: true,

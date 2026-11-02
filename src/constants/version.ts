@@ -1,6 +1,6 @@
 // ── FormatPulse Canonical Version & Metadata ─────────────────────────────────
 
-export const APP_VERSION = '1.2.1';
+export const APP_VERSION = '1.2.2';
 export const APP_BUILD_DATE = '2026-11-02';
 export const APP_CODENAME = 'Swiss Industrial Tactical';
 export const REPOSITORY_URL = 'https://github.com/psicossz29-netizen/FormatPulse';
