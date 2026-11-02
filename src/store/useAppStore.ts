@@ -110,10 +110,20 @@ function getInitialLicense(): { tier: LicenseTier; key: string | null } {
 }
 
 function detectInitialViewMode(): 'workspace' | 'landing' {
-  if (typeof window === 'undefined') return 'workspace';
+  if (typeof window === 'undefined') return 'landing';
+  // Check if running inside Tauri native desktop application
+  if ('__TAURI_INTERNALS__' in window || '__TAURI__' in window) {
+    return 'workspace';
+  }
   const params = new URLSearchParams(window.location.search);
-  if (params.get('view') === 'landing') return 'landing';
-  return 'workspace';
+  if (params.get('view') === 'workspace' || params.get('app') === 'true') {
+    return 'workspace';
+  }
+  if (params.get('view') === 'landing') {
+    return 'landing';
+  }
+  // Default for all web visitors is the high-conversion Landing Page
+  return 'landing';
 }
 
 // ── Store ────────────────────────────────────────────────────────────────────

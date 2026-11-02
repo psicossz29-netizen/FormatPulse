@@ -1,8 +1,15 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import { useAppStore } from '@/store/useAppStore';
 
 describe('App Shell', () => {
+  beforeEach(() => {
+    useAppStore.setState({
+      viewMode: 'workspace',
+      licenseTier: 'free',
+    });
+  });
   it('renders the FormatPulse logo', () => {
     render(<App />);
     expect(screen.getByText('FORMATPULSE')).toBeInTheDocument();
@@ -84,6 +91,23 @@ describe('App Shell', () => {
     render(<App />);
     expect(screen.getByText('Security Audit')).toBeInTheDocument();
     expect(screen.getByText('Diff')).toBeInTheDocument();
+  });
+
+  it('renders landing page when viewMode is landing', () => {
+    useAppStore.setState({ viewMode: 'landing' });
+    render(<App />);
+    expect(screen.getByText('ZERO-SERVER ENGINE')).toBeInTheDocument();
+  });
+
+  it('switches between landing and workspace view modes', () => {
+    useAppStore.setState({ viewMode: 'landing' });
+    const { unmount } = render(<App />);
+    expect(screen.getByText('ZERO-SERVER ENGINE')).toBeInTheDocument();
+    unmount();
+
+    useAppStore.setState({ viewMode: 'workspace' });
+    render(<App />);
+    expect(screen.getByText('100% CLIENT-SIDE')).toBeInTheDocument();
   });
 });
 
