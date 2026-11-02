@@ -4,11 +4,13 @@ import { LandingNav } from './LandingNav';
 import { HeroSection } from './HeroSection';
 import { TechTicker } from './TechTicker';
 import { TechnicalShowcase } from './TechnicalShowcase';
+import { WorkspaceSandboxSection } from './WorkspaceSandboxSection';
 import { LiveSanitizerWidget } from './LiveSanitizerWidget';
 import { ComparisonMatrix } from './ComparisonMatrix';
 import { SecurityAuditSection } from './SecurityAuditSection';
 import { RoiCalculator } from './RoiCalculator';
 import { PricingSection } from './PricingSection';
+import { InstallerDownloadSection } from './InstallerDownloadSection';
 import { DeveloperFAQ } from './DeveloperFAQ';
 import { LandingFooter } from './LandingFooter';
 import { useAppStore } from '@/store/useAppStore';
@@ -29,21 +31,25 @@ export const LandingPage: React.FC = () => {
   }, [setViewMode]);
 
   return (
-    <div className="min-h-screen w-full bg-zinc-950 text-zinc-50 flex flex-col font-sans selection:bg-accent selection:text-white">
+    <div className="min-h-screen w-full bg-[#06070b] text-zinc-50 flex flex-col font-sans selection:bg-accent selection:text-white">
       <SEOJsonLd />
       <LandingNav />
       <main className="flex-1">
         <HeroSection />
         <TechTicker />
+        <WorkspaceSandboxSection />
         <TechnicalShowcase />
         <LiveSanitizerWidget />
         <ComparisonMatrix />
         <SecurityAuditSection />
         <RoiCalculator />
         <PricingSection />
+        <InstallerDownloadSection />
         <DeveloperFAQ />
       </main>
       <LandingFooter />
     </div>
   );
 };
+
+export default LandingPage;

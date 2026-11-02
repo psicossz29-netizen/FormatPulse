@@ -83,4 +83,17 @@ describe('FormatPulse Landing Page (2026 Swiss Industrial Design)', () => {
     ).toBeInTheDocument();
     expect(screen.getByText(/DEV TIME SAVED/i)).toBeInTheDocument();
   });
+
+  it('renders Spaceship-inspired Workspace Sandbox and Desktop Installer sections', () => {
+    render(<LandingPage />);
+
+    expect(
+      screen.getByText(/Test The Engine Right Now In Your Browser/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Dedicated Desktop Power. Zero Cloud Latency/i),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Windows SmartScreen Verification/i)).toBeInTheDocument();
+    expect(screen.getByText(/SHA-256:/i)).toBeInTheDocument();
+  });
 });
