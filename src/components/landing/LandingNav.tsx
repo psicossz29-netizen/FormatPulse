@@ -64,8 +64,8 @@ export const LandingNav: React.FC = () => {
         )}
 
         <a
-          href="https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.0/FormatPulse-Setup-1.2.0.exe"
-          download="FormatPulse-Setup-1.2.0.exe"
+          href="https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.0/FormatPulse_1.2.0_x64-setup.exe"
+          download="FormatPulse_1.2.0_x64-setup.exe"
           target="_blank"
           rel="noopener noreferrer"
           className="hidden md:flex items-center gap-1.5 h-7 px-2.5 text-2xs font-mono text-zinc-300 bg-zinc-900 border border-zinc-700 hover:bg-zinc-800 transition-colors rounded-sm"

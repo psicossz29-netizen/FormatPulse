@@ -105,8 +105,8 @@ export const HeroSection: React.FC = () => {
           </button>
 
           <a
-            href="https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.0/FormatPulse-Setup-1.2.0.exe"
-            download="FormatPulse-Setup-1.2.0.exe"
+            href="https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.0/FormatPulse_1.2.0_x64-setup.exe"
+            download="FormatPulse_1.2.0_x64-setup.exe"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 h-10 px-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-mono text-xs transition-colors rounded-sm"
