@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { SEOJsonLd } from './SEOJsonLd';
 import { LandingNav } from './LandingNav';
 import { HeroSection } from './HeroSection';
+import { GuidedUseCaseSection } from './GuidedUseCaseSection';
+import { ThreeStepIndicator } from './ThreeStepIndicator';
 import { TechTicker } from './TechTicker';
 import { TechnicalShowcase } from './TechnicalShowcase';
 import { WorkspaceSandboxSection } from './WorkspaceSandboxSection';
@@ -36,6 +38,8 @@ export const LandingPage: React.FC = () => {
       <LandingNav />
       <main className="flex-1">
         <HeroSection />
+        <GuidedUseCaseSection />
+        <ThreeStepIndicator />
         <TechTicker />
         <WorkspaceSandboxSection />
         <TechnicalShowcase />

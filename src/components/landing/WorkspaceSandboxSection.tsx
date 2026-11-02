@@ -9,6 +9,8 @@ import {
   Layers,
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
+import { useSettingsStore } from '@/store/useSettingsStore';
+import { createTranslator } from '@/core/i18n';
 import { convert } from '@/core/converters';
 import { sanitizePII } from '@/core/piiSanitizer';
 import type { InputFormat, OutputFormat } from '@/types';
@@ -17,6 +19,7 @@ const SANDBOX_PRESETS = [
   {
     id: 'user',
     name: 'User Profile & Roles',
+    nameKey: 'sandbox_preset_user' as const,
     inputFormat: 'json' as InputFormat,
     outputFormat: 'typescript' as OutputFormat,
     payload: `{\n  "userId": "usr_99824",\n  "username": "alex_dev",\n  "email": "alex@enterprise.corp",\n  "clearanceLevel": 4,\n  "is2FAEnabled": true,\n  "roles": ["admin", "infra_lead"],\n  "metadata": {\n    "lastLogin": "2026-11-02T18:40:00Z",\n    "ipAddress": "192.168.1.45"\n  }\n}`,
@@ -24,6 +27,7 @@ const SANDBOX_PRESETS = [
   {
     id: 'ecommerce',
     name: 'E-Commerce CSV Orders',
+    nameKey: 'sandbox_preset_ecom' as const,
     inputFormat: 'csv' as InputFormat,
     outputFormat: 'zod' as OutputFormat,
     payload: `orderId,customer,amount,currency,shipped\nORD-101,Acme Corp,149.50,USD,true\nORD-102,CyberLabs,899.00,USD,false\nORD-103,BioHealth,42.00,EUR,true`,
@@ -31,6 +35,7 @@ const SANDBOX_PRESETS = [
   {
     id: 'pii',
     name: 'Sensitive Cloud Secrets',
+    nameKey: 'sandbox_preset_pii' as const,
     inputFormat: 'json' as InputFormat,
     outputFormat: 'pii-sanitizer' as OutputFormat,
     payload: `{\n  "service": "production-cluster",\n  "awsAccessKey": "AKIAIOSFODNN7EXAMPLE",\n  "githubToken": "ghp_AbCdEfGhIjKlMnOpQrStUvWxYz123456",\n  "supportContact": "security@fintech.bank",\n  "creditCard": "4532-0150-1234-5678"\n}`,
@@ -38,6 +43,7 @@ const SANDBOX_PRESETS = [
   {
     id: 'database',
     name: 'Prisma DB Model',
+    nameKey: 'sandbox_preset_db' as const,
     inputFormat: 'json' as InputFormat,
     outputFormat: 'prisma' as OutputFormat,
     payload: `{\n  "productId": "prd_77",\n  "title": "Quantum SSD 2TB",\n  "price": 199.99,\n  "inStock": true,\n  "tags": ["hardware", "storage", "fast"]\n}`,
@@ -49,6 +55,8 @@ export const WorkspaceSandboxSection: React.FC = () => {
   const setInputValue = useAppStore((s) => s.setInputValue);
   const setOutputFormatStore = useAppStore((s) => s.setOutputFormat);
   const setInputFormatStore = useAppStore((s) => s.setInputFormat);
+  const language = useSettingsStore((s) => s.language);
+  const tr = createTranslator(language);
 
   const [inputFormat, setInputFormat] = useState<InputFormat>('json');
   const [outputFormat, setOutputFormat] = useState<OutputFormat>('typescript');
@@ -128,15 +136,13 @@ export const WorkspaceSandboxSection: React.FC = () => {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-2xs font-mono text-zinc-300 mb-4 backdrop-blur-md">
             <Sparkles className="w-3.5 h-3.5 text-accent" />
-            <span className="tracking-widest uppercase text-accent font-semibold">Live In-Page Sandbox</span>
-            <span className="text-zinc-600">//</span>
-            <span>Zero Latency Local Engine</span>
+            <span className="tracking-widest uppercase text-accent font-semibold">{tr('sandbox_badge')}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white font-sans uppercase">
-            Test The Engine Right Now In Your Browser
+            {tr('sandbox_title')}
           </h2>
           <p className="mt-4 text-sm sm:text-base text-zinc-400 font-mono max-w-2xl mx-auto leading-relaxed">
-            No sign-ups, no cloud servers, and no telemetry. Edit any payload below or load sample data to inspect real-time contract generation and secret redaction.
+            {tr('sandbox_subtitle')}
           </p>
         </div>
 
@@ -152,7 +158,7 @@ export const WorkspaceSandboxSection: React.FC = () => {
               onClick={() => handleLoadPreset(p)}
               className="px-3 py-1 rounded-full text-2xs font-mono bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-white/20 text-zinc-300 transition-all"
             >
-              {p.name}
+              {tr(p.nameKey)}
             </button>
           ))}
         </div>
@@ -181,20 +187,21 @@ export const WorkspaceSandboxSection: React.FC = () => {
 
             <span className="hidden sm:inline text-zinc-600 font-mono">→</span>
 
-            {/* Output Format buttons */}
+            {/* Output Format buttons with helpful tooltips */}
             <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1">
               <span className="text-2xs font-mono text-zinc-500 uppercase mr-1 flex-none">Out:</span>
               {[
-                { id: 'typescript', label: 'TypeScript' },
-                { id: 'zod', label: 'Zod' },
-                { id: 'openapi', label: 'OpenAPI 3.1' },
-                { id: 'prisma', label: 'Prisma' },
-                { id: 'sql-ddl', label: 'SQL DDL' },
-                { id: 'pii-sanitizer', label: 'PII Scrubber' },
+                { id: 'typescript', label: 'TypeScript', tip: 'Genera interfaces y tipos TypeScript' },
+                { id: 'zod', label: 'Zod', tip: 'Genera esquemas de validación Zod runtime' },
+                { id: 'openapi', label: 'OpenAPI 3.1', tip: 'Genera especificación OpenAPI YAML' },
+                { id: 'prisma', label: 'Prisma', tip: 'Genera esquemas de modelo para base de datos Prisma' },
+                { id: 'sql-ddl', label: 'SQL DDL', tip: 'Genera sentencias CREATE TABLE y esquemas SQL' },
+                { id: 'pii-sanitizer', label: 'PII Scrubber', tip: 'Oculta y enmascara tokens, contraseñas y datos sensibles' },
               ].map((t) => (
                 <button
                   key={t.id}
                   onClick={() => setOutputFormat(t.id as OutputFormat)}
+                  title={t.tip}
                   className={`px-2.5 py-1 text-2xs font-mono rounded-lg transition-all whitespace-nowrap flex-none ${
                     outputFormat === t.id
                       ? 'bg-accent text-white font-semibold shadow-[0_0_15px_rgba(255,79,0,0.3)]'
@@ -212,7 +219,7 @@ export const WorkspaceSandboxSection: React.FC = () => {
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-zinc-950 font-mono text-2xs font-bold hover:bg-zinc-100 transition-all shadow-sm hover:scale-[1.02]"
             >
               <Terminal className="w-3 h-3" />
-              <span>Full IDE</span>
+              <span>{tr('open_workspace')}</span>
               <ArrowRight className="w-3 h-3" />
             </button>
           </div>
@@ -222,7 +229,7 @@ export const WorkspaceSandboxSection: React.FC = () => {
             {/* Input Canvas */}
             <div className="p-4 flex flex-col justify-between bg-zinc-950/40">
               <div className="flex items-center justify-between mb-2 text-2xs font-mono text-zinc-500">
-                <span>Input Payload (Editable)</span>
+                <span>{tr('sandbox_input_hdr')}</span>
                 <span>{inputValue.length} chars</span>
               </div>
               <textarea
@@ -238,7 +245,7 @@ export const WorkspaceSandboxSection: React.FC = () => {
             <div className="p-4 flex flex-col justify-between bg-zinc-950/70">
               <div className="flex items-center justify-between mb-2 text-2xs font-mono text-zinc-500">
                 <div className="flex items-center gap-2">
-                  <span className="text-accent font-semibold">Synthesized Output</span>
+                  <span className="text-accent font-semibold">{tr('sandbox_output_hdr')}</span>
                   <span className="text-emerald-400 tabular-nums">
                     {conversionResult.timeMs > 0 ? `${conversionResult.timeMs.toFixed(2)} ms` : '< 0.1 ms'}
                   </span>
@@ -249,7 +256,7 @@ export const WorkspaceSandboxSection: React.FC = () => {
                   className="flex items-center gap-1 text-2xs text-zinc-400 hover:text-white px-2 py-0.5 rounded-md hover:bg-white/[0.06] transition-colors"
                 >
                   {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                  <span>{copied ? 'Copied' : 'Copy'}</span>
+                  <span>{copied ? tr('copied') : tr('copy')}</span>
                 </button>
               </div>
 
@@ -276,7 +283,7 @@ export const WorkspaceSandboxSection: React.FC = () => {
                 onClick={handleOpenInFullWorkspace}
                 className="text-white hover:text-accent flex items-center gap-1 transition-colors"
               >
-                <span>Switch to Full IDE View</span>
+                <span>{tr('sandbox_full_ide')}</span>
                 <ArrowRight className="w-3 h-3" />
               </button>
             </div>

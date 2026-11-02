@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { InputFormat, OutputFormat } from '@/types';
+import { type Language, detectLanguage, persistLanguage } from '@/core/i18n';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -39,11 +40,15 @@ export interface UserSettings {
   // ── Application ────────────────────────────────────────────────────────────
   autoCheckUpdates: boolean;
   confirmClearWorkspace: boolean;
+
+  // ── Localisation ───────────────────────────────────────────────────────────
+  language: Language;
 }
 
 export interface SettingsStore extends UserSettings {
   updateSettings: (partial: Partial<UserSettings>) => void;
   resetToDefaults: () => void;
+  setLanguage: (lang: Language) => void;
 }
 
 // ── Default Settings ─────────────────────────────────────────────────────────
@@ -74,19 +79,21 @@ export const DEFAULT_SETTINGS: UserSettings = {
 
   autoCheckUpdates: true,
   confirmClearWorkspace: true,
+
+  language: 'en', // Will be overridden by detectLanguage() at load time
 };
 
 const STORAGE_KEY = 'formatpulse_user_settings_v1';
 
 function loadPersistedSettings(): UserSettings {
-  if (typeof window === 'undefined') return DEFAULT_SETTINGS;
+  if (typeof window === 'undefined') return { ...DEFAULT_SETTINGS, language: 'en' };
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return DEFAULT_SETTINGS;
+    if (!raw) return { ...DEFAULT_SETTINGS, language: detectLanguage() };
     const parsed = JSON.parse(raw);
-    return { ...DEFAULT_SETTINGS, ...parsed };
+    return { ...DEFAULT_SETTINGS, language: detectLanguage(), ...parsed };
   } catch {
-    return DEFAULT_SETTINGS;
+    return { ...DEFAULT_SETTINGS, language: detectLanguage() };
   }
 }
 
@@ -130,14 +137,20 @@ export const useSettingsStore = create<SettingsStore>((set) => ({
         maxHistoryItems: updated.maxHistoryItems,
         autoCheckUpdates: updated.autoCheckUpdates,
         confirmClearWorkspace: updated.confirmClearWorkspace,
+        language: updated.language,
       };
       persistSettings(dataToSave);
       return partial;
     });
   },
 
+  setLanguage: (lang: Language) => {
+    persistLanguage(lang);
+    set({ language: lang });
+  },
+
   resetToDefaults: () => {
-    persistSettings(DEFAULT_SETTINGS);
-    set(DEFAULT_SETTINGS);
+    persistSettings({ ...DEFAULT_SETTINGS, language: detectLanguage() });
+    set({ ...DEFAULT_SETTINGS, language: detectLanguage() });
   },
 }));

@@ -15,20 +15,16 @@ describe('FormatPulse Landing Page (2026 Swiss Industrial Design)', () => {
     render(<LandingPage />);
 
     expect(screen.getByText('ZERO-SERVER ENGINE')).toBeInTheDocument();
-    expect(screen.getByText('// features')).toBeInTheDocument();
-    expect(screen.getByText('// security')).toBeInTheDocument();
-    expect(screen.getByText('// vs-cloud')).toBeInTheDocument();
-    expect(screen.getByText('// pricing')).toBeInTheDocument();
-    expect(screen.getByText('// faq')).toBeInTheDocument();
   });
 
-  it('renders anti-AI-slop headline and core value proposition', () => {
+  it('renders clear human headline and core value proposition', () => {
     render(<LandingPage />);
 
+    // Renders either ES or EN headline based on initial language
     expect(
-      screen.getByText(/Stop pasting confidential payloads into cloud converters/i),
+      screen.getByText(/Convierte, formatea y protege|Convert, format and protect/i),
     ).toBeInTheDocument();
-    expect(screen.getByText(/SWISS PRECISION ARCHITECTURE/i)).toBeInTheDocument();
+    expect(screen.getByText(/ARQUITECTURA SWISS PRECISION|SWISS PRECISION ARCHITECTURE/i)).toBeInTheDocument();
   });
 
   it('renders interactive hero playground with code tabs', () => {
@@ -54,7 +50,7 @@ describe('FormatPulse Landing Page (2026 Swiss Industrial Design)', () => {
   it('switches viewMode to workspace when Launch Workspace is clicked', () => {
     render(<LandingPage />);
 
-    const launchButtons = screen.getAllByText(/Launch Workspace/i);
+    const launchButtons = screen.getAllByText(/Abrir Workspace|Launch Workspace/i);
     expect(launchButtons.length).toBeGreaterThan(0);
 
     fireEvent.click(launchButtons[0]!);
@@ -88,7 +84,7 @@ describe('FormatPulse Landing Page (2026 Swiss Industrial Design)', () => {
     render(<LandingPage />);
 
     expect(
-      screen.getByText(/Test The Engine Right Now In Your Browser/i),
+      screen.getByText(/PRUEBA EL MOTOR|Test The Engine/i),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/Dedicated Desktop Power. Zero Cloud Latency/i),

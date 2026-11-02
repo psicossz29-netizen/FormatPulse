@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Terminal, Shield, ArrowRight, Activity, Lock, Cpu, Check, Copy, Download, Sparkles } from 'lucide-react';
+import { Terminal, ArrowRight, Activity, Lock, Cpu, Check, Copy, Download, Sparkles } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
+import { useSettingsStore } from '@/store/useSettingsStore';
 import { FormatPulseLogo } from '@/components/brand/FormatPulseLogo';
 import { APP_VERSION } from '@/constants/version';
+import { createTranslator } from '@/core/i18n';
 
 const HERO_EXAMPLES = [
   {
@@ -44,6 +46,8 @@ export const HeroSection: React.FC = () => {
   const setInputValue = useAppStore((s) => s.setInputValue);
   const setOutputFormat = useAppStore((s) => s.setOutputFormat);
   const setShowDownloadModal = useAppStore((s) => s.setShowDownloadModal);
+  const language = useSettingsStore((s) => s.language);
+  const tr = createTranslator(language);
 
   const [activeTab, setActiveTab] = useState(0);
   const [copiedInput, setCopiedInput] = useState(false);
@@ -73,39 +77,39 @@ export const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full border-b border-zinc-800/80 bg-[#06070b] px-4 pt-16 pb-20 md:pt-24 md:pb-32 overflow-hidden select-none">
+    <section className="relative w-full border-b border-zinc-800/80 bg-[#06070b] px-4 pt-20 pb-20 md:pt-32 md:pb-32 overflow-hidden select-none">
       {/* Spaceship Ambient Gradients & Glow Mesh */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-accent/20 via-blue-600/10 to-transparent blur-[140px] pointer-events-none rounded-full" />
       <div className="absolute top-1/3 left-1/4 w-[400px] h-[300px] bg-emerald-500/10 blur-[120px] pointer-events-none rounded-full" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:2.5rem_2.5rem] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_20%,#000_70%,transparent_100%)] pointer-events-none opacity-40" />
 
       <div className="max-w-6xl mx-auto relative z-10 flex flex-col items-center text-center">
-        {/* ── Spaceship Status Pill ────────────────────────────────────── */}
+        {/* ── Status Pill ───────────────────────────────────────────────────── */}
         <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs font-mono text-zinc-300 mb-8 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
           <FormatPulseLogo size={16} animate={false} />
-          <span className="text-accent font-semibold tracking-wider">SWISS PRECISION ARCHITECTURE</span>
+          <span className="text-accent font-semibold tracking-wider">{tr('hero_badge_label')}</span>
           <span className="text-zinc-600">//</span>
-          <span className="text-zinc-400">ZERO SERVER TELEMETRY</span>
+          <span className="text-zinc-400">{tr('hero_badge_sub')}</span>
         </div>
 
-        {/* ── Spaceship Main Heading with High-Contrast Gradient ────── */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white max-w-4xl font-sans uppercase leading-[1.08]">
-          Stop pasting confidential payloads into cloud converters.
+        {/* ── Main Heading ──────────────────────────────────────────────────── */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl font-sans leading-[1.08]">
+          {tr('hero_h1')}
         </h1>
 
-        {/* ── Subtitle ─────────────────────────────────────────────────── */}
+        {/* ── Subtitle ─────────────────────────────────────────────────────── */}
         <p className="mt-6 text-sm sm:text-base md:text-lg text-zinc-400 max-w-2xl font-mono leading-relaxed">
-          Transform JSON, CSV &amp; YAML, infer contracts across 10 modern languages (TypeScript, Zod, OpenAPI, Prisma, Pydantic, Rust, Go), and sanitize sensitive secrets 100% locally on your machine.
+          {tr('hero_subtitle')}
         </p>
 
-        {/* ── Spaceship CTAs (Pill-shaped with ambient glow) ───────────── */}
+        {/* ── Hero CTAs — 2 buttons only ───────────────────────────────────── */}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <button
             onClick={() => setViewMode('workspace')}
             className="flex items-center gap-2.5 h-12 px-7 bg-white hover:bg-zinc-100 text-zinc-950 font-mono text-xs font-bold tracking-tight transition-all rounded-full shadow-[0_0_35px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] focus:outline-none"
           >
             <Terminal className="w-4 h-4 text-zinc-950" />
-            <span>Launch Web App [⌘K]</span>
+            <span>{tr('hero_cta_primary')}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
@@ -115,38 +119,30 @@ export const HeroSection: React.FC = () => {
             title="Download FormatPulse native Windows x64 executable"
           >
             <Download className="w-4 h-4 text-accent" />
-            <span>Download Windows .exe</span>
+            <span>{tr('hero_cta_secondary')}</span>
           </button>
-
-          <a
-            href="#security"
-            className="flex items-center gap-2 h-12 px-5 bg-transparent hover:bg-white/[0.04] border border-white/[0.08] text-zinc-400 hover:text-zinc-200 font-mono text-xs transition-all rounded-full backdrop-blur-xs"
-          >
-            <Shield className="w-4 h-4 text-emerald-400" />
-            <span>Security Audit</span>
-          </a>
         </div>
 
-        {/* ── Technical Proof Badges ───────────────────────────────────── */}
+        {/* ── Technical Proof Badges ────────────────────────────────────────── */}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-2xs font-mono text-zinc-400 border-y border-white/[0.07] py-3.5 w-full max-w-3xl backdrop-blur-xs">
           <div className="flex items-center gap-1.5">
             <Lock className="w-3.5 h-3.5 text-emerald-400" />
-            <span>GDPR Art. 25 &amp; SOC2 Safe</span>
+            <span>{tr('hero_badge_gdpr')}</span>
           </div>
           <span className="text-zinc-700">·</span>
           <div className="flex items-center gap-1.5">
             <Cpu className="w-3.5 h-3.5 text-accent" />
-            <span>Web Worker Parallel Engine</span>
+            <span>{tr('hero_badge_worker')}</span>
           </div>
           <span className="text-zinc-700">·</span>
           <div className="flex items-center gap-1.5">
             <Activity className="w-3.5 h-3.5 text-blue-400" />
-            <span>0.38ms In-Memory Latency</span>
+            <span>{tr('hero_badge_latency')}</span>
           </div>
           <span className="text-zinc-700">·</span>
           <div className="flex items-center gap-1.5">
             <Check className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Air-Gapped Ready (v{APP_VERSION})</span>
+            <span>{tr('hero_badge_air')} (v{APP_VERSION})</span>
           </div>
         </div>
 
@@ -193,7 +189,7 @@ export const HeroSection: React.FC = () => {
                 title="Load into full editor"
               >
                 <Sparkles className="w-3 h-3 text-accent" />
-                <span className="hidden sm:inline">Open in Workspace</span>
+                <span className="hidden sm:inline">{tr('open_workspace')}</span>
                 <ArrowRight className="w-3 h-3" />
               </button>
             </div>
@@ -213,7 +209,7 @@ export const HeroSection: React.FC = () => {
                   className="flex items-center gap-1 text-2xs text-zinc-500 hover:text-zinc-300 transition-colors px-2 py-0.5 rounded-sm hover:bg-white/[0.04]"
                 >
                   {copiedInput ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                  <span>{copiedInput ? 'Copied' : 'Copy'}</span>
+                  <span>{copiedInput ? tr('copied') : tr('copy')}</span>
                 </button>
               </div>
               <pre className="p-3.5 rounded-xl bg-zinc-950/70 border border-white/[0.06] text-zinc-300 overflow-x-auto leading-relaxed text-2xs select-text">
@@ -233,7 +229,7 @@ export const HeroSection: React.FC = () => {
                   className="flex items-center gap-1 text-2xs text-zinc-500 hover:text-zinc-300 transition-colors px-2 py-0.5 rounded-sm hover:bg-white/[0.04]"
                 >
                   {copiedOutput ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                  <span>{copiedOutput ? 'Copied' : 'Copy'}</span>
+                  <span>{copiedOutput ? tr('copied') : tr('copy')}</span>
                 </button>
               </div>
               <pre className="p-3.5 rounded-xl bg-zinc-950/90 border border-accent/25 text-emerald-300/90 overflow-x-auto leading-relaxed text-2xs select-text shadow-inner">
