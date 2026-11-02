@@ -7,7 +7,7 @@ export const REPOSITORY_URL = 'https://github.com/psicossz29-netizen/FormatPulse
 export const PRODUCTION_WEB_URL = 'https://formatpulse.vercel.app';
 export const SUPPORT_EMAIL = 'formatpulse.app@gmail.com';
 export const LATEST_RELEASE_API = 'https://formatpulse.vercel.app/latest.json';
-export const OFFICIAL_SHA256 = '7b9751df5dcd672c8a226a3006fca18d342739a3df037631e6b59eaf13777a69';
+export const OFFICIAL_SHA256 = '0d4ae51299774b8e7001246071a3110d910f3c1c2168fb7a7d465cfd13046c39';
 
 /**
  * Checks whether the application is running inside a Tauri native desktop window.
