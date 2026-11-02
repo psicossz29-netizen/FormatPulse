@@ -11,7 +11,7 @@
     "Web Crypto SHA-256 integrity receipt generator"
   ],
   "mandatory": false,
-  "downloadUrl": "https://github.com/formatpulse/formatpulse/releases/download/v1.2.0/FormatPulse-Setup-1.2.0.exe",
+  "downloadUrl": "https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.0/FormatPulse-Setup-1.2.0.exe",
   "sha256": "8f3a9e2d7c4b1a6e5f0d8c3b7a1e9f2d5c4b1a6e7f0d8c3b5a1e9f2d7c4b1a6e",
   "assetSize": "8.4 MB"
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, Shield, ArrowRight, Zap } from 'lucide-react';
+import { Terminal, Shield, ArrowRight, Zap, Download } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 
 export const LandingNav: React.FC = () => {
@@ -62,6 +62,18 @@ export const LandingNav: React.FC = () => {
             <span>Lifetime $14</span>
           </button>
         )}
+
+        <a
+          href="https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.0/FormatPulse-Setup-1.2.0.exe"
+          download="FormatPulse-Setup-1.2.0.exe"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:flex items-center gap-1.5 h-7 px-2.5 text-2xs font-mono text-zinc-300 bg-zinc-900 border border-zinc-700 hover:bg-zinc-800 transition-colors rounded-sm"
+          title="Direct download of FormatPulse native Windows x64 executable"
+        >
+          <Download className="w-3 h-3 text-accent" />
+          <span>.exe v1.2</span>
+        </a>
 
         <button
           onClick={() => setViewMode('workspace')}

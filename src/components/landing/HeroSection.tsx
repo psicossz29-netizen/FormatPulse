@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Terminal, Shield, ArrowRight, Activity, Lock, Cpu, Check, Copy } from 'lucide-react';
+import { Terminal, Shield, ArrowRight, Activity, Lock, Cpu, Check, Copy, Download } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 
 const HERO_EXAMPLES = [
@@ -100,16 +100,28 @@ export const HeroSection: React.FC = () => {
             className="flex items-center gap-2 h-10 px-5 bg-accent hover:bg-accent-hover text-white font-mono text-xs font-semibold tracking-tight transition-all rounded-sm shadow-[0_0_20px_rgba(255,79,0,0.25)] focus:outline-none"
           >
             <Terminal className="w-4 h-4" />
-            <span>Launch Local Workspace [⌘K]</span>
+            <span>Launch Web App [⌘K]</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
           <a
+            href="https://github.com/psicossz29-netizen/FormatPulse/releases/download/v1.2.0/FormatPulse-Setup-1.2.0.exe"
+            download="FormatPulse-Setup-1.2.0.exe"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 h-10 px-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-mono text-xs transition-colors rounded-sm"
+            title="Direct download of FormatPulse native Windows x64 executable"
+          >
+            <Download className="w-3.5 h-3.5 text-accent" />
+            <span>Download Windows .exe</span>
+          </a>
+
+          <a
             href="#security"
-            className="flex items-center gap-2 h-10 px-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 font-mono text-xs transition-colors rounded-sm"
+            className="flex items-center gap-2 h-10 px-4 bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-zinc-300 font-mono text-xs transition-colors rounded-sm"
           >
             <Shield className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Verify Zero-Data Architecture</span>
+            <span>Security Audit</span>
           </a>
         </div>
 
