@@ -115,10 +115,38 @@ export const translations = {
   sandbox_input_hdr:  { es: 'Entrada (Tus datos editables)', en: 'Input Payload (Editable)' },
   sandbox_output_hdr: { es: 'Salida Sintetizada',            en: 'Synthesized Output' },
   sandbox_full_ide:   { es: 'Abrir en IDE Completo',        en: 'Switch to Full IDE View' },
+  sandbox_preset_clean: { es: 'Limpiar & Formatear JSON',   en: 'Clean & Indent JSON' },
   sandbox_preset_user: { es: 'Perfil de Usuario',            en: 'User Profile & Roles' },
   sandbox_preset_ecom: { es: 'Pedidos E-Commerce CSV',      en: 'E-Commerce CSV Orders' },
   sandbox_preset_pii:  { es: 'Secretos en la Nube',          en: 'Sensitive Cloud Secrets' },
   sandbox_preset_db:   { es: 'Modelo de Base de Datos',      en: 'Prisma DB Model' },
+  // ── Features Showcase ─────────────────────────────────────────────────────────
+  features_badge:        { es: '// Ventajas Principales', en: '// Key Advantages' },
+  features_title:        { es: 'Rendimiento Máximo. Privacidad Inquebrantable.', en: 'Maximum Performance. Uncompromising Privacy.' },
+  features_subtitle:     {
+    es: 'Diseñado para desarrolladores y equipos exigentes. El 100% de las operaciones suceden en tu memoria local.',
+    en: 'Built for developers and security teams. 100% of operations execute inside your local machine memory.',
+  },
+  feature_priv_title:    { es: 'Privacidad Absoluta (Cero Red)', en: 'Absolute Privacy (Zero Network)' },
+  feature_priv_desc:     {
+    es: 'Ni un solo byte sale de tu ordenador. Cumple por diseño con normativas como GDPR Art. 25 y SOC2.',
+    en: 'Not a single byte ever leaves your machine. Complies by design with GDPR Art. 25 and SOC2.',
+  },
+  feature_worker_title:  { es: 'Motor Multihilo Web Worker', en: 'Multithreaded Web Worker Engine' },
+  feature_worker_desc:   {
+    es: 'Transforma archivos pesados de más de 50MB sin congelar la interfaz ni agotar la memoria de tu navegador.',
+    en: 'Transforms large 50MB+ datasets without freezing your browser tab or exhausting browser memory.',
+  },
+  feature_owasp_title:   { es: 'Escudo contra Inyección CSV (OWASP)', en: 'OWASP CSV Injection Defense' },
+  feature_owasp_desc:    {
+    es: 'Detecta y neutraliza comandos maliciosos al exportar a Excel, bloqueando ataques de ejecución remota.',
+    en: 'Detects and neutralizes malicious formula triggers in spreadsheet exports, preventing remote exploits.',
+  },
+  feature_types_title:   { es: 'Inferencia Estricta en 10 Lenguajes', en: 'Strict Inference across 10 Languages' },
+  feature_types_desc:    {
+    es: 'Genera tipos exactos para TypeScript, Zod, OpenAPI 3.1, Prisma, Rust y Go sin alucinaciones de IA.',
+    en: 'Generates deterministic types for TypeScript, Zod, OpenAPI, Prisma, Rust, and Go with zero AI hallucination.',
+  },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

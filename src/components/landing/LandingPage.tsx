@@ -3,14 +3,8 @@ import { SEOJsonLd } from './SEOJsonLd';
 import { LandingNav } from './LandingNav';
 import { HeroSection } from './HeroSection';
 import { GuidedUseCaseSection } from './GuidedUseCaseSection';
-import { ThreeStepIndicator } from './ThreeStepIndicator';
-import { TechTicker } from './TechTicker';
-import { TechnicalShowcase } from './TechnicalShowcase';
 import { WorkspaceSandboxSection } from './WorkspaceSandboxSection';
-import { LiveSanitizerWidget } from './LiveSanitizerWidget';
-import { ComparisonMatrix } from './ComparisonMatrix';
-import { SecurityAuditSection } from './SecurityAuditSection';
-import { RoiCalculator } from './RoiCalculator';
+import { TechnicalShowcase } from './TechnicalShowcase';
 import { PricingSection } from './PricingSection';
 import { InstallerDownloadSection } from './InstallerDownloadSection';
 import { DeveloperFAQ } from './DeveloperFAQ';
@@ -39,14 +33,8 @@ export const LandingPage: React.FC = () => {
       <main className="flex-1">
         <HeroSection />
         <GuidedUseCaseSection />
-        <ThreeStepIndicator />
-        <TechTicker />
         <WorkspaceSandboxSection />
         <TechnicalShowcase />
-        <LiveSanitizerWidget />
-        <ComparisonMatrix />
-        <SecurityAuditSection />
-        <RoiCalculator />
         <PricingSection />
         <InstallerDownloadSection />
         <DeveloperFAQ />

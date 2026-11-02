@@ -1,5 +1,14 @@
 import React from 'react';
-import { Sparkles, RefreshCw, ShieldCheck, Code2, ArrowRight } from 'lucide-react';
+import {
+  Sparkles,
+  RefreshCw,
+  ShieldCheck,
+  Code2,
+  ArrowRight,
+  ClipboardPaste,
+  Wand2,
+  Copy,
+} from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { useSettingsStore } from '@/store/useSettingsStore';
 import { createTranslator } from '@/core/i18n';
@@ -8,52 +17,86 @@ import { createTranslator } from '@/core/i18n';
 
 const USE_CASES = [
   {
+    id: 'clean',
     icon: Sparkles,
     color: 'text-orange-400',
     bgColor: 'bg-orange-500/10',
     borderColor: 'border-orange-500/20 hover:border-orange-400/50',
-    glowColor: 'group-hover:shadow-[0_0_40px_rgba(249,115,22,0.12)]',
+    glowColor: 'group-hover:shadow-[0_0_35px_rgba(249,115,22,0.15)]',
     titleKey: 'guided_card1_title' as const,
-    descKey:  'guided_card1_desc'  as const,
-    ctaKey:   'guided_card1_cta'   as const,
+    descKey: 'guided_card1_desc' as const,
+    ctaKey: 'guided_card1_cta' as const,
     outputFormat: 'json' as const,
     sampleInput: '{"name":"Maria","age":29,"city":"Buenos Aires","active":true}',
   },
   {
+    id: 'convert',
     icon: RefreshCw,
     color: 'text-cyan-400',
     bgColor: 'bg-cyan-500/10',
     borderColor: 'border-cyan-500/20 hover:border-cyan-400/50',
-    glowColor: 'group-hover:shadow-[0_0_40px_rgba(34,211,238,0.12)]',
+    glowColor: 'group-hover:shadow-[0_0_35px_rgba(34,211,238,0.15)]',
     titleKey: 'guided_card2_title' as const,
-    descKey:  'guided_card2_desc'  as const,
-    ctaKey:   'guided_card2_cta'   as const,
+    descKey: 'guided_card2_desc' as const,
+    ctaKey: 'guided_card2_cta' as const,
     outputFormat: 'csv' as const,
     sampleInput: '{"id":1,"product":"FormatPulse PRO","price":14,"currency":"USD","active":true}',
   },
   {
+    id: 'pii',
     icon: ShieldCheck,
     color: 'text-emerald-400',
     bgColor: 'bg-emerald-500/10',
     borderColor: 'border-emerald-500/20 hover:border-emerald-400/50',
-    glowColor: 'group-hover:shadow-[0_0_40px_rgba(52,211,153,0.12)]',
+    glowColor: 'group-hover:shadow-[0_0_35px_rgba(52,211,153,0.15)]',
     titleKey: 'guided_card3_title' as const,
-    descKey:  'guided_card3_desc'  as const,
-    ctaKey:   'guided_card3_cta'   as const,
+    descKey: 'guided_card3_desc' as const,
+    ctaKey: 'guided_card3_cta' as const,
     outputFormat: 'pii-sanitizer' as const,
     sampleInput: '{"user":"admin","password":"S3cr3t!Pass","api_key":"sk-abc123XYZ","email":"user@example.com"}',
   },
   {
+    id: 'code',
     icon: Code2,
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/10',
     borderColor: 'border-blue-500/20 hover:border-blue-400/50',
-    glowColor: 'group-hover:shadow-[0_0_40px_rgba(96,165,250,0.12)]',
+    glowColor: 'group-hover:shadow-[0_0_35px_rgba(96,165,250,0.15)]',
     titleKey: 'guided_card4_title' as const,
-    descKey:  'guided_card4_desc'  as const,
-    ctaKey:   'guided_card4_cta'   as const,
+    descKey: 'guided_card4_desc' as const,
+    ctaKey: 'guided_card4_cta' as const,
     outputFormat: 'typescript' as const,
     sampleInput: '{"id":"usr_001","email":"dev@formatpulse.app","role":"admin","verified":true,"createdAt":"2026-01-15"}',
+  },
+] as const;
+
+const STEPS = [
+  {
+    num: 1,
+    icon: ClipboardPaste,
+    color: 'text-orange-400',
+    bgColor: 'bg-orange-500/10',
+    borderColor: 'border-orange-500/20',
+    labelKey: 'step1_label' as const,
+    descKey: 'step1_desc' as const,
+  },
+  {
+    num: 2,
+    icon: Wand2,
+    color: 'text-cyan-400',
+    bgColor: 'bg-cyan-500/10',
+    borderColor: 'border-cyan-500/20',
+    labelKey: 'step2_label' as const,
+    descKey: 'step2_desc' as const,
+  },
+  {
+    num: 3,
+    icon: Copy,
+    color: 'text-emerald-400',
+    bgColor: 'bg-emerald-500/10',
+    borderColor: 'border-emerald-500/20',
+    labelKey: 'step3_label' as const,
+    descKey: 'step3_desc' as const,
   },
 ] as const;
 
@@ -69,21 +112,31 @@ export const GuidedUseCaseSection: React.FC = () => {
   const handleCardClick = (card: (typeof USE_CASES)[number]) => {
     setInputValue(card.sampleInput);
     setOutputFormat(card.outputFormat);
-    setViewMode('workspace');
+    // Smooth scroll to studio if on landing, or go to workspace
+    const sandboxEl = document.getElementById('workspace-sandbox');
+    if (sandboxEl) {
+      sandboxEl.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      setViewMode('workspace');
+    }
   };
 
   return (
     <section
       id="use-cases"
       className="relative w-full px-4 py-20 md:py-28 bg-[#06070b] border-b border-zinc-800/60 overflow-hidden"
-      aria-label="Guided use cases"
+      aria-label="Guided use cases and workflow"
     >
-      {/* Ambient gradient */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-accent/5 blur-[120px] pointer-events-none rounded-full" />
+      {/* Subtle ambient light */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-accent/5 blur-[120px] pointer-events-none rounded-full" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Section header */}
         <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-2xs font-mono text-zinc-300 mb-4 backdrop-blur-md">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            <span className="uppercase tracking-widest text-accent font-semibold">// Guided Workflow</span>
+          </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white font-sans">
             {tr('guided_title')}
           </h2>
@@ -93,18 +146,18 @@ export const GuidedUseCaseSection: React.FC = () => {
         </div>
 
         {/* 4 Cards grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-16">
           {USE_CASES.map((card) => {
             const Icon = card.icon;
             return (
               <button
                 key={card.titleKey}
                 onClick={() => handleCardClick(card)}
-                className={`group relative flex flex-col items-start gap-4 p-6 rounded-2xl bg-zinc-900/60 border ${card.borderColor} backdrop-blur-sm transition-all duration-300 text-left ${card.glowColor} hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30`}
+                className={`group relative flex flex-col items-start gap-4 p-6 rounded-2xl bg-zinc-900/50 border ${card.borderColor} backdrop-blur-sm transition-all duration-300 text-left ${card.glowColor} hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30`}
                 aria-label={tr(card.titleKey)}
               >
                 {/* Icon badge */}
-                <div className={`flex items-center justify-center w-10 h-10 rounded-xl ${card.bgColor} border ${card.borderColor} transition-all duration-300`}>
+                <div className={`flex items-center justify-center w-11 h-11 rounded-xl ${card.bgColor} border ${card.borderColor} transition-all duration-300`}>
                   <Icon className={`w-5 h-5 ${card.color}`} />
                 </div>
 
@@ -119,16 +172,45 @@ export const GuidedUseCaseSection: React.FC = () => {
                 </div>
 
                 {/* CTA row */}
-                <div className={`flex items-center gap-1.5 text-2xs font-mono font-semibold ${card.color} opacity-70 group-hover:opacity-100 transition-opacity`}>
+                <div className={`flex items-center gap-1.5 text-2xs font-mono font-semibold ${card.color} opacity-80 group-hover:opacity-100 transition-opacity`}>
                   <span>{tr(card.ctaKey)}</span>
-                  <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                  <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                 </div>
 
                 {/* Hover shimmer */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
               </button>
             );
           })}
+        </div>
+
+        {/* ── Seamless 3-Step Visual Strip ───────────────────────────── */}
+        <div className="pt-8 border-t border-white/[0.08]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 items-start max-w-4xl mx-auto">
+            {STEPS.map((step) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.num} className="flex items-start gap-3.5 text-left">
+                  <div className="relative flex-none">
+                    <div className={`flex items-center justify-center w-10 h-10 rounded-xl ${step.bgColor} border ${step.borderColor}`}>
+                      <Icon className={`w-5 h-5 ${step.color}`} />
+                    </div>
+                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-zinc-950 border border-zinc-700 flex items-center justify-center text-3xs font-bold font-mono text-zinc-300">
+                      {step.num}
+                    </span>
+                  </div>
+                  <div>
+                    <p className={`text-xs font-bold font-mono ${step.color}`}>
+                      {tr(step.labelKey)}
+                    </p>
+                    <p className="text-2xs text-zinc-500 font-mono mt-0.5 leading-relaxed">
+                      {tr(step.descKey)}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

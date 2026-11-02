@@ -1,116 +1,96 @@
 import React from 'react';
-import { Code2, ShieldAlert, FileSpreadsheet, KeyRound, GitCompare, FileCheck, ArrowUpRight } from 'lucide-react';
-
-const FEATURES = [
-  {
-    icon: <Code2 className="w-5 h-5 text-accent" />,
-    title: 'Multi-Target Contract Inference',
-    badge: '10 TARGETS',
-    description:
-      'Infers strict types, optionality, datetime formats, emails, and nested structures into TypeScript, Zod Schema, OpenAPI 3.1, Prisma ORM, Python Pydantic v2, Rust Serde, and Go Structs.',
-    metric: 'Zero-Any Strict Inference',
-    colSpan: 'md:col-span-8',
-    highlight: true,
-  },
-  {
-    icon: <ShieldAlert className="w-5 h-5 text-emerald-400" />,
-    title: 'Zero-Trust AST & Prototype Defense',
-    badge: 'ANTI-EXPLOIT',
-    description:
-      'Neutralizes __proto__, constructor, and prototype injection attempts. Enforces 50-level recursion limits, 500KB string caps, and circular reference handling to block DoS exploits.',
-    metric: 'Safe Parser Sandbox',
-    colSpan: 'md:col-span-4',
-  },
-  {
-    icon: <FileSpreadsheet className="w-5 h-5 text-accent" />,
-    title: 'OWASP CSV Formula Injection Shield',
-    badge: 'OWASP TOP 10',
-    description:
-      'Detects execution trigger prefixes (=, +, -, @, \\t, \\r) in spreadsheet exports while intelligently preserving legitimate negative and positive numbers, neutralizing remote command execution.',
-    metric: 'Excel / Calc Safe',
-    colSpan: 'md:col-span-4',
-  },
-  {
-    icon: <KeyRound className="w-5 h-5 text-emerald-400" />,
-    title: 'Cloud Secrets & Regional PII Engine',
-    badge: 'SOC2 / GDPR',
-    description:
-      'Detects and redacts AWS Keys (AKIA), GitHub PATs, Google API keys, PEM Private Keys, Slack webhooks, alongside regional credentials: IBAN, Spanish DNI/NIE, and US SSNs.',
-    metric: 'A+ to F Health Audit',
-    colSpan: 'md:col-span-4',
-  },
-  {
-    icon: <GitCompare className="w-5 h-5 text-blue-400" />,
-    title: 'Structural AST Schema Diff',
-    badge: 'BREAKING CHANGE ALERT',
-    description:
-      'Deep recursive structural comparison across payloads. Automatically flags schema breaking changes (removed fields, mutated primitive types) and emits Git-formatted unified diffs.',
-    metric: 'API Contract Guard',
-    colSpan: 'md:col-span-4',
-  },
-  {
-    icon: <FileCheck className="w-5 h-5 text-emerald-400" />,
-    title: 'Web Crypto Integrity Receipts',
-    badge: 'SHA-256 / SHA-512',
-    description:
-      'Generates browser-native SHA-256 and SHA-512 cryptographic digests. Issues audit-ready integrity certificates proving payloads were processed purely client-side without tampering.',
-    metric: 'SubtleCrypto Certified',
-    colSpan: 'md:col-span-12',
-    horizontal: true,
-  },
-];
+import { Lock, Cpu, FileSpreadsheet, Code2 } from 'lucide-react';
+import { useSettingsStore } from '@/store/useSettingsStore';
+import { createTranslator } from '@/core/i18n';
 
 export const TechnicalShowcase: React.FC = () => {
+  const language = useSettingsStore((s) => s.language);
+  const tr = createTranslator(language);
+
+  const FEATURES = [
+    {
+      icon: <Lock className="w-5 h-5 text-emerald-400" />,
+      badge: '100% IN-BROWSER',
+      badgeColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+      titleKey: 'feature_priv_title' as const,
+      descKey: 'feature_priv_desc' as const,
+      metric: '0 Bytes Network I/O',
+    },
+    {
+      icon: <Cpu className="w-5 h-5 text-accent" />,
+      badge: 'PARALLEL THREADS',
+      badgeColor: 'text-accent bg-accent/10 border-accent/20',
+      titleKey: 'feature_worker_title' as const,
+      descKey: 'feature_worker_desc' as const,
+      metric: '0.38ms In-Memory Speed',
+    },
+    {
+      icon: <FileSpreadsheet className="w-5 h-5 text-cyan-400" />,
+      badge: 'OWASP TOP 10',
+      badgeColor: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
+      titleKey: 'feature_owasp_title' as const,
+      descKey: 'feature_owasp_desc' as const,
+      metric: 'Excel & Calc Safe',
+    },
+    {
+      icon: <Code2 className="w-5 h-5 text-blue-400" />,
+      badge: '10 TARGETS',
+      badgeColor: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
+      titleKey: 'feature_types_title' as const,
+      descKey: 'feature_types_desc' as const,
+      metric: 'TypeScript · Zod · OpenAPI',
+    },
+  ] as const;
+
   return (
-    <section id="features" className="relative w-full border-b border-zinc-800/80 bg-[#06070b] px-4 py-20 md:py-28 overflow-hidden">
+    <section id="features" className="relative w-full border-b border-zinc-800/80 bg-[#06070b] px-4 py-20 md:py-28 overflow-hidden scroll-mt-12">
+      {/* Anchor alias for #security */}
+      <span id="security" className="sr-only" />
       {/* Background radial glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-600/5 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className="text-left mb-14">
+        <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-2xs font-mono text-zinc-300 mb-3 backdrop-blur-md">
             <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-            <span className="uppercase tracking-widest text-accent font-semibold">// Core Architecture</span>
+            <span className="uppercase tracking-widest text-accent font-semibold">{tr('features_badge')}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white font-sans uppercase">
-            Built for security teams. Loved by developers.
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white font-sans">
+            {tr('features_title')}
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-zinc-400 font-mono max-w-2xl leading-relaxed">
-            Every feature runs with zero server dependencies, zero external HTTP calls, and strict memory containment.
+          <p className="mt-4 text-sm sm:text-base text-zinc-400 font-mono max-w-2xl mx-auto leading-relaxed">
+            {tr('features_subtitle')}
           </p>
         </div>
 
-        {/* Spaceship Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          {FEATURES.map((feat, i) => (
+        {/* Spaceship Bento Grid — 4 Clean Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {FEATURES.map((feat) => (
             <div
-              key={i}
-              className={`${feat.colSpan} p-7 md:p-8 rounded-3xl bg-zinc-900/40 border border-white/10 backdrop-blur-xl hover:border-accent/40 hover:bg-zinc-900/60 transition-all duration-300 flex flex-col justify-between group shadow-xl hover:-translate-y-1`}
+              key={feat.titleKey}
+              className="p-7 md:p-8 rounded-3xl bg-zinc-900/40 border border-white/10 backdrop-blur-xl hover:border-accent/40 hover:bg-zinc-900/60 transition-all duration-300 flex flex-col justify-between group shadow-xl hover:-translate-y-1"
             >
               <div>
                 <div className="flex items-center justify-between mb-5">
-                  <div className="w-11 h-11 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                     {feat.icon}
                   </div>
-                  <span className="px-3 py-1 rounded-full text-3xs font-mono font-semibold tracking-wider text-zinc-300 bg-white/[0.05] border border-white/10">
+                  <span className={`px-3 py-1 rounded-full text-3xs font-mono font-semibold tracking-wider border ${feat.badgeColor}`}>
                     {feat.badge}
                   </span>
                 </div>
 
                 <h3 className="text-lg md:text-xl font-bold text-white font-sans tracking-tight mb-2.5">
-                  {feat.title}
+                  {tr(feat.titleKey)}
                 </h3>
-                <p className="text-xs sm:text-sm text-zinc-400 font-mono leading-relaxed mb-6">
-                  {feat.description}
+                <p className="text-xs md:text-sm text-zinc-400 font-mono leading-relaxed">
+                  {tr(feat.descKey)}
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-2xs font-mono text-zinc-400">
-                <span className="text-accent font-semibold flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                  {feat.metric}
-                </span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-white transition-colors" />
+              <div className="mt-6 pt-5 border-t border-white/[0.06] flex items-center justify-between text-2xs font-mono text-zinc-500">
+                <span className="text-zinc-400 font-semibold">{feat.metric}</span>
+                <span className="text-accent group-hover:translate-x-1 transition-transform">✓</span>
               </div>
             </div>
           ))}

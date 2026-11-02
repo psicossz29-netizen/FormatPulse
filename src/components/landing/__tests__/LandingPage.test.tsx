@@ -27,13 +27,13 @@ describe('FormatPulse Landing Page (2026 Swiss Industrial Design)', () => {
     expect(screen.getByText(/ARQUITECTURA SWISS PRECISION|SWISS PRECISION ARCHITECTURE/i)).toBeInTheDocument();
   });
 
-  it('renders interactive hero playground with code tabs', () => {
+  it('renders guided workflow section with all 4 use case cards', () => {
     render(<LandingPage />);
 
-    expect(screen.getByText('TypeScript Interface')).toBeInTheDocument();
-    expect(screen.getByText('OpenAPI 3.1 Spec')).toBeInTheDocument();
-    expect(screen.getByText('Secrets & PII Redaction')).toBeInTheDocument();
-    expect(screen.getByText('CSV to SQL DDL + Seed')).toBeInTheDocument();
+    expect(screen.getAllByText(/Limpiar y Formatear|Clean & Format/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Convertir Formatos|Convert Formats/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Ocultar Datos Sensibles|Mask Sensitive Data/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Generar Código|Generate Code/i).length).toBeGreaterThan(0);
   });
 
   it('renders all 3 lifetime commercial pricing plans with accurate price tags', () => {
@@ -68,16 +68,15 @@ describe('FormatPulse Landing Page (2026 Swiss Industrial Design)', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders live interactive PII sandbox and ROI calculator widgets', () => {
+  it('renders streamlined technical features showcase without clutter', () => {
     render(<LandingPage />);
 
     expect(
-      screen.getByText(/Test the PII & Secrets Engine in your browser right now/i),
+      screen.getByText(/Privacidad Absoluta|Absolute Privacy/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/Estimate Engineering Hours & SaaS Costs Saved/i),
+      screen.getByText(/Motor Multihilo Web Worker|Multithreaded Web Worker Engine/i),
     ).toBeInTheDocument();
-    expect(screen.getByText(/DEV TIME SAVED/i)).toBeInTheDocument();
   });
 
   it('renders Spaceship-inspired Workspace Sandbox and Desktop Installer sections', () => {

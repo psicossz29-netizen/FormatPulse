@@ -17,6 +17,14 @@ import type { InputFormat, OutputFormat } from '@/types';
 
 const SANDBOX_PRESETS = [
   {
+    id: 'clean',
+    name: 'Clean & Indent JSON',
+    nameKey: 'sandbox_preset_clean' as const,
+    inputFormat: 'json' as InputFormat,
+    outputFormat: 'json' as OutputFormat,
+    payload: `{"id":42,"title":"FormatPulse","features":["offline","privacy","fast"],"nested":{"active":true,"version":"1.2.3"}}`,
+  },
+  {
     id: 'user',
     name: 'User Profile & Roles',
     nameKey: 'sandbox_preset_user' as const,
@@ -191,6 +199,7 @@ export const WorkspaceSandboxSection: React.FC = () => {
             <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1">
               <span className="text-2xs font-mono text-zinc-500 uppercase mr-1 flex-none">Out:</span>
               {[
+                { id: 'json', label: 'JSON Clean', tip: 'Formatea e indenta JSON limpiamente a 2 espacios' },
                 { id: 'typescript', label: 'TypeScript', tip: 'Genera interfaces y tipos TypeScript' },
                 { id: 'zod', label: 'Zod', tip: 'Genera esquemas de validación Zod runtime' },
                 { id: 'openapi', label: 'OpenAPI 3.1', tip: 'Genera especificación OpenAPI YAML' },
