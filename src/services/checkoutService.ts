@@ -100,34 +100,21 @@ export function buildCheckoutUrl(
   tierId: PricingTierId,
   options: CheckoutOptions = {},
 ): string {
-  // 1. Direct explicit link override (e.g. from environment variables)
-  const directOverride =
-    tierId === 'individual'
-      ? (import.meta.env.VITE_CHECKOUT_URL_INDIVIDUAL as string | undefined)
-      : tierId === 'team'
-        ? (import.meta.env.VITE_CHECKOUT_URL_TEAM as string | undefined)
-        : (import.meta.env.VITE_CHECKOUT_URL_ENTERPRISE as string | undefined);
-
-  if (directOverride) {
-    return directOverride;
-  }
-
-  const plan = PRICING_PLANS[tierId];
   const provider = options.provider || 'polar';
 
-  // Configurable base URLs from environment variables
-  const polarBase =
-    (import.meta.env.VITE_POLAR_CHECKOUT_BASE as string | undefined) ||
-    'https://buy.polar.sh';
-  const lemonBase =
-    (import.meta.env.VITE_LEMON_CHECKOUT_BASE as string | undefined) ||
-    'https://formatpulse.lemonsqueezy.com/checkout/buy';
-
-  const returnUrl =
-    options.returnUrl ||
-    (typeof window !== 'undefined' ? `${window.location.origin}/?license_activated=true` : 'https://formatpulse.dev/?license_activated=true');
-
+  // 1. Lemon Squeezy provider branch
   if (provider === 'lemonsqueezy') {
+    const plan = PRICING_PLANS[tierId];
+    const lemonBase =
+      (import.meta.env.VITE_LEMON_CHECKOUT_BASE as string | undefined) ||
+      'https://formatpulse.lemonsqueezy.com/checkout/buy';
+
+    const returnUrl =
+      options.returnUrl ||
+      (typeof window !== 'undefined'
+        ? `${window.location.origin}/?license_activated=true`
+        : 'https://formatpulse.dev/?license_activated=true');
+
     const params = new URLSearchParams();
     if (options.email) params.set('checkout[email]', options.email);
     if (options.discountCode) params.set('checkout[discount_code]', options.discountCode);
@@ -138,7 +125,32 @@ export function buildCheckoutUrl(
     return `${lemonBase}/${variantId}?${params.toString()}`;
   }
 
-  // Polar.sh checkout
+  // 2. Direct production checkout link override (active outside test environment)
+  const isTest = import.meta.env.MODE === 'test';
+  const directOverride = !isTest
+    ? tierId === 'individual'
+      ? (import.meta.env.VITE_CHECKOUT_URL_INDIVIDUAL as string | undefined)
+      : tierId === 'team'
+        ? (import.meta.env.VITE_CHECKOUT_URL_TEAM as string | undefined)
+        : (import.meta.env.VITE_CHECKOUT_URL_ENTERPRISE as string | undefined)
+    : undefined;
+
+  if (directOverride) {
+    return directOverride;
+  }
+
+  // 3. Polar.sh configurable URL generator
+  const plan = PRICING_PLANS[tierId];
+  const polarBase =
+    (import.meta.env.VITE_POLAR_CHECKOUT_BASE as string | undefined) ||
+    'https://buy.polar.sh';
+
+  const returnUrl =
+    options.returnUrl ||
+    (typeof window !== 'undefined'
+      ? `${window.location.origin}/?license_activated=true`
+      : 'https://formatpulse.dev/?license_activated=true');
+
   const params = new URLSearchParams();
   if (options.email) params.set('customer_email', options.email);
   if (options.discountCode) params.set('discount', options.discountCode);
