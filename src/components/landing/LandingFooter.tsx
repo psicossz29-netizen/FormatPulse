@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, ArrowUp } from 'lucide-react';
+import { Terminal, ArrowUp, Mail } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 
 export const LandingFooter: React.FC = () => {
@@ -51,6 +51,13 @@ export const LandingFooter: React.FC = () => {
           >
             14-Day Refund Policy
           </button>
+          <a
+            href="mailto:formatpulse.app@gmail.com?subject=FormatPulse%20Support%20Inquiry"
+            className="hover:text-zinc-100 transition-colors flex items-center gap-1 text-zinc-400"
+          >
+            <Mail className="w-3 h-3" />
+            <span>Support</span>
+          </a>
           <button
             onClick={scrollToTop}
             className="p-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100 rounded-sm transition-colors"

@@ -327,7 +327,7 @@ const RefundContent: React.FC = () => (
       </p>
       <ol className="list-decimal pl-4 space-y-1 text-zinc-400">
         <li>Open your digital purchase receipt sent by Polar.sh or Lemon Squeezy upon payment.</li>
-        <li>Click "Generate Refund" or contact support referencing your Order ID / License Key.</li>
+        <li>Click "Generate Refund" in your receipt or contact support directly at <a href="mailto:formatpulse.app@gmail.com?subject=FormatPulse%20Refund%20Request" className="text-accent hover:underline">formatpulse.app@gmail.com</a> referencing your Order ID / License Key.</li>
         <li>Refunds are credited back to your original payment method (Credit Card, PayPal, Apple Pay) within 3-5 business days.</li>
       </ol>
     </section>

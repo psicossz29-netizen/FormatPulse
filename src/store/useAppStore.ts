@@ -6,7 +6,7 @@ import type {
   ParseError,
   WorkerStatus,
 } from '@/types';
-import { loadLicenseFromStorage } from '@/services/licenseService';
+import { loadLicenseFromStorage, saveLicenseToStorage } from '@/services/licenseService';
 import { verifyLicenseKey } from '@/services/licenseVerification';
 import { getPreset, applySEO } from '@/core/presets';
 
@@ -100,6 +100,31 @@ function countLines(text: string): number {
 // ── Persisted License ────────────────────────────────────────────────────────
 
 function getInitialLicense(): { tier: LicenseTier; key: string | null } {
+  // 1. Check URL query parameters for direct checkout activation link
+  if (typeof window !== 'undefined') {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const urlKey = params.get('license_key') || params.get('key');
+      if (urlKey) {
+        const verified = verifyLicenseKey(urlKey);
+        if (verified.valid) {
+          saveLicenseToStorage(urlKey);
+          params.delete('license_key');
+          params.delete('key');
+          params.set('license_activated', 'true');
+          params.set('tier', verified.tier);
+          const newSearch = params.toString();
+          const newUrl = window.location.pathname + (newSearch ? `?${newSearch}` : '') + window.location.hash;
+          window.history.replaceState({}, '', newUrl);
+          return { tier: verified.tier, key: urlKey };
+        }
+      }
+    } catch {
+      // Ignore URL parsing errors
+    }
+  }
+
+  // 2. Fall back to local storage
   const key = loadLicenseFromStorage();
   if (key) {
     const verified = verifyLicenseKey(key);
