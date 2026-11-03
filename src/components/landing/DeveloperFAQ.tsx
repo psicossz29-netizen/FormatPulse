@@ -1,83 +1,79 @@
-import React, { useState } from 'react';
-import { ChevronDown, HelpCircle } from 'lucide-react';
-
-const FAQS = [
-  {
-    q: 'How do you technically guarantee that no data touches a remote server?',
-    a: 'FormatPulse compiles to a purely static web application with zero backend servers. All parsing (JSON, CSV conforming to RFC 4180, YAML), type inference, AST safety checks, and PII anonymization execute directly inside your browser runtime. You can verify this live: press F12, switch to the Network tab, filter by Fetch/XHR, and convert any dataset — 0 requests are transmitted.',
-  },
-  {
-    q: 'How does the Web Worker process large files without freezing the UI?',
-    a: 'Files over 512KB automatically spawn a dedicated background Web Worker thread (conversion.worker.ts). This executes AST traversals and string transformations in a separate OS thread without blocking the browser main thread or UI rendering, benchmarked at over 10MB under 500ms.',
-  },
-  {
-    q: 'Does the license key validation work in air-gapped networks without internet?',
-    a: 'Yes. While online users can validate directly via our Merchant of Record API, FormatPulse features an offline-first deterministic cryptographic license check (FP-PRO-2026-XXXX-XXXX). If no internet connection is detected, the app validates locally without blocking or degrading functionality.',
-  },
-  {
-    q: 'How does the Cloud Secrets & Regional PII sanitizer work?',
-    a: 'Our sanitizer combines regex boundary checks for cloud provider tokens (AWS AKIA keys, GitHub fine-grained PATs, GCP API keys, Slack webhooks, PEM private keys) with format-validated regional identifiers (IBAN, Spanish DNI/NIE, US SSN). You can choose between full redaction ([REDACTED]) or deterministic synthetic values (FNV-1a hash replacement) to preserve referential integrity.',
-  },
-  {
-    q: 'What Merchant of Record handles payments and tax deduction invoices?',
-    a: 'We use Polar.sh and Lemon Squeezy as our Merchants of Record. They calculate, collect, and remit all global sales tax, VAT, and GST automatically, delivering an immediate tax-compliant invoice for business expense deduction.',
-  },
-  {
-    q: 'Can our organization deploy FormatPulse on an internal intranet or private cloud?',
-    a: 'Yes. With the Enterprise Air-Gapped license, you receive deployment artifacts that can be hosted on internal S3 buckets, Nginx, or Docker environments with zero outbound network access required.',
-  },
-];
+import React from 'react';
+import { useSettingsStore } from '@/store/useSettingsStore';
+import { createTranslator } from '@/core/i18n';
 
 export const DeveloperFAQ: React.FC = () => {
-  const [openIdx, setOpenIdx] = useState<number | null>(0);
+  const language = useSettingsStore((s) => s.language);
+  const tr = createTranslator(language);
 
-  const toggle = (idx: number) => {
-    setOpenIdx(openIdx === idx ? null : idx);
-  };
+  const faqs = language === 'es' ? [
+    {
+      q: '¿Se envían mis datos a algún servidor?',
+      a: 'No. La conversión, la generación de código y el enmascarado de PII se ejecutan exclusivamente en tu navegador o app de escritorio local. FormatPulse no envía telemetría de tus datos a ningún servidor externo. Puedes comprobarlo abriendo la pestaña Network en las herramientas de desarrollo de tu navegador.',
+    },
+    {
+      q: '¿Qué formatos y salidas admite?',
+      a: 'Convierte bidireccionalmente entre JSON, CSV y YAML, y genera interfaces de TypeScript, esquemas de Zod, especificaciones OpenAPI 3.1, DDL de SQL, modelos de Prisma, estructuras de Go y Rust.',
+    },
+    {
+      q: '¿Cómo funciona el enmascarado de datos personales?',
+      a: 'Reemplaza valores sensibles como correos electrónicos, números de teléfono, tarjetas de crédito, tokens de APIs (AWS, GitHub, Slack) y números de identificación por versiones ofuscadas antes de que copies o exportes el resultado.',
+    },
+    {
+      q: '¿FormatPulse cumple con GDPR, SOC2 o HIPAA?',
+      a: 'Está concebido con arquitectura Privacy-by-Design y Zero-Server: dado que los datos confidenciales nunca abandonan la máquina del usuario, se minimiza completamente el riesgo de fuga y se facilita el cumplimiento normativo en sectores financieros, legales y de salud.',
+    },
+    {
+      q: '¿Funciona la aplicación sin conexión a internet (air-gapped)?',
+      a: 'Sí. Tanto la versión web en caché como el instalador nativo de Windows (.exe) funcionan 100% desconectados de internet, incluyendo la validación criptográfica de licencias.',
+    },
+  ] : [
+    {
+      q: 'Does my data get sent to any remote server?',
+      a: 'No. Format conversion, schema generation, and PII masking run entirely within your local browser or desktop app runtime. FormatPulse transmits zero payload telemetry. You can verify this live in your browser DevTools Network tab.',
+    },
+    {
+      q: 'What formats and output targets are supported?',
+      a: 'Convert bidirectionally between JSON, CSV, and YAML, and generate TypeScript interfaces, Zod validation schemas, OpenAPI 3.1 specs, SQL DDL, Prisma models, Go structs, and Rust types.',
+    },
+    {
+      q: 'How does personal data & secrets masking work?',
+      a: 'It scans for sensitive values (emails, phone numbers, credit cards, cloud credentials, tokens) and redacts or synthesizes them before export so you never leak confidential information.',
+    },
+    {
+      q: 'Does FormatPulse help with GDPR, SOC2 or HIPAA compliance?',
+      a: 'Yes. With local-only in-memory execution, sensitive customer payloads never transit third-party servers, drastically reducing compliance liability for teams in finance, legal, and healthcare.',
+    },
+    {
+      q: 'Does the application work in air-gapped environments?',
+      a: 'Yes. Both the offline web app and the native Windows .exe desktop app operate completely air-gapped without requiring an active internet connection.',
+    },
+  ];
 
   return (
-    <section id="faq" className="w-full border-b border-zinc-800 bg-surface-base px-4 py-16 md:py-24">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-left mb-12">
-          <div className="text-2xs font-mono uppercase tracking-widest text-accent mb-2">
-            // Engineering FAQ
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-zinc-100 font-sans uppercase">
-            Frequently Asked Technical Questions
-          </h2>
-          <p className="mt-2 text-sm text-zinc-400 font-mono">
-            Direct answers to compliance, licensing, and implementation questions.
-          </p>
-        </div>
+    <section className="py-20 md:py-28" id="faq">
+      <div className="max-w-[820px] mx-auto px-5">
+        <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-[#F4F4F5] tracking-tight mb-12">
+          {tr('faq_title')}
+        </h2>
 
-        <div className="divide-y divide-zinc-800 border border-zinc-800 bg-surface-raised">
-          {FAQS.map((item, idx) => {
-            const isOpen = openIdx === idx;
-            return (
-              <div key={idx} className="transition-colors">
-                <button
-                  onClick={() => toggle(idx)}
-                  className="w-full py-4 px-6 text-left flex items-center justify-between gap-4 focus:outline-none focus-visible:bg-zinc-900"
-                >
-                  <span className="text-xs sm:text-sm font-bold font-mono text-zinc-100 flex items-center gap-2">
-                    <HelpCircle className="w-3.5 h-3.5 text-accent flex-none" />
-                    <span>{item.q}</span>
-                  </span>
-                  <ChevronDown
-                    className={`w-4 h-4 text-zinc-500 transition-transform duration-200 flex-none ${
-                      isOpen ? 'rotate-180 text-accent' : ''
-                    }`}
-                  />
-                </button>
-
-                {isOpen && (
-                  <div className="px-6 pb-5 pt-1 text-xs text-zinc-400 font-mono leading-relaxed border-t border-zinc-800/40 bg-zinc-950/40">
-                    {item.a}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+        <div className="divide-y divide-[#26262C] border-y border-[#26262C]">
+          {faqs.map((item, idx) => (
+            <details
+              key={idx}
+              className="group py-6 transition-colors cursor-pointer"
+            >
+              <summary className="flex items-center justify-between gap-4 font-display font-semibold text-lg sm:text-xl text-[#F4F4F5] list-none select-none">
+                <span>{item.q}</span>
+                <span className="text-2xl text-[#FF4F00] font-normal leading-none transition-transform duration-300 group-open:rotate-45 shrink-0">
+                  +
+                </span>
+              </summary>
+              <p className="mt-4 font-geist text-sm sm:text-base text-[#9A9AA5] leading-relaxed max-w-[64ch]">
+                {item.a}
+              </p>
+            </details>
+          ))}
         </div>
       </div>
     </section>

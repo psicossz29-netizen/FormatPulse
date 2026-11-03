@@ -26,146 +26,128 @@ export const InstallerDownloadSection: React.FC = () => {
   };
 
   return (
-    <section id="installer" className="relative w-full border-b border-zinc-800/80 bg-[#06070b] px-4 py-20 md:py-28 overflow-hidden">
-      {/* Background glow mesh */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-accent/15 via-blue-500/10 to-emerald-500/15 blur-[120px] rounded-full pointer-events-none" />
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        {/* Section Tag */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-2xs font-mono text-zinc-300 mb-4 backdrop-blur-md">
-            <Monitor className="w-3.5 h-3.5 text-accent" />
-            <span className="tracking-widest uppercase text-accent font-semibold">Native Desktop Application</span>
-            <span className="text-zinc-600">//</span>
-            <span>Windows x64 Build</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white font-sans uppercase">
-            Dedicated Desktop Power. Zero Cloud Latency.
+    <section id="installer" className="py-20 md:py-28 relative">
+      <div className="max-w-[1160px] mx-auto px-5">
+        {/* Header */}
+        <div className="text-center mb-14">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-[#F4F4F5] tracking-tight max-w-[22ch] mx-auto">
+            Potencia de escritorio nativa. Sin latencia de nube.
           </h2>
-          <p className="mt-4 text-sm sm:text-base text-zinc-400 font-mono max-w-2xl mx-auto leading-relaxed">
-            Experience FormatPulse as a standalone desktop IDE. Built with Tauri & Rust for minimal memory footprint (&lt;45MB RAM), native OS menu bars, and 100% offline air-gapped security.
+          <p className="mt-4 font-geist text-base sm:text-lg text-[#9A9AA5] max-w-2xl mx-auto leading-relaxed">
+            Utiliza FormatPulse como una app de escritorio independiente. Construida con Rust y Tauri para un consumo mínimo de memoria (&lt;45MB RAM) y 100% de aislamiento offline air-gapped.
           </p>
         </div>
 
-        {/* Main 2-Column Showcase */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        {/* 2-Column Showcase */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           {/* Left Column: Download Card */}
-          <div className="lg:col-span-7 flex flex-col justify-between p-8 rounded-3xl bg-zinc-900/50 border border-white/10 backdrop-blur-xl shadow-2xl relative overflow-hidden group">
-            {/* Ambient hover light */}
-            <div className="absolute -top-24 -right-24 w-64 h-64 bg-accent/20 rounded-full blur-3xl group-hover:bg-accent/30 transition-all duration-500 pointer-events-none" />
-
+          <div className="lg:col-span-7 flex flex-col justify-between p-8 rounded-[28px] bg-[#111114] border border-[#26262C] shadow-2xl relative overflow-hidden">
             <div>
               {/* Header */}
-              <div className="flex items-center justify-between pb-6 border-b border-zinc-800">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/30 flex items-center justify-center">
-                    <Monitor className="w-6 h-6 text-accent" />
+              <div className="flex items-center justify-between pb-6 border-b border-[#26262C]">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-11 h-11 rounded-2xl bg-[#FF4F00]/10 border border-[#FF4F00]/25 flex items-center justify-center">
+                    <Monitor className="w-5 h-5 text-[#FF4F00]" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-white font-sans">FormatPulse Desktop</h3>
-                    <div className="text-2xs font-mono text-zinc-400">Release v{APP_VERSION} (Windows 10/11 x64)</div>
+                    <h3 className="text-lg font-display font-bold text-[#F4F4F5]">FormatPulse Desktop</h3>
+                    <div className="text-xs font-geist-mono text-[#9A9AA5]">Release v{APP_VERSION} (Windows 10/11 x64)</div>
                   </div>
                 </div>
-                <div className="px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-800/80 text-emerald-400 text-2xs font-mono font-semibold flex items-center gap-1.5">
+                <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-geist-mono font-medium flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>OFFICIAL RELEASE</span>
+                  <span>RELEASE OFICIAL</span>
                 </div>
               </div>
 
               {/* Specs Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 my-6 text-2xs font-mono">
-                <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/80">
-                  <div className="text-zinc-500 mb-1">Architecture</div>
-                  <div className="text-zinc-200 font-semibold flex items-center gap-1.5">
-                    <Cpu className="w-3.5 h-3.5 text-accent" />
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 my-6 text-xs font-geist-mono">
+                <div className="p-3 rounded-xl bg-[#09090B] border border-[#26262C]">
+                  <div className="text-[#9A9AA5] text-[11px] mb-1">Arquitectura</div>
+                  <div className="text-[#F4F4F5] font-semibold flex items-center gap-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-[#FF4F00]" />
                     <span>x86_64 / Rust</span>
                   </div>
                 </div>
-                <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/80">
-                  <div className="text-zinc-500 mb-1">Installer Size</div>
-                  <div className="text-zinc-200 font-semibold flex items-center gap-1.5">
+                <div className="p-3 rounded-xl bg-[#09090B] border border-[#26262C]">
+                  <div className="text-[#9A9AA5] text-[11px] mb-1">Tamaño instalador</div>
+                  <div className="text-[#F4F4F5] font-semibold flex items-center gap-1.5">
                     <Layers className="w-3.5 h-3.5 text-blue-400" />
                     <span>~7.8 MB</span>
                   </div>
                 </div>
-                <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/80">
-                  <div className="text-zinc-500 mb-1">Network Access</div>
-                  <div className="text-zinc-200 font-semibold flex items-center gap-1.5">
+                <div className="p-3 rounded-xl bg-[#09090B] border border-[#26262C]">
+                  <div className="text-[#9A9AA5] text-[11px] mb-1">Red / Conexión</div>
+                  <div className="text-[#F4F4F5] font-semibold flex items-center gap-1.5">
                     <Lock className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>0 Outbound IO</span>
+                    <span>0 peticiones</span>
                   </div>
                 </div>
               </div>
 
-              {/* Desktop Highlights List */}
-              <div className="space-y-3 mb-8 text-xs font-mono text-zinc-300">
+              {/* Highlights List */}
+              <div className="space-y-3 mb-8 text-xs font-geist text-[#9A9AA5]">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-4 h-4 rounded-full bg-accent/20 flex items-center justify-center flex-none">
-                    <Check className="w-2.5 h-2.5 text-accent" strokeWidth={3} />
+                  <div className="w-4 h-4 rounded-full bg-[#FF4F00]/20 flex items-center justify-center flex-none">
+                    <Check className="w-2.5 h-2.5 text-[#FF4F00]" strokeWidth={3} />
                   </div>
-                  <span><strong>Native Menu Bar:</strong> File, Edit, View, Tools, Preferences & Help dropdowns</span>
+                  <span><strong className="text-[#F4F4F5]">Menú nativo de sistema:</strong> Archivo, Edición, Ver, Herramientas, Preferencias y Ayuda</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-4 h-4 rounded-full bg-accent/20 flex items-center justify-center flex-none">
-                    <Check className="w-2.5 h-2.5 text-accent" strokeWidth={3} />
+                  <div className="w-4 h-4 rounded-full bg-[#FF4F00]/20 flex items-center justify-center flex-none">
+                    <Check className="w-2.5 h-2.5 text-[#FF4F00]" strokeWidth={3} />
                   </div>
-                  <span><strong>Antigravity-Style Settings Modal (⌘,):</strong> Fine-grained font sizes, word wrap & themes</span>
+                  <span><strong className="text-[#F4F4F5]">Panel de ajustes (⌘,):</strong> Configuración de fuentes, word-wrap y paletas de color</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-4 h-4 rounded-full bg-accent/20 flex items-center justify-center flex-none">
-                    <Check className="w-2.5 h-2.5 text-accent" strokeWidth={3} />
+                  <div className="w-4 h-4 rounded-full bg-[#FF4F00]/20 flex items-center justify-center flex-none">
+                    <Check className="w-2.5 h-2.5 text-[#FF4F00]" strokeWidth={3} />
                   </div>
-                  <span><strong>100% Offline Air-Gapped:</strong> Works in high-security bank & defense networks</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-4 h-4 rounded-full bg-accent/20 flex items-center justify-center flex-none">
-                    <Check className="w-2.5 h-2.5 text-accent" strokeWidth={3} />
-                  </div>
-                  <span><strong>Local State Persistence:</strong> Zero data ever transmitted outside your device</span>
+                  <span><strong className="text-[#F4F4F5]">100% Offline Air-Gapped:</strong> Aprobado para infraestructuras bancarias y legales</span>
                 </div>
               </div>
             </div>
 
             {/* CTA & Hash Box */}
-            <div className="space-y-4 pt-6 border-t border-zinc-800">
+            <div className="space-y-3.5 pt-6 border-t border-[#26262C]">
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
                   href={`/FormatPulse_${APP_VERSION}_x64-setup.exe`}
                   download
-                  className="flex-1 h-12 rounded-xl bg-accent hover:bg-accent-hover text-white font-mono text-xs font-bold flex items-center justify-center gap-2.5 transition-all shadow-[0_0_30px_rgba(255,79,0,0.35)] hover:scale-[1.01]"
+                  className="flex-1 h-11 rounded-xl bg-[#FF4F00] hover:bg-[#FF6A20] text-white font-geist text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(255,79,0,0.35)] hover:-translate-y-0.5 active:translate-y-0"
                 >
                   <Download className="w-4 h-4" />
-                  <span>Download .EXE (Windows x64)</span>
+                  <span>Descargar instalador .EXE (Windows x64)</span>
                 </a>
                 <button
                   onClick={() => setShowDownloadModal(true)}
-                  className="px-5 h-12 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-zinc-200 font-mono text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
+                  className="px-4 h-11 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-[#26262C] text-[#F4F4F5] font-geist text-xs transition-colors"
                 >
-                  <span>Verification Info</span>
+                  <span>Verificar firma</span>
                 </button>
               </div>
 
               {/* SHA-256 Box */}
-              <div className="p-3 rounded-xl bg-zinc-950/80 border border-zinc-800 flex items-center justify-between gap-3 text-2xs font-mono">
+              <div className="p-3 rounded-xl bg-[#09090B] border border-[#26262C] flex items-center justify-between gap-3 text-xs font-geist-mono">
                 <div className="flex items-center gap-2 truncate">
                   <ShieldCheck className="w-4 h-4 text-emerald-400 flex-none" />
-                  <span className="text-zinc-500 flex-none">SHA-256:</span>
-                  <span className="text-zinc-300 truncate select-all">{OFFICIAL_SHA256}</span>
+                  <span className="text-[#9A9AA5] flex-none">SHA-256:</span>
+                  <span className="text-[#F4F4F5] truncate select-all">{OFFICIAL_SHA256}</span>
                 </div>
                 <button
                   onClick={handleCopyHash}
-                  className="flex-none px-2 py-1 rounded-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition-colors flex items-center gap-1"
-                  title="Copy SHA-256 Checksum"
+                  className="flex-none px-2.5 py-1 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] text-[#F4F4F5] transition-colors flex items-center gap-1"
+                  title="Copiar Checksum SHA-256"
                 >
                   {copiedHash ? (
                     <>
                       <Check className="w-3 h-3 text-emerald-400" />
-                      <span className="text-emerald-400">Copied</span>
+                      <span className="text-emerald-400 text-2xs">Copiado</span>
                     </>
                   ) : (
                     <>
                       <Copy className="w-3 h-3" />
-                      <span>Copy</span>
+                      <span className="text-2xs">Copiar</span>
                     </>
                   )}
                 </button>
@@ -173,45 +155,40 @@ export const InstallerDownloadSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Security Guidance / SmartScreen Note */}
-          <div className="lg:col-span-5 flex flex-col justify-between p-8 rounded-3xl bg-zinc-900/30 border border-white/10 backdrop-blur-xl">
+          {/* Right Column: Security Guidance */}
+          <div className="lg:col-span-5 flex flex-col justify-between p-8 rounded-[28px] bg-[#111114] border border-[#26262C]">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/50 border border-blue-800/60 text-blue-400 text-2xs font-mono mb-4">
-                <Info className="w-3 h-3" />
-                <span>First-Run Installation Notice</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-geist-mono mb-4">
+                <Info className="w-3.5 h-3.5" />
+                <span>Aviso de primer inicio</span>
               </div>
 
-              <h3 className="text-xl font-bold text-white font-sans uppercase mb-3">
-                Windows SmartScreen Verification
+              <h3 className="text-xl font-display font-bold text-[#F4F4F5] mb-3">
+                Verificación de Windows SmartScreen
               </h3>
-              <p className="text-xs font-mono text-zinc-400 leading-relaxed mb-6">
-                FormatPulse is built by independent developers committed to zero-cloud software. Because we do not purchase costly (\$500/yr) enterprise corporate code-signing certificates, Microsoft Defender SmartScreen may display an &quot;unknown publisher&quot; warning on first launch.
+              <p className="text-xs font-geist text-[#9A9AA5] leading-relaxed mb-6">
+                FormatPulse es desarrollado de forma independiente y segura. Como no pagamos licencias corporativas innecesarias de certificados (\$500/año), Windows SmartScreen puede mostrar una advertencia preventiva de editor desconocido la primera vez.
               </p>
 
-              {/* Stylized Defender Card */}
-              <div className="p-4 rounded-2xl bg-zinc-950/90 border border-zinc-800 space-y-3 mb-6">
-                <div className="text-xs font-sans font-semibold text-zinc-200 flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-blue-400" />
-                  <span>How to complete setup in 2 clicks:</span>
+              {/* Steps */}
+              <div className="p-4 rounded-2xl bg-[#09090B] border border-[#26262C] space-y-3 mb-6">
+                <div className="text-xs font-geist font-semibold text-[#F4F4F5]">
+                  Cómo completar la instalación en 2 clics:
                 </div>
-                <ol className="list-decimal list-inside space-y-2 text-2xs font-mono text-zinc-300">
+                <ol className="list-decimal list-inside space-y-2 text-xs font-geist text-[#9A9AA5]">
                   <li>
-                    When Windows shows <span className="text-white font-bold">&quot;Windows protegió su PC&quot;</span>, click on{' '}
-                    <span className="text-accent underline font-semibold">Más información (More info)</span>.
+                    Si Windows muestra <span className="text-[#F4F4F5] font-semibold">&quot;Windows protegió su PC&quot;</span>, haz clic en{' '}
+                    <span className="text-[#FF4F00] font-semibold">Más información</span>.
                   </li>
                   <li>
-                    Click <span className="text-emerald-400 underline font-semibold">Ejecutar de todas formas (Run anyway)</span>.
+                    Haz clic en <span className="text-emerald-400 font-semibold">Ejecutar de todas formas</span>.
                   </li>
-                  <li>The app opens immediately with 0 background processes.</li>
+                  <li>La aplicación se iniciará de inmediato sin procesos de fondo.</li>
                 </ol>
               </div>
-
-              <p className="text-3xs font-mono text-zinc-500 leading-relaxed">
-                You can independently audit the executable hash against the official GitHub releases and SHA-256 manifest to guarantee 100% cryptographic integrity.
-              </p>
             </div>
 
-            <div className="pt-6 border-t border-zinc-800/80 flex items-center justify-between text-2xs font-mono text-zinc-400">
+            <div className="pt-6 border-t border-[#26262C] flex items-center justify-between text-xs font-geist text-[#9A9AA5]">
               <a
                 href={REPOSITORY_URL}
                 target="_blank"
@@ -220,13 +197,13 @@ export const InstallerDownloadSection: React.FC = () => {
                   e.preventDefault();
                   void openExternalUrl(REPOSITORY_URL);
                 }}
-                className="hover:text-white transition-colors flex items-center gap-1 text-accent"
+                className="hover:text-[#F4F4F5] transition-colors flex items-center gap-1 text-[#FF4F00]"
               >
-                <span>Audit GitHub Source</span>
+                <span>Auditar código en GitHub</span>
                 <ExternalLink className="w-3 h-3" />
               </a>
-              <span className="text-zinc-600">·</span>
-              <span>100% Virus-Free Clean Build</span>
+              <span className="text-[#26262C]">·</span>
+              <span className="text-emerald-400">100% Libre de telemetría</span>
             </div>
           </div>
         </div>

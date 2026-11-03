@@ -1,5 +1,4 @@
 import React from 'react';
-import { Terminal, ArrowUp, Mail, ExternalLink, ShieldCheck, Download } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { FormatPulseLogo } from '@/components/brand/FormatPulseLogo';
 import { APP_VERSION, SUPPORT_EMAIL, REPOSITORY_URL } from '@/constants/version';
@@ -10,107 +9,128 @@ export const LandingFooter: React.FC = () => {
   const setShowLegalModal = useAppStore((s) => s.setShowLegalModal);
   const setShowDownloadModal = useAppStore((s) => s.setShowDownloadModal);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
-    <footer className="w-full border-t border-zinc-800/80 bg-[#050609] px-4 py-16 select-none font-mono text-xs">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-        <div>
-          <div className="flex items-center gap-2.5 mb-3">
-            <FormatPulseLogo size={22} showText={true} version={`v${APP_VERSION}`} />
+    <footer className="border-t border-[#26262C] bg-[#09090B] py-14 select-none">
+      <div className="max-w-[1160px] mx-auto px-5">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12">
+          {/* Brand Info */}
+          <div className="md:col-span-2">
+            <a href="#top" className="flex items-center gap-2.5 font-display font-bold text-lg text-[#F4F4F5] mb-3">
+              <FormatPulseLogo size={24} animate={false} />
+              <span>FormatPulse</span>
+              <span className="text-[10px] font-mono text-[#9A9AA5] px-1.5 py-0.5 rounded border border-[#26262C] bg-[#111114]">
+                v{APP_VERSION}
+              </span>
+            </a>
+            <p className="font-geist text-sm text-[#9A9AA5] max-w-sm leading-relaxed">
+              Estudio de datos 100% local. Convierte formatos, infiere esquemas y enmascara datos sensibles sin telemetría de servidor.
+            </p>
+            <div className="mt-4 flex items-center gap-2 text-xs font-geist-mono text-emerald-400">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-dot" />
+              <span>Ejecución local en memoria · Sin cookies de rastreo</span>
+            </div>
           </div>
-          <p className="text-2xs text-zinc-500 max-w-sm leading-relaxed">
-            Local-first schema inference, data conversion, and sensitive PII anonymization. Zero-server telemetry, 100% in-browser memory execution.
-          </p>
-          <div className="mt-4 flex items-center gap-2 text-3xs text-emerald-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Zero telemetry active · No cookies tracked</span>
+
+          {/* Col 2: Producto */}
+          <div>
+            <h4 className="font-display font-bold text-sm text-[#F4F4F5] mb-4">Producto</h4>
+            <ul className="space-y-2.5 font-geist text-sm text-[#9A9AA5]">
+              <li>
+                <a href="#productos" className="hover:text-[#F4F4F5] transition-colors">
+                  Conversor de formatos
+                </a>
+              </li>
+              <li>
+                <a href="#flujo" className="hover:text-[#F4F4F5] transition-colors">
+                  Flujo de trabajo
+                </a>
+              </li>
+              <li>
+                <a href="#pricing" className="hover:text-[#F4F4F5] transition-colors">
+                  Planes y Precios
+                </a>
+              </li>
+              <li>
+                <a href="#installer" className="hover:text-[#F4F4F5] transition-colors">
+                  Instalador Windows .exe
+                </a>
+              </li>
+              <li>
+                <button
+                  onClick={() => setViewMode('workspace')}
+                  className="hover:text-[#FF4F00] text-left transition-colors font-medium"
+                >
+                  Abrir estudio →
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 3: Recursos y Legal */}
+          <div>
+            <h4 className="font-display font-bold text-sm text-[#F4F4F5] mb-4">Recursos</h4>
+            <ul className="space-y-2.5 font-geist text-sm text-[#9A9AA5]">
+              <li>
+                <a href="#seguridad" className="hover:text-[#F4F4F5] transition-colors">
+                  Auditoría de Privacidad
+                </a>
+              </li>
+              <li>
+                <a href="#faq" className="hover:text-[#F4F4F5] transition-colors">
+                  Preguntas frecuentes
+                </a>
+              </li>
+              <li>
+                <button
+                  onClick={() => setShowLegalModal(true)}
+                  className="hover:text-[#F4F4F5] text-left transition-colors"
+                >
+                  Términos y Privacidad Cero
+                </button>
+              </li>
+              <li>
+                <a
+                  href={REPOSITORY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    void openExternalUrl(REPOSITORY_URL);
+                  }}
+                  className="hover:text-[#F4F4F5] transition-colors"
+                >
+                  Repositorio GitHub
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`mailto:${SUPPORT_EMAIL}?subject=FormatPulse%20Support`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    void openExternalUrl(`mailto:${SUPPORT_EMAIL}?subject=FormatPulse%20Support`);
+                  }}
+                  className="hover:text-[#F4F4F5] transition-colors"
+                >
+                  Contacto y Soporte
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-5 text-2xs text-zinc-400">
-          <button
-            onClick={() => setViewMode('workspace')}
-            className="hover:text-white transition-colors flex items-center gap-1.5 text-accent font-semibold"
-          >
-            <Terminal className="w-3.5 h-3.5" />
-            <span>Launch Workspace</span>
-          </button>
-
-          <button
-            onClick={() => setShowDownloadModal(true)}
-            className="hover:text-white transition-colors flex items-center gap-1.5"
-          >
-            <Download className="w-3.5 h-3.5 text-accent" />
-            <span>Download .exe (v{APP_VERSION})</span>
-          </button>
-
-          <button
-            onClick={() => setShowLegalModal(true)}
-            className="hover:text-white transition-colors"
-          >
-            Terms &amp; EULA
-          </button>
-
-          <button
-            onClick={() => setShowLegalModal(true)}
-            className="hover:text-white transition-colors"
-          >
-            Zero-Data Privacy
-          </button>
-
-          <button
-            onClick={() => setShowLegalModal(true)}
-            className="hover:text-white transition-colors"
-          >
-            14-Day Refund Policy
-          </button>
-
-          <a
-            href={REPOSITORY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => {
-              e.preventDefault();
-              void openExternalUrl(REPOSITORY_URL);
-            }}
-            className="hover:text-white transition-colors flex items-center gap-1"
-          >
-            <span>GitHub</span>
-            <ExternalLink className="w-3 h-3 text-zinc-500" />
-          </a>
-
-          <a
-            href={`mailto:${SUPPORT_EMAIL}?subject=FormatPulse%20Support%20Inquiry`}
-            onClick={(e) => {
-              e.preventDefault();
-              void openExternalUrl(`mailto:${SUPPORT_EMAIL}?subject=FormatPulse%20Support%20Inquiry`);
-            }}
-            className="hover:text-white transition-colors flex items-center gap-1"
-          >
-            <Mail className="w-3.5 h-3.5" />
-            <span>Support</span>
-          </a>
-
-          <button
-            onClick={scrollToTop}
-            className="p-2 bg-white/[0.04] border border-white/10 hover:bg-white/[0.08] text-zinc-400 hover:text-white rounded-full transition-colors"
-            title="Scroll to Top"
-          >
-            <ArrowUp className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-2xs text-zinc-600">
-        <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-emerald-500" />
-          <span>ALL COMPUTATION IS LOCAL · NO TELEMETRY REGISTERED</span>
-        </div>
-        <div>
-          &copy; {new Date().getFullYear()} FormatPulse. Spaceship Industrial Edition.
+        {/* Bottom Bar */}
+        <div className="pt-6 border-t border-[#26262C] flex flex-col sm:flex-row items-center justify-between gap-4 font-geist text-xs text-[#9A9AA5]">
+          <p>© 2026 FormatPulse. Todos los derechos reservados.</p>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setShowDownloadModal(true)}
+              className="hover:text-[#F4F4F5] transition-colors"
+            >
+              Descargar Desktop v{APP_VERSION}
+            </button>
+            <span>·</span>
+            <span className="text-emerald-400">100% Local-First</span>
+          </div>
         </div>
       </div>
     </footer>

@@ -48,31 +48,113 @@ export function persistLanguage(lang: Language): void {
 
 export const translations = {
   // ── Navbar ──────────────────────────────────────────────────────────────────
-  nav_how_it_works:   { es: 'Cómo funciona', en: 'How it works' },
+  nav_product:        { es: 'Producto',       en: 'Product' },
+  nav_solutions:      { es: 'Soluciones',     en: 'Solutions' },
+  nav_resources:      { es: 'Recursos',       en: 'Resources' },
+  nav_how_it_works:   { es: 'Cómo funciona',  en: 'How it works' },
   nav_privacy:        { es: 'Privacidad',     en: 'Privacy' },
   nav_pricing:        { es: 'Precios',        en: 'Pricing' },
   nav_download:       { es: 'Descargar .exe', en: 'Download .exe' },
   nav_launch:         { es: 'Abrir Workspace', en: 'Launch Workspace' },
-  nav_pro_active:     { es: 'PRO ACTIVO',    en: 'PRO ACTIVE' },
-  nav_lifetime:       { es: 'Lifetime $14',  en: 'Lifetime $14' },
+  nav_open_studio:    { es: 'Abrir estudio',  en: 'Launch Studio' },
+  nav_pro_active:     { es: 'PRO ACTIVO',     en: 'PRO ACTIVE' },
+  nav_lifetime:       { es: 'Lifetime $14',   en: 'Lifetime $14' },
+  nav_search:         { es: 'Buscar',         en: 'Search' },
 
-  // ── Hero ─────────────────────────────────────────────────────────────────────
+  // ── Spaceship Mega Menu Sub-items ───────────────────────────────────────────
+  nav_p_converter:    { es: 'Conversor de formatos', en: 'Format Converter' },
+  nav_p_converter_sub:{ es: 'JSON, CSV y YAML en cualquier dirección.', en: 'JSON, CSV and YAML in any direction.' },
+  nav_p_schema:       { es: 'Generador de esquemas', en: 'Schema Generator' },
+  nav_p_schema_sub:   { es: 'TypeScript, Zod, OpenAPI y SQL desde tus datos.', en: 'TypeScript, Zod, OpenAPI and SQL from data.' },
+  nav_p_mask:         { es: 'Enmascarado de PII', en: 'PII Sanitizer' },
+  nav_p_mask_sub:     { es: 'Oculta correos, teléfonos y secretos antes de exportar.', en: 'Hide emails, phones and secrets before export.' },
+  nav_p_flow:         { es: 'Flujo de trabajo', en: 'Workflow' },
+  nav_p_flow_sub:     { es: 'De pegar los datos a copiar el resultado.', en: 'From pasting data to copying the result.' },
+
+  nav_s_api:          { es: 'Desarrollo de APIs', en: 'API Development' },
+  nav_s_api_sub:      { es: 'Genera tipos y contratos desde respuestas reales.', en: 'Generate types and contracts from responses.' },
+  nav_s_data:         { es: 'Equipos de datos', en: 'Data Engineering' },
+  nav_s_data_sub:     { es: 'Limpia y convierte archivos sin subirlos a ningún sitio.', en: 'Clean and convert files without uploading.' },
+  nav_s_reg:          { es: 'Sectores regulados', en: 'Regulated Sectors' },
+  nav_s_reg_sub:      { es: 'Salud, finanzas y legal: nada sale del equipo.', en: 'Health, finance & legal: zero outbound data.' },
+
+  nav_r_verify:       { es: 'Verifica la privacidad', en: 'Verify Privacy' },
+  nav_r_verify_sub:   { es: 'Compruébalo en la pestaña Network de tu navegador.', en: 'Inspect in your browser Network tab.' },
+  nav_r_faq:          { es: 'Preguntas frecuentes', en: 'FAQ' },
+  nav_r_faq_sub:      { es: 'Formatos, privacidad y cumplimiento.', en: 'Formats, privacy and compliance.' },
+  nav_r_studio:       { es: 'Abrir el estudio', en: 'Launch Studio' },
+  nav_r_studio_sub:   { es: 'Empieza a transformar ahora mismo.', en: 'Start transforming right now.' },
+  faq_title:          { es: 'Preguntas frecuentes', en: 'Frequently asked questions' },
+
+  // ── Hero & Studio ────────────────────────────────────────────────────────────
   hero_badge_label:   { es: 'ARQUITECTURA SWISS PRECISION', en: 'SWISS PRECISION ARCHITECTURE' },
   hero_badge_sub:     { es: 'CERO TELEMETRÍA DE SERVIDOR',  en: 'ZERO SERVER TELEMETRY' },
   hero_h1:            {
-    es: 'Convierte, formatea y protege tus datos en tu propia máquina.',
-    en: 'Convert, format and protect your data — entirely on your machine.',
+    es: 'Convierte, tipa y limpia tus datos sin enviarlos a nadie',
+    en: 'Convert, type and sanitize your data without sending it to anyone',
   },
   hero_subtitle:      {
-    es: 'Pega tu JSON, CSV o YAML. Obtén estructuras ordenadas, tipos para TypeScript y oculta datos sensibles. Sin registros, sin suscripciones y sin enviar datos a internet.',
-    en: 'Paste your JSON, CSV or YAML. Get clean structures, TypeScript types and mask sensitive data. No accounts, no subscriptions, no data leaves your machine.',
+    es: 'FormatPulse transforma JSON, CSV y YAML, genera TypeScript, Zod, OpenAPI y SQL, y enmascara datos personales. Todo ocurre dentro de tu navegador.',
+    en: 'FormatPulse transforms JSON, CSV & YAML, generates TypeScript, Zod, OpenAPI & SQL, and scrubs personal data. Everything runs inside your browser.',
   },
-  hero_cta_primary:   { es: 'Abrir Workspace Gratis', en: 'Launch Free Workspace' },
+  hero_cta_primary:   { es: 'Abrir el estudio', en: 'Launch Studio' },
   hero_cta_secondary: { es: 'Descargar para Windows (.exe)', en: 'Download for Windows (.exe)' },
+  hero_cta_verify:    { es: 'Cómo comprobarlo', en: 'How to verify' },
   hero_badge_gdpr:    { es: 'GDPR Art.25 & SOC2 Seguro',   en: 'GDPR Art.25 & SOC2 Safe' },
   hero_badge_worker:  { es: 'Motor Web Worker Paralelo',   en: 'Web Worker Parallel Engine' },
   hero_badge_latency: { es: 'Latencia 0.38ms en Memoria',  en: '0.38ms In-Memory Latency' },
   hero_badge_air:     { es: 'Modo Air-Gap Listo',           en: 'Air-Gapped Ready' },
+  studio_mask_label:  { es: 'Enmascarar datos personales', en: 'Mask personal data' },
+  studio_footer_note: { es: 'Demostración procesada en esta pestaña. Nada se envía a un servidor.', en: 'Demo processed in this tab. Nothing is ever sent to a server.' },
+
+  // ── Trio Section (Todo ocurre en tu navegador) ──────────────────────────────
+  trio_title:         { es: 'Todo ocurre en tu navegador', en: 'Everything happens in your browser' },
+  trio_1_title:       { es: 'Sin servidor de por medio', en: 'Zero servers involved' },
+  trio_1_desc:        { es: 'La conversión corre en tu equipo. No hay subidas de archivos ni enlaces compartidos que puedan filtrarse.', en: 'Conversion runs on your machine. No file uploads or shared links that can leak.' },
+  trio_2_title:       { es: 'Esquemas desde datos reales', en: 'Schemas from real data' },
+  trio_2_desc:        { es: 'Pega una respuesta de API y obtén tipos, validadores y tablas listos para tu proyecto.', en: 'Paste an API response and get types, validators and tables ready for your project.' },
+  trio_3_title:       { es: 'Datos personales fuera de vista', en: 'Personal data kept private' },
+  trio_3_desc:        { es: 'Enmascara correos, teléfonos y nombres antes de copiar o compartir el resultado.', en: 'Mask emails, phone numbers and names before copying or sharing.' },
+
+  // ── Bento Section (Tres herramientas en una sola mesa) ──────────────────────
+  bento_title:        { es: 'Tres herramientas en una sola mesa de trabajo', en: 'Three tools in a single workbench' },
+  bento_1_title:      { es: 'Conversor de formatos', en: 'Format converter' },
+  bento_1_desc:       { es: 'Cambia entre JSON, CSV y YAML sin abrir otra pestaña ni pegar tus datos en un sitio ajeno.', en: 'Convert between JSON, CSV and YAML without opening third-party tabs or pasting into foreign servers.' },
+  bento_2_title:      { es: 'Generador de esquemas', en: 'Schema generator' },
+  bento_2_desc:       { es: 'TypeScript, Zod, OpenAPI y SQL construidos a partir de la estructura de tus datos.', en: 'TypeScript, Zod, OpenAPI and SQL built directly from your data structure.' },
+  bento_3_title:      { es: 'Enmascarado de datos personales', en: 'PII & Secrets scrubber' },
+  bento_3_desc:       { es: 'Sustituye valores sensibles por versiones ocultas y comparte el resultado con tranquilidad.', en: 'Replace sensitive values with masked representations and share with confidence.' },
+
+  // ── Scroll Flow (De pegar a copiar, sin pasos de más) ────────────────────────
+  flow_title:         { es: 'De pegar a copiar, sin pasos de más', en: 'From paste to copy, with zero friction' },
+  flow_1_title:       { es: 'Pega tus datos', en: 'Paste your data' },
+  flow_1_desc:        { es: 'JSON, CSV o YAML directamente en el editor.', en: 'JSON, CSV or YAML directly in the editor.' },
+  flow_2_title:       { es: 'Elige la salida', en: 'Choose output' },
+  flow_2_desc:        { es: 'Otro formato, o código: TypeScript, Zod, OpenAPI o SQL.', en: 'Another format or code: TypeScript, Zod, OpenAPI or SQL.' },
+  flow_3_title:       { es: 'Enmascara lo sensible', en: 'Mask sensitive values' },
+  flow_3_desc:        { es: 'Activa el enmascarado para ocultar datos personales antes de exportar.', en: 'Toggle masking to hide confidential data before exporting.' },
+  flow_4_title:       { es: 'Copia el resultado', en: 'Copy the result' },
+  flow_4_desc:        { es: 'Llévalo a tu proyecto. Tus datos originales no salieron de la pestaña.', en: 'Paste into your project. Original data never left your browser tab.' },
+
+  // ── Security Verification & Comparison ──────────────────────────────────────
+  sec_title:          { es: 'No tienes que creernos: compruébalo en 20 segundos', en: "Don't trust our words: verify it in 20 seconds" },
+  sec_desc:           {
+    es: 'Abre las herramientas de desarrollo de tu navegador, entra en la pestaña Network y convierte un archivo en FormatPulse. No verás ninguna petición con tus datos, porque el procesamiento ocurre en tu equipo.',
+    en: 'Open your browser DevTools, switch to the Network tab and convert any payload in FormatPulse. You will see 0 outbound requests with your data.',
+  },
+  sec_net_empty:      { es: 'Sin peticiones con tus datos mientras conviertes.', en: 'Zero network requests with your data while converting.' },
+  sec_net_badge:      { es: '0 peticiones con tus datos', en: '0 network requests with your data' },
+  sec_cmp_th1:        { es: 'En muchos formateadores en línea', en: 'In common online converters' },
+  sec_cmp_th2:        { es: 'En FormatPulse', en: 'In FormatPulse' },
+  sec_cmp_r1_title:   { es: 'Dónde se procesa', en: 'Where it runs' },
+  sec_cmp_r1_c1:      { es: 'En un servidor ajeno', en: 'On a remote third-party server' },
+  sec_cmp_r1_c2:      { es: 'En tu navegador / PC', en: 'Inside your local browser / PC' },
+  sec_cmp_r2_title:   { es: 'Qué pasa con lo que pegas', en: 'What happens to your input' },
+  sec_cmp_r2_c1:      { es: 'Puede guardarse o compartirse por enlace', en: 'Can be logged, retained or shared via link' },
+  sec_cmp_r2_c2:      { es: 'Se queda en tu pestaña', en: 'Stays private inside your tab memory' },
+  sec_cmp_r3_title:   { es: 'Datos personales y claves', en: 'Personal data & secrets' },
+  sec_cmp_r3_c1:      { es: 'Los copias tal cual están expuestos', en: 'Exposed as plaintext' },
+  sec_cmp_r3_c2:      { es: 'Los enmascaras antes de exportar', en: 'Sanitized and masked before export' },
 
   // ── Guided Use Case Section ───────────────────────────────────────────────────
   guided_title:       { es: '¿Qué quieres hacer hoy?',          en: 'What do you want to do today?' },

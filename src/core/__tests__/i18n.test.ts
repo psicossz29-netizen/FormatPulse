@@ -45,13 +45,13 @@ describe('i18n — t()', () => {
   it('translates hero_h1 to Spanish', () => {
     const result = t('hero_h1', 'es');
     expect(result).toContain('Convierte');
-    expect(result).toContain('máquina');
+    expect(result).toContain('datos');
   });
 
   it('translates hero_h1 to English', () => {
     const result = t('hero_h1', 'en');
     expect(result).toContain('Convert');
-    expect(result).toContain('machine');
+    expect(result).toContain('data');
   });
 
   it('translates nav_launch to Spanish', () => {

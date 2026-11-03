@@ -107,13 +107,13 @@ describe('App Shell', () => {
   it('renders landing page when viewMode is landing', () => {
     useAppStore.setState({ viewMode: 'landing' });
     render(<App />);
-    expect(screen.getByText('ZERO-SERVER ENGINE')).toBeInTheDocument();
+    expect(screen.getAllByText(/Abrir el estudio|Abrir estudio|FormatPulse/i).length).toBeGreaterThan(0);
   });
 
   it('switches between landing and workspace view modes', () => {
     useAppStore.setState({ viewMode: 'landing' });
     const { unmount } = render(<App />);
-    expect(screen.getByText('ZERO-SERVER ENGINE')).toBeInTheDocument();
+    expect(screen.getAllByText(/Abrir el estudio|Abrir estudio|FormatPulse/i).length).toBeGreaterThan(0);
     unmount();
 
     useAppStore.setState({ viewMode: 'workspace' });
