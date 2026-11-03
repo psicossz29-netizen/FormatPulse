@@ -50,117 +50,125 @@ export const DownloadModal: React.FC = () => {
     >
       {/* ── Backdrop ────────────────────────────────────────────────── */}
       <div
-        className="fixed inset-0 bg-zinc-950/85 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-[#09090B]/85 backdrop-blur-md transition-opacity"
         onClick={() => setShowDownloadModal(false)}
       />
 
-      {/* ── Modal Window ────────────────────────────────────────────── */}
-      <div className="relative w-full max-w-xl bg-zinc-900 border border-zinc-800 shadow-2xl rounded-xs overflow-hidden my-auto text-zinc-100">
+      {/* ── Spaceship Modal Window ──────────────────────────────────── */}
+      <div className="relative w-full max-w-xl bg-[#111114] border border-[#26262C] shadow-[0_32px_80px_rgba(0,0,0,0.85)] rounded-[28px] overflow-hidden my-auto text-[#F4F4F5] animate-pop font-geist">
         {/* Header */}
-        <div className="flex items-center justify-between h-11 px-4 border-b border-zinc-800 bg-zinc-950">
-          <div className="flex items-center gap-2">
-            <FormatPulseLogo size={18} animate={false} />
-            <span className="text-xs font-semibold text-zinc-200 tracking-tight font-mono">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#26262C] bg-[#09090B]/60">
+          <div className="flex items-center gap-2.5">
+            <FormatPulseLogo size={22} animate={false} />
+            <span className="font-display font-bold text-sm text-[#F4F4F5] tracking-tight">
               INSTALLER // WINDOWS x64 NATIVE
             </span>
-            <span className="text-2xs font-mono px-1.5 py-0.5 rounded-xs bg-emerald-950/60 border border-emerald-800/60 text-emerald-400">
-              v1.2.1
+            <span className="text-[10px] font-geist-mono px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-medium">
+              v{APP_VERSION}
             </span>
           </div>
           <button
             onClick={() => setShowDownloadModal(false)}
-            className="w-6 h-6 flex items-center justify-center text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors rounded-xs focus:outline-none"
+            className="w-8 h-8 flex items-center justify-center text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.06] transition-colors rounded-xl focus:outline-none"
             aria-label="Close"
           >
-            <X className="w-4 h-4" strokeWidth={2} />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Content Body */}
-        <div className="p-5 space-y-5 max-h-[85vh] overflow-y-auto">
+        <div className="p-6 space-y-5 max-h-[85vh] overflow-y-auto">
           {/* ── Main Download Action ─────────────────────────────────── */}
-          <div className="p-4 rounded-xs bg-zinc-950 border border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="p-5 rounded-2xl bg-[#09090B] border border-[#26262C] flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
-              <div className="text-sm font-semibold font-mono text-zinc-100">
-                FormatPulse_1.2.1_x64-setup.exe
+              <div className="text-sm font-semibold font-geist-mono text-[#F4F4F5]">
+                FormatPulse_{APP_VERSION}_x64-setup.exe
               </div>
-              <div className="text-2xs text-zinc-400 font-mono">
-                Tamaño: ~1.17 MB · Windows 10/11 x64 · 100% Offline
+              <div className="text-xs text-[#9A9AA5] font-geist">
+                Tamaño: ~7.8 MB · Windows 10/11 x64 · 100% Offline Air-Gapped
               </div>
             </div>
 
             <a
               href={EXE_URL}
-              download="FormatPulse_1.2.1_x64-setup.exe"
-              className="flex-none flex items-center gap-2 h-9 px-4 bg-accent hover:bg-accent-hover text-white font-mono text-xs font-semibold tracking-tight transition-all rounded-xs shadow-[0_0_15px_rgba(255,79,0,0.3)]"
+              download={`FormatPulse_${APP_VERSION}_x64-setup.exe`}
+              className="flex-none flex items-center gap-2 h-11 px-5 bg-[#FF4F00] hover:bg-[#FF6A20] text-white font-geist text-xs font-semibold tracking-tight transition-all rounded-xl shadow-[0_0_24px_rgba(255,79,0,0.35)] hover:-translate-y-0.5 active:translate-y-0"
             >
               <Download className="w-4 h-4" />
               <span>Iniciar Descarga</span>
             </a>
           </div>
 
-          {/* ── SmartScreen Guidance (Dark Windows Defender Simulation) ── */}
-          <div className="rounded-xs border border-amber-900/50 bg-amber-950/20 p-4 space-y-3">
-            <div className="flex items-start gap-2.5">
-              <AlertTriangle className="w-4 h-4 text-amber-400 flex-none mt-0.5" />
+          {/* ── SmartScreen Guidance (Spaceship Shield Card) ── */}
+          <div className="rounded-2xl border border-amber-500/25 bg-amber-500/5 p-4 space-y-3">
+            <div className="flex items-start gap-3">
+              <div className="w-7 h-7 rounded-xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 flex-none mt-0.5">
+                <AlertTriangle className="w-4 h-4" />
+              </div>
               <div className="space-y-1">
-                <div className="text-xs font-semibold font-mono text-amber-300">
+                <div className="text-xs font-display font-bold text-amber-300">
                   ¿Por qué Windows muestra la pantalla de SmartScreen?
                 </div>
-                <p className="text-2xs text-zinc-300 leading-relaxed font-sans">
+                <p className="text-xs text-[#9A9AA5] leading-relaxed font-geist">
                   FormatPulse es un software nuevo, independiente y de código abierto que no realiza telemetría a los servidores de Microsoft. Microsoft Defender muestra este aviso estándar de forma preventiva a cualquier aplicación recién publicada hasta acumular reputación global.
                 </p>
               </div>
             </div>
 
             {/* Step by step mockup box */}
-            <div className="bg-zinc-950 border border-zinc-800 p-3 rounded-xs space-y-2 font-mono text-2xs">
-              <div className="text-zinc-400 uppercase text-3xs tracking-wider">
-                Pasos para ejecutar el instalador:
+            <div className="bg-[#09090B] border border-[#26262C] p-3.5 rounded-xl space-y-2.5">
+              <div className="text-[#9A9AA5] uppercase text-[10px] font-geist-mono tracking-wider font-semibold">
+                PASOS PARA EJECUTAR EL INSTALADOR:
               </div>
-              <div className="flex items-center gap-3 p-2 bg-zinc-900 border border-zinc-800/80 rounded-xs">
-                <span className="w-5 h-5 flex items-center justify-center bg-zinc-800 text-zinc-200 font-bold rounded-xs">
+              <div className="flex items-center gap-3 p-2.5 bg-[#111114] border border-[#26262C] rounded-xl text-xs font-geist">
+                <span className="w-6 h-6 flex items-center justify-center bg-white/[0.06] border border-[#26262C] text-[#F4F4F5] font-bold rounded-lg flex-none text-xs">
                   1
                 </span>
-                <span className="text-zinc-300">
-                  En la ventana azul/negra, pulsa en el texto azul: <strong className="text-sky-400 underline">«Más información»</strong> (More info).
+                <span className="text-[#9A9AA5]">
+                  En la ventana azul/negra, pulsa en el texto azul:{' '}
+                  <strong className="text-sky-400 underline font-semibold">«Más información»</strong> (More info).
                 </span>
               </div>
-              <div className="flex items-center gap-3 p-2 bg-zinc-900 border border-zinc-800/80 rounded-xs">
-                <span className="w-5 h-5 flex items-center justify-center bg-accent text-white font-bold rounded-xs">
+              <div className="flex items-center gap-3 p-2.5 bg-[#111114] border border-[#26262C] rounded-xl text-xs font-geist">
+                <span className="w-6 h-6 flex items-center justify-center bg-[#FF4F00] text-white font-bold rounded-lg flex-none text-xs shadow-[0_0_12px_rgba(255,79,0,0.35)]">
                   2
                 </span>
-                <span className="text-zinc-300">
-                  Aparecerá el botón abajo a la derecha: <strong className="text-white bg-zinc-800 px-1.5 py-0.5 rounded-xs border border-zinc-700">«Ejecutar de todas formas»</strong>.
+                <span className="text-[#9A9AA5]">
+                  Aparecerá el botón abajo a la derecha:{' '}
+                  <strong className="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/30 font-semibold">
+                    «Ejecutar de todas formas»
+                  </strong>.
                 </span>
               </div>
             </div>
           </div>
 
           {/* ── Security & Integrity Verification ─────────────────────── */}
-          <div className="p-3 bg-zinc-950 border border-zinc-800 rounded-xs space-y-2 text-2xs font-mono">
-            <div className="flex items-center justify-between text-zinc-400">
-              <span className="flex items-center gap-1.5 text-emerald-400 font-semibold">
-                <ShieldCheck className="w-3.5 h-3.5" />
+          <div className="p-4 bg-[#09090B] border border-[#26262C] rounded-2xl space-y-2.5">
+            <div className="flex items-center justify-between text-xs font-geist">
+              <span className="flex items-center gap-1.5 text-emerald-400 font-semibold font-geist-mono text-xs">
+                <ShieldCheck className="w-4 h-4" />
                 VERIFICACIÓN CRIPTOGRÁFICA DE INTEGRIDAD
               </span>
-              <span className="text-3xs text-zinc-500">SHA-256</span>
+              <span className="text-[10px] font-geist-mono px-2 py-0.5 rounded-md bg-white/[0.04] border border-[#26262C] text-[#9A9AA5]">
+                SHA-256
+              </span>
             </div>
 
-            <div className="flex items-center justify-between gap-2 p-1.5 bg-zinc-900 border border-zinc-800 rounded-xs text-3xs text-zinc-300 overflow-x-auto">
-              <span className="truncate select-all">{SHA256_HASH}</span>
+            <div className="flex items-center justify-between gap-2 p-2.5 bg-[#111114] border border-[#26262C] rounded-xl text-xs font-geist-mono text-[#9A9AA5] overflow-x-auto">
+              <span className="truncate select-all text-[#F4F4F5]">{SHA256_HASH}</span>
               <button
                 onClick={handleCopyHash}
-                className="flex items-center gap-1 px-2 py-0.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-xs transition-colors flex-none"
+                className="flex items-center gap-1.5 px-3 py-1 bg-white/[0.06] hover:bg-white/[0.1] text-[#F4F4F5] rounded-lg transition-colors flex-none font-geist text-xs"
               >
                 {copiedHash ? (
                   <>
-                    <Check className="w-3 h-3 text-emerald-400" />
-                    <span>Copiado</span>
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    <span className="text-emerald-400">Copiado</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3 h-3" />
+                    <Copy className="w-3.5 h-3.5" />
                     <span>Copiar</span>
                   </>
                 )}
@@ -169,37 +177,37 @@ export const DownloadModal: React.FC = () => {
           </div>
 
           {/* ── Alternatives: WinGet or Web Studio ─────────────────────── */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-zinc-800">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
             {/* WinGet Option */}
-            <div className="p-3 bg-zinc-950 border border-zinc-800 rounded-xs space-y-1.5">
-              <div className="flex items-center gap-1.5 text-2xs font-mono font-semibold text-zinc-200">
-                <Terminal className="w-3 h-3 text-accent" />
+            <div className="p-4 bg-[#09090B] border border-[#26262C] rounded-2xl space-y-2">
+              <div className="flex items-center gap-2 text-xs font-display font-semibold text-[#F4F4F5]">
+                <Terminal className="w-3.5 h-3.5 text-[#FF4F00]" />
                 <span>Instalar vía WinGet</span>
               </div>
-              <div className="flex items-center justify-between gap-2 p-1.5 bg-zinc-900 rounded-xs text-3xs font-mono text-zinc-400">
-                <code>winget install formatpulse</code>
+              <div className="flex items-center justify-between gap-2 p-2 bg-[#111114] border border-[#26262C] rounded-xl text-xs font-geist-mono text-[#9A9AA5]">
+                <code className="text-[#F4F4F5]">winget install formatpulse</code>
                 <button
                   onClick={handleCopyWinget}
-                  className="p-1 hover:text-zinc-100 transition-colors"
+                  className="p-1 hover:text-[#FF4F00] transition-colors focus:outline-none"
                   title="Copiar comando"
                 >
                   {copiedWinget ? (
-                    <Check className="w-3 h-3 text-emerald-400" />
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
                   ) : (
-                    <Copy className="w-3 h-3" />
+                    <Copy className="w-3.5 h-3.5" />
                   )}
                 </button>
               </div>
             </div>
 
             {/* Direct Web Studio Option */}
-            <div className="p-3 bg-zinc-950 border border-zinc-800 rounded-xs space-y-1.5 flex flex-col justify-between">
+            <div className="p-4 bg-[#09090B] border border-[#26262C] rounded-2xl space-y-2 flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-1.5 text-2xs font-mono font-semibold text-zinc-200">
-                  <Monitor className="w-3 h-3 text-emerald-400" />
+                <div className="flex items-center gap-2 text-xs font-display font-semibold text-[#F4F4F5]">
+                  <Monitor className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Usar sin instalación</span>
                 </div>
-                <div className="text-3xs text-zinc-400 font-sans mt-0.5">
+                <div className="text-xs text-[#9A9AA5] font-geist mt-1">
                   Misma privacidad offline directamente en tu navegador.
                 </div>
               </div>
@@ -208,17 +216,17 @@ export const DownloadModal: React.FC = () => {
                   setShowDownloadModal(false);
                   setViewMode('workspace');
                 }}
-                className="flex items-center justify-between text-2xs font-mono text-accent hover:underline pt-1"
+                className="flex items-center justify-between text-xs font-geist font-medium text-[#FF4F00] hover:text-[#FF6A20] pt-1 transition-colors group"
               >
                 <span>Abrir Web Studio [⌘K]</span>
-                <ArrowRight className="w-3 h-3" />
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </button>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="h-9 px-4 border-t border-zinc-800 bg-zinc-950 flex items-center justify-between text-3xs font-mono text-zinc-500">
+        <div className="h-11 px-6 border-t border-[#26262C] bg-[#09090B]/60 flex items-center justify-between text-xs font-geist text-[#9A9AA5]">
           <span>100% Client-Side Engine · Zero Network IO</span>
           <a
             href="https://github.com/psicossz29-netizen/FormatPulse/releases"
@@ -228,10 +236,10 @@ export const DownloadModal: React.FC = () => {
               e.preventDefault();
               void openExternalUrl('https://github.com/psicossz29-netizen/FormatPulse/releases');
             }}
-            className="flex items-center gap-1 hover:text-zinc-300 transition-colors"
+            className="flex items-center gap-1.5 hover:text-[#F4F4F5] transition-colors text-xs"
           >
             <span>Ver Release en GitHub</span>
-            <ExternalLink className="w-2.5 h-2.5" />
+            <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </div>
       </div>

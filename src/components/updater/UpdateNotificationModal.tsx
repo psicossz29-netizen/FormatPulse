@@ -1,21 +1,19 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   X,
   RefreshCw,
+  Sparkles,
   Download,
-  CheckCircle2,
-  AlertCircle,
   ExternalLink,
   ShieldCheck,
-  Sparkles,
+  CheckCircle2,
+  AlertCircle,
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
-import {
-  checkForUpdates,
-  CURRENT_APP_VERSION,
-  type ReleaseManifest,
-} from '@/services/updaterService';
+import { checkForUpdates, type UpdateCheckResult } from '@/services/updaterService';
+import { APP_VERSION as CURRENT_APP_VERSION } from '@/constants/version';
 import { openExternalUrl } from '@/core/desktopBridge';
+import { FormatPulseLogo } from '@/components/brand/FormatPulseLogo';
 import { cn } from '@/lib/utils';
 
 export const UpdateNotificationModal: React.FC = () => {
@@ -23,28 +21,28 @@ export const UpdateNotificationModal: React.FC = () => {
   const setShowUpdateModal = useAppStore((s) => s.setShowUpdateModal);
 
   const [isChecking, setIsChecking] = useState(false);
-  const [updateResult, setUpdateResult] = useState<{
-    hasUpdate: boolean;
-    manifest: ReleaseManifest | null;
-    error?: string;
-  } | null>(null);
+  const [updateResult, setUpdateResult] = useState<UpdateCheckResult | null>(null);
 
   const runCheck = useCallback(async () => {
     setIsChecking(true);
-    setUpdateResult(null);
     try {
       const res = await checkForUpdates();
+      setUpdateResult(res);
+    } catch {
       setUpdateResult({
-        hasUpdate: res.hasUpdate,
-        manifest: res.manifest,
-        error: res.error,
+        hasUpdate: false,
+        currentVersion: CURRENT_APP_VERSION,
+        latestVersion: CURRENT_APP_VERSION,
+        manifest: null,
+        checkedAt: Date.now(),
+        error: 'Network unreachable or offline mode active.',
       });
     } finally {
       setIsChecking(false);
     }
   }, []);
 
-  // Run a check when the modal opens if no check has occurred yet
+  // When modal is shown and we haven't checked yet, auto-trigger check
   useEffect(() => {
     if (showUpdateModal && !updateResult) {
       void runCheck();
@@ -62,73 +60,73 @@ export const UpdateNotificationModal: React.FC = () => {
     >
       {/* ── Backdrop ────────────────────────────────────────────────── */}
       <div
-        className="fixed inset-0 bg-zinc-950/85 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-[#09090B]/85 backdrop-blur-md transition-opacity"
         onClick={() => setShowUpdateModal(false)}
       />
 
-      {/* ── Modal Window ────────────────────────────────────────────── */}
-      <div className="relative w-full max-w-lg bg-zinc-900 border border-zinc-800 shadow-2xl rounded-xs overflow-hidden my-auto">
+      {/* ── Spaceship Modal Window ──────────────────────────────────── */}
+      <div className="relative w-full max-w-lg bg-[#111114] border border-[#26262C] shadow-[0_32px_80px_rgba(0,0,0,0.85)] rounded-[28px] overflow-hidden my-auto text-[#F4F4F5] animate-pop font-geist">
         {/* Header */}
-        <div className="flex items-center justify-between h-10 px-4 border-b border-zinc-800 bg-zinc-950">
-          <div className="flex items-center gap-2">
-            <RefreshCw className={cn('w-4 h-4 text-accent', isChecking && 'animate-spin')} />
-            <span className="text-xs font-semibold text-zinc-200 tracking-tight">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#26262C] bg-[#09090B]/60">
+          <div className="flex items-center gap-2.5">
+            <FormatPulseLogo size={22} animate={false} />
+            <span className="font-display font-bold text-sm text-[#F4F4F5] tracking-tight">
               FormatPulse Release Engine
             </span>
-            <span className="text-2xs font-mono px-1.5 py-0.5 rounded-xs bg-zinc-800 text-zinc-400">
+            <span className="text-[10px] font-geist-mono px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-medium">
               v{CURRENT_APP_VERSION}
             </span>
           </div>
           <button
             onClick={() => setShowUpdateModal(false)}
-            className="w-6 h-6 flex items-center justify-center text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent rounded-xs"
+            className="w-8 h-8 flex items-center justify-center text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.06] transition-colors rounded-xl focus:outline-none"
             aria-label="Close"
           >
-            <X className="w-4 h-4" strokeWidth={2} />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Content Body */}
-        <div className="p-5 space-y-4">
+        <div className="p-6 space-y-5">
           {/* Status Display */}
           {isChecking ? (
-            <div className="p-6 text-center space-y-3 bg-zinc-950/70 border border-zinc-800 rounded-xs">
-              <RefreshCw className="w-6 h-6 text-accent animate-spin mx-auto" />
+            <div className="p-8 text-center space-y-3 bg-[#09090B] border border-[#26262C] rounded-2xl">
+              <RefreshCw className="w-7 h-7 text-[#FF4F00] animate-spin mx-auto" />
               <div className="space-y-1">
-                <p className="text-xs font-mono text-zinc-300">Checking for updates...</p>
-                <p className="text-2xs text-zinc-500">Querying release manifest without telemetry.</p>
+                <p className="text-xs font-semibold text-[#F4F4F5]">Buscando actualizaciones oficiales...</p>
+                <p className="text-xs text-[#9A9AA5]">Consultando manifiesto de versión sin telemetría de usuario.</p>
               </div>
             </div>
           ) : updateResult?.hasUpdate && updateResult.manifest ? (
             /* Update Available */
             <div className="space-y-4">
-              <div className="p-4 bg-emerald-950/30 border border-emerald-800/80 rounded-xs space-y-3">
+              <div className="p-5 bg-emerald-500/5 border border-emerald-500/25 rounded-2xl space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-emerald-400" />
-                    <span className="text-xs font-semibold text-emerald-300">
-                      New Release Available
+                    <span className="text-xs font-semibold text-emerald-300 font-display">
+                      Nueva versión disponible
                     </span>
                   </div>
-                  <span className="text-2xs font-mono font-bold px-2 py-0.5 rounded-xs bg-emerald-900/60 text-emerald-400 border border-emerald-700">
+                  <span className="text-xs font-geist-mono font-bold px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                     v{updateResult.manifest.version}
                   </span>
                 </div>
 
-                <div className="space-y-1 text-2xs font-mono text-zinc-300">
-                  <div className="font-semibold text-zinc-100">{updateResult.manifest.title}</div>
-                  <div className="text-zinc-500">Released: {updateResult.manifest.releaseDate}</div>
+                <div className="space-y-1 text-xs font-geist text-[#9A9AA5]">
+                  <div className="font-semibold text-[#F4F4F5]">{updateResult.manifest.title}</div>
+                  <div>Publicado: {updateResult.manifest.releaseDate}</div>
                 </div>
 
                 {/* Highlights */}
                 {updateResult.manifest.highlights && updateResult.manifest.highlights.length > 0 && (
-                  <div className="pt-2 border-t border-emerald-900/50 space-y-1.5">
-                    <span className="text-3xs uppercase font-mono tracking-wider text-emerald-400 font-semibold">
-                      Changelog Highlights
+                  <div className="pt-3 border-t border-emerald-500/20 space-y-2">
+                    <span className="text-[10px] uppercase font-geist-mono tracking-wider text-emerald-400 font-semibold">
+                      Novedades de la versión
                     </span>
-                    <ul className="space-y-1">
+                    <ul className="space-y-1.5">
                       {updateResult.manifest.highlights.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-2xs text-zinc-300">
+                        <li key={idx} className="flex items-start gap-2 text-xs text-[#9A9AA5]">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
                           <span>{item}</span>
                         </li>
@@ -139,12 +137,12 @@ export const UpdateNotificationModal: React.FC = () => {
 
                 {/* SHA-256 Checksum receipt */}
                 {updateResult.manifest.sha256 && (
-                  <div className="pt-2 border-t border-emerald-900/50 space-y-1">
-                    <div className="flex items-center gap-1.5 text-3xs font-mono text-zinc-400">
-                      <ShieldCheck className="w-3 h-3 text-emerald-400" />
-                      <span>SHA-256 Checksum Verified:</span>
+                  <div className="pt-3 border-t border-emerald-500/20 space-y-1.5">
+                    <div className="flex items-center gap-1.5 text-xs font-geist-mono text-[#9A9AA5]">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Firma SHA-256 Verificada:</span>
                     </div>
-                    <code className="block text-3xs font-mono text-zinc-400 bg-zinc-950/80 p-1.5 rounded-xs truncate">
+                    <code className="block text-[11px] font-geist-mono text-[#F4F4F5] bg-[#09090B] p-2 rounded-xl truncate border border-[#26262C]">
                       {updateResult.manifest.sha256}
                     </code>
                   </div>
@@ -163,29 +161,29 @@ export const UpdateNotificationModal: React.FC = () => {
                       void openExternalUrl(updateResult.manifest.downloadUrl);
                     }
                   }}
-                  className="flex-1 flex items-center justify-center gap-2 h-9 bg-accent hover:bg-accent-hover text-white text-xs font-semibold rounded-xs transition-colors shadow-sm"
+                  className="flex-1 flex items-center justify-center gap-2 h-11 bg-[#FF4F00] hover:bg-[#FF6A20] text-white text-xs font-semibold rounded-xl transition-all shadow-[0_0_24px_rgba(255,79,0,0.35)]"
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Download Windows .exe Installer ({updateResult.manifest.assetSize ?? 'Latest'})</span>
-                  <ExternalLink className="w-3 h-3 opacity-70" />
+                  <Download className="w-4 h-4" />
+                  <span>Descargar Instalador .exe ({updateResult.manifest.assetSize ?? 'Latest'})</span>
+                  <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                 </a>
               </div>
             </div>
           ) : (
             /* Up to Date or Offline */
-            <div className="p-6 bg-zinc-950 border border-zinc-800 rounded-xs text-center space-y-3">
-              <CheckCircle2 className="w-7 h-7 text-emerald-400 mx-auto" />
+            <div className="p-8 bg-[#09090B] border border-[#26262C] rounded-2xl text-center space-y-3">
+              <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto" />
               <div className="space-y-1">
-                <h4 className="text-xs font-semibold text-zinc-200">
-                  FormatPulse is up to date (v{CURRENT_APP_VERSION})
+                <h4 className="text-sm font-display font-bold text-[#F4F4F5]">
+                  FormatPulse está actualizado (v{CURRENT_APP_VERSION})
                 </h4>
-                <p className="text-2xs text-zinc-500">
-                  You are running the latest cryptographic & offline data transformation engine.
+                <p className="text-xs text-[#9A9AA5] font-geist">
+                  Estás ejecutando la última versión del motor con aislamiento offline y cero telemetría.
                 </p>
                 {updateResult?.error && (
-                  <p className="text-3xs font-mono text-amber-500/80 pt-1 flex items-center justify-center gap-1">
-                    <AlertCircle className="w-3 h-3" />
-                    Offline mode active: manifest check skipped.
+                  <p className="text-xs font-geist-mono text-amber-400/90 pt-1 flex items-center justify-center gap-1.5">
+                    <AlertCircle className="w-3.5 h-3.5" />
+                    Modo offline activo: comprobación de manifiesto omitida.
                   </p>
                 )}
               </div>
@@ -193,22 +191,22 @@ export const UpdateNotificationModal: React.FC = () => {
           )}
 
           {/* Footer Actions */}
-          <div className="flex items-center justify-between pt-2 border-t border-zinc-800">
+          <div className="flex items-center justify-between pt-3 border-t border-[#26262C]">
             <button
               type="button"
               onClick={() => void runCheck()}
               disabled={isChecking}
-              className="flex items-center gap-1.5 text-2xs font-mono text-zinc-400 hover:text-zinc-200 transition-colors disabled:opacity-50"
+              className="flex items-center gap-1.5 text-xs font-geist text-[#9A9AA5] hover:text-[#F4F4F5] transition-colors disabled:opacity-50"
             >
-              <RefreshCw className={cn('w-3 h-3', isChecking && 'animate-spin')} />
-              Check Again
+              <RefreshCw className={cn('w-3.5 h-3.5', isChecking && 'animate-spin')} />
+              <span>Comprobar de nuevo</span>
             </button>
             <button
               type="button"
               onClick={() => setShowUpdateModal(false)}
-              className="h-7 px-3 text-2xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-xs transition-colors"
+              className="h-10 px-5 text-xs font-geist font-semibold bg-white/[0.06] hover:bg-white/[0.1] text-[#F4F4F5] rounded-xl border border-[#26262C] transition-colors"
             >
-              Close
+              Cerrar
             </button>
           </div>
         </div>

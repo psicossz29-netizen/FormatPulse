@@ -98,35 +98,35 @@ export const SettingsModal: React.FC = () => {
         onClick={() => setShowSettingsModal(false)}
       />
 
-      {/* Main Container - Antigravity Style */}
-      <div className="relative w-full max-w-4xl bg-zinc-950 border border-zinc-800 shadow-2xl rounded-sm overflow-hidden flex flex-col md:flex-row h-[580px] my-auto">
+      {/* Main Container - Spaceship Architecture */}
+      <div className="relative w-full max-w-4xl bg-[#111114] border border-[#26262C] shadow-[0_32px_80px_rgba(0,0,0,0.85)] rounded-[28px] overflow-hidden flex flex-col md:flex-row h-[600px] my-auto font-geist text-[#F4F4F5] animate-pop">
         {/* ── Left Sidebar Navigation ───────────────────────────────── */}
-        <aside className="w-full md:w-56 border-b md:border-b-0 md:border-r border-zinc-800/80 bg-zinc-950/60 p-3 flex flex-col justify-between flex-none select-none">
+        <aside className="w-full md:w-56 border-b md:border-b-0 md:border-r border-[#26262C] bg-[#09090B]/60 p-4 flex flex-col justify-between flex-none select-none">
           <div>
-            <div className="px-3 py-2 text-2xs font-mono font-semibold tracking-wider text-zinc-500 uppercase">
+            <div className="px-3 py-2 text-[10px] font-geist-mono font-semibold tracking-wider text-[#9A9AA5] uppercase">
               Preferences
             </div>
-            <nav className="space-y-1 mt-1 font-mono text-xs">
+            <nav className="space-y-1.5 mt-2 font-geist text-xs">
               <button
                 onClick={() => setActiveTab('general')}
                 className={cn(
-                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xs transition-colors text-left',
+                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all text-left text-xs',
                   activeTab === 'general'
-                    ? 'bg-zinc-800/90 text-zinc-100 font-semibold shadow-xs'
-                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60',
+                    ? 'bg-white/[0.08] text-[#F4F4F5] border border-[#26262C] font-semibold shadow-sm'
+                    : 'text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.03]',
                 )}
               >
-                <Sliders className="w-4 h-4 text-accent flex-none" />
+                <Sliders className="w-4 h-4 text-[#FF4F00] flex-none" />
                 <span>General</span>
               </button>
 
               <button
                 onClick={() => setActiveTab('appearance')}
                 className={cn(
-                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xs transition-colors text-left',
+                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all text-left text-xs',
                   activeTab === 'appearance'
-                    ? 'bg-zinc-800/90 text-zinc-100 font-semibold shadow-xs'
-                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60',
+                    ? 'bg-white/[0.08] text-[#F4F4F5] border border-[#26262C] font-semibold shadow-sm'
+                    : 'text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.03]',
                 )}
               >
                 <Palette className="w-4 h-4 text-emerald-400 flex-none" />
@@ -136,10 +136,10 @@ export const SettingsModal: React.FC = () => {
               <button
                 onClick={() => setActiveTab('security')}
                 className={cn(
-                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xs transition-colors text-left',
+                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all text-left text-xs',
                   activeTab === 'security'
-                    ? 'bg-zinc-800/90 text-zinc-100 font-semibold shadow-xs'
-                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60',
+                    ? 'bg-white/[0.08] text-[#F4F4F5] border border-[#26262C] font-semibold shadow-sm'
+                    : 'text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.03]',
                 )}
               >
                 <Shield className="w-4 h-4 text-cyan-400 flex-none" />
@@ -149,10 +149,10 @@ export const SettingsModal: React.FC = () => {
               <button
                 onClick={() => setActiveTab('performance')}
                 className={cn(
-                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xs transition-colors text-left',
+                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all text-left text-xs',
                   activeTab === 'performance'
-                    ? 'bg-zinc-800/90 text-zinc-100 font-semibold shadow-xs'
-                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60',
+                    ? 'bg-white/[0.08] text-[#F4F4F5] border border-[#26262C] font-semibold shadow-sm'
+                    : 'text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.03]',
                 )}
               >
                 <Cpu className="w-4 h-4 text-amber-400 flex-none" />
@@ -162,10 +162,10 @@ export const SettingsModal: React.FC = () => {
               <button
                 onClick={() => setActiveTab('license')}
                 className={cn(
-                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xs transition-colors text-left',
+                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all text-left text-xs',
                   activeTab === 'license'
-                    ? 'bg-zinc-800/90 text-zinc-100 font-semibold shadow-xs'
-                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60',
+                    ? 'bg-white/[0.08] text-[#F4F4F5] border border-[#26262C] font-semibold shadow-sm'
+                    : 'text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.03]',
                 )}
               >
                 <Key className="w-4 h-4 text-purple-400 flex-none" />
@@ -175,10 +175,10 @@ export const SettingsModal: React.FC = () => {
               <button
                 onClick={() => setActiveTab('updates')}
                 className={cn(
-                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xs transition-colors text-left',
+                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all text-left text-xs',
                   activeTab === 'updates'
-                    ? 'bg-zinc-800/90 text-zinc-100 font-semibold shadow-xs'
-                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60',
+                    ? 'bg-white/[0.08] text-[#F4F4F5] border border-[#26262C] font-semibold shadow-sm'
+                    : 'text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.03]',
                 )}
               >
                 <RefreshCw className="w-4 h-4 text-blue-400 flex-none" />
@@ -188,10 +188,10 @@ export const SettingsModal: React.FC = () => {
               <button
                 onClick={() => setActiveTab('shortcuts')}
                 className={cn(
-                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xs transition-colors text-left',
+                  'w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all text-left text-xs',
                   activeTab === 'shortcuts'
-                    ? 'bg-zinc-800/90 text-zinc-100 font-semibold shadow-xs'
-                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60',
+                    ? 'bg-white/[0.08] text-[#F4F4F5] border border-[#26262C] font-semibold shadow-sm'
+                    : 'text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.03]',
                 )}
               >
                 <Keyboard className="w-4 h-4 text-zinc-400 flex-none" />
@@ -201,21 +201,21 @@ export const SettingsModal: React.FC = () => {
           </div>
 
           {/* Footer Info in Sidebar */}
-          <div className="pt-3 border-t border-zinc-900 text-3xs font-mono text-zinc-500 px-3 space-y-1">
+          <div className="pt-3 border-t border-[#26262C] text-xs font-geist-mono text-[#9A9AA5] px-3 space-y-1">
             <div className="flex items-center justify-between">
               <span>FormatPulse</span>
-              <span className="text-zinc-400 font-semibold">v{APP_VERSION}</span>
+              <span className="text-[#F4F4F5] font-semibold">v{APP_VERSION}</span>
             </div>
-            <div>Build: {APP_BUILD_DATE}</div>
+            <div className="text-[11px]">Build: {APP_BUILD_DATE}</div>
           </div>
         </aside>
 
         {/* ── Right Content Panel ───────────────────────────────────── */}
-        <main className="flex-1 flex flex-col justify-between overflow-hidden bg-zinc-900/30">
+        <main className="flex-1 flex flex-col justify-between overflow-hidden bg-[#09090B]/30">
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800/80 bg-zinc-950/40 select-none">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-[#26262C] bg-[#09090B]/60 select-none">
             <div>
-              <h3 className="text-sm font-bold text-zinc-100 tracking-tight font-mono capitalize">
+              <h3 className="text-sm font-bold text-[#F4F4F5] tracking-tight font-display capitalize">
                 {activeTab === 'general' && 'General Configuration'}
                 {activeTab === 'appearance' && 'Editor & Visual Appearance'}
                 {activeTab === 'security' && 'Security, Privacy & Compliance'}
@@ -224,7 +224,7 @@ export const SettingsModal: React.FC = () => {
                 {activeTab === 'updates' && 'Application Releases & Auto-Update'}
                 {activeTab === 'shortcuts' && 'Keyboard Shortcuts Reference'}
               </h3>
-              <p className="text-2xs text-zinc-500 font-mono mt-0.5">
+              <p className="text-xs text-[#9A9AA5] font-geist mt-0.5">
                 {activeTab === 'general' && 'Configure automatic detection, input parsing and indentation behavior.'}
                 {activeTab === 'appearance' && 'Customize theme accent palette, font family and code canvas options.'}
                 {activeTab === 'security' && 'Manage PII redaction rules, air-gapped isolation, and formula injection guard.'}
@@ -236,7 +236,7 @@ export const SettingsModal: React.FC = () => {
             </div>
             <button
               onClick={() => setShowSettingsModal(false)}
-              className="p-1.5 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 rounded-xs transition-colors"
+              className="w-8 h-8 flex items-center justify-center text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.06] transition-colors rounded-xl focus:outline-none"
               aria-label="Close settings"
             >
               <X className="w-4 h-4" />

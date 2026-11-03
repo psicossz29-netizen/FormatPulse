@@ -37,12 +37,12 @@ export const DataHealthInspector: React.FC<{
 
   return (
     <div
-      className="fixed inset-y-0 right-0 z-40 w-full sm:w-96 bg-zinc-900 border-l border-zinc-800 shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-right duration-200"
+      className="fixed inset-y-0 right-0 z-40 w-full sm:w-96 bg-[#111114] border-l border-[#26262C] shadow-2xl flex flex-col overflow-hidden font-geist text-[#F4F4F5] animate-in slide-in-from-right duration-200"
       role="region"
       aria-label="Data Health & Security Inspector"
     >
       {/* ── Header ──────────────────────────────────────────────────────── */}
-      <div className="h-10 px-3.5 flex items-center justify-between border-b border-zinc-800 bg-surface-raised flex-none">
+      <div className="px-5 py-3.5 flex items-center justify-between border-b border-[#26262C] bg-[#09090B]/60 flex-none">
         <div className="flex items-center gap-2">
           {report && report.overallScore < 70 ? (
             <ShieldAlert className="w-4 h-4 text-red-400" />
@@ -51,13 +51,13 @@ export const DataHealthInspector: React.FC<{
           ) : (
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
           )}
-          <span className="text-xs font-semibold text-zinc-100 font-mono tracking-tight">
+          <span className="text-xs font-bold text-[#F4F4F5] font-display tracking-tight">
             DATA HEALTH & SECURITY AUDIT
           </span>
         </div>
         <button
           onClick={onClose}
-          className="w-6 h-6 flex items-center justify-center text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+          className="w-7 h-7 flex items-center justify-center text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.06] transition-colors rounded-lg focus:outline-none"
           aria-label="Close inspector"
         >
           <X className="w-3.5 h-3.5" />

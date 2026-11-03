@@ -152,38 +152,38 @@ export const BatchProcessingModal: React.FC = () => {
     >
       {/* ── Backdrop ────────────────────────────────────────────────── */}
       <div
-        className="fixed inset-0 bg-zinc-950/85 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-[#09090B]/85 backdrop-blur-md transition-opacity"
         onClick={() => setShowBatchModal(false)}
       />
 
-      {/* ── Modal Window ────────────────────────────────────────────── */}
-      <div className="relative w-full max-w-2xl bg-zinc-900 border border-zinc-800 shadow-2xl rounded-xs overflow-hidden my-auto flex flex-col max-h-[90vh]">
+      {/* ── Spaceship Modal Window ──────────────────────────────────── */}
+      <div className="relative w-full max-w-2xl bg-[#111114] border border-[#26262C] shadow-[0_32px_80px_rgba(0,0,0,0.85)] rounded-[28px] overflow-hidden my-auto flex flex-col max-h-[90vh] font-geist text-[#F4F4F5] animate-pop">
         {/* Header */}
-        <div className="flex items-center justify-between h-10 px-4 border-b border-zinc-800 bg-zinc-950 shrink-0">
-          <div className="flex items-center gap-2">
-            <Layers className="w-4 h-4 text-accent" strokeWidth={2} />
-            <span className="text-xs font-semibold text-zinc-200 tracking-tight">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#26262C] bg-[#09090B]/60 shrink-0">
+          <div className="flex items-center gap-2.5">
+            <Layers className="w-4 h-4 text-[#FF4F00]" strokeWidth={2} />
+            <span className="font-display font-bold text-sm text-[#F4F4F5] tracking-tight">
               Batch Processing & Multi-File Engine
             </span>
-            <span className="text-2xs font-mono px-1.5 py-0.5 rounded-xs bg-zinc-800 text-zinc-400">
+            <span className="text-[10px] font-geist-mono px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-medium">
               {files.length} FILES
             </span>
           </div>
           <button
             onClick={() => setShowBatchModal(false)}
-            className="w-6 h-6 flex items-center justify-center text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent rounded-xs"
+            className="w-8 h-8 flex items-center justify-center text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.06] transition-colors rounded-xl focus:outline-none"
             aria-label="Close"
           >
-            <X className="w-4 h-4" strokeWidth={2} />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Content Body */}
-        <div className="p-5 space-y-4 overflow-y-auto flex-1">
+        <div className="p-6 space-y-4 overflow-y-auto flex-1">
           {/* Controls Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-zinc-950 border border-zinc-800 rounded-xs">
+          <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-[#09090B] border border-[#26262C] rounded-2xl">
             <div className="flex items-center gap-2">
-              <span className="text-2xs font-mono text-zinc-400 uppercase">Target:</span>
+              <span className="text-xs font-geist-mono text-[#9A9AA5] uppercase">Target:</span>
               <select
                 value={targetFormat}
                 onChange={(e) => setTargetFormat(e.target.value as OutputFormat)}

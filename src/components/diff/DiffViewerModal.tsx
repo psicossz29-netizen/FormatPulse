@@ -55,26 +55,26 @@ export const DiffViewerModal: React.FC<{
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-sm select-none"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#09090B]/85 backdrop-blur-md select-none"
       role="dialog"
       aria-modal="true"
       aria-label="Structural Diff Viewer"
     >
-      <div className="relative w-full max-w-4xl max-h-[85vh] bg-zinc-900 border border-zinc-800 shadow-2xl flex flex-col overflow-hidden">
+      <div className="relative w-full max-w-4xl max-h-[85vh] bg-[#111114] border border-[#26262C] shadow-[0_32px_80px_rgba(0,0,0,0.85)] rounded-[28px] flex flex-col overflow-hidden animate-pop font-geist text-[#F4F4F5]">
         {/* Header */}
-        <div className="h-10 px-4 border-b border-zinc-800 bg-surface-raised flex items-center justify-between flex-none">
-          <div className="flex items-center gap-2">
-            <GitCompare className="w-4 h-4 text-accent" />
-            <span className="text-xs font-semibold text-zinc-100 font-mono tracking-tight">
+        <div className="px-6 py-4 border-b border-[#26262C] bg-[#09090B]/60 flex items-center justify-between flex-none">
+          <div className="flex items-center gap-2.5">
+            <GitCompare className="w-4 h-4 text-[#FF4F00]" />
+            <span className="text-sm font-bold text-[#F4F4F5] font-display tracking-tight">
               STRUCTURAL SCHEMA & PAYLOAD DIFF
             </span>
           </div>
           <button
             onClick={onClose}
-            className="w-6 h-6 flex items-center justify-center text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors rounded-sm"
+            className="w-8 h-8 flex items-center justify-center text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.06] transition-colors rounded-xl focus:outline-none"
             aria-label="Close diff modal"
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
