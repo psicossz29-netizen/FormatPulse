@@ -26,10 +26,7 @@ const FEATURES = [
   { label: 'AST Code Generators (TS, Zod, SQL)', free: false, pro: true, team: true, ent: true },
   { label: 'Extended PII & Cloud Secrets Masking', free: false, pro: true, team: true, ent: true },
   { label: 'Non-blocking Web Worker (>10MB)', free: false, pro: true, team: true, ent: true },
-  { label: 'Structural Diff & Breaking Alerts', free: false, pro: true, team: true, ent: true },
-  { label: 'Developer Seats Included', free: '1 User', pro: '1 Seat', team: '5 Seats', ent: 'Unlimited' },
   { label: 'Air-Gapped Intranet Deployment', free: false, pro: false, team: false, ent: true },
-  { label: 'Zero-Network Client-Side Isolation', free: true, pro: true, team: true, ent: true },
 ] as const;
 
 export const ProLicenseModal: React.FC = () => {
@@ -89,7 +86,7 @@ export const ProLicenseModal: React.FC = () => {
 
   const handleActivate = useCallback(async () => {
     if (!keyInput.trim()) {
-      setError('Please enter a license key');
+      setError('Por favor introduce una clave de licencia');
       return;
     }
 
@@ -113,7 +110,7 @@ export const ProLicenseModal: React.FC = () => {
         setKeyInput('');
       }, 1600);
     } else {
-      setError(result.error ?? 'Invalid license key');
+      setError(result.error ?? 'Clave de licencia no válida');
     }
   }, [keyInput, setLicenseKey, setLicenseTier, unlockFullOutput, setShowLicenseModal]);
 
@@ -148,91 +145,98 @@ export const ProLicenseModal: React.FC = () => {
     >
       {/* ── Backdrop ────────────────────────────────────────────────── */}
       <div
-        className="fixed inset-0 bg-zinc-950/85 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-[#09090B]/85 backdrop-blur-md transition-opacity"
         onClick={() => setShowLicenseModal(false)}
       />
 
-      {/* ── Modal Window ────────────────────────────────────────────── */}
-      <div className="relative w-full max-w-lg bg-zinc-900 border border-zinc-800 shadow-2xl rounded-xs overflow-hidden my-auto">
+      {/* ── Spaceship Modal Window ──────────────────────────────────── */}
+      <div className="relative w-full max-w-xl bg-[#111114] border border-[#26262C] shadow-[0_32px_80px_rgba(0,0,0,0.85)] rounded-[28px] overflow-hidden my-auto animate-pop font-geist">
         {/* Header */}
-        <div className="flex items-center justify-between h-10 px-4 border-b border-zinc-800 bg-zinc-950">
-          <div className="flex items-center gap-2">
-            <FormatPulseLogo size={16} animate={false} />
-            <span className="text-xs font-semibold text-zinc-200 tracking-tight">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#26262C] bg-[#09090B]/60">
+          <div className="flex items-center gap-2.5">
+            <FormatPulseLogo size={22} animate={false} />
+            <span className="font-display font-bold text-sm text-[#F4F4F5] tracking-tight">
               FormatPulse License Engine
             </span>
-            <span className="text-2xs font-mono px-1.5 py-0.5 rounded-xs bg-zinc-800 text-zinc-400">
+            <span className="text-[10px] font-geist-mono px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-medium flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               OFFLINE PROTOCOL
             </span>
           </div>
           <button
             onClick={() => setShowLicenseModal(false)}
-            className="w-6 h-6 flex items-center justify-center text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent rounded-xs"
+            className="w-8 h-8 flex items-center justify-center text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.06] transition-colors rounded-xl focus:outline-none"
             aria-label="Close"
           >
-            <X className="w-4 h-4" strokeWidth={2} />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Content Body */}
-        <div className="p-5 space-y-5">
+        <div className="p-6 space-y-6">
           {/* ── ACTIVE LICENSE VIEW ────────────────────────────────────── */}
           {isAlreadyActive ? (
-            <div className="space-y-4">
-              <div className="p-4 bg-zinc-950 border border-emerald-900/60 rounded-xs space-y-3">
+            <div className="space-y-5">
+              <div className="p-5 bg-[#09090B] border border-emerald-500/30 rounded-2xl space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                    <span className="text-xs font-semibold text-emerald-300">
-                      {getTierLabel(licenseTier)} Active
-                    </span>
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                      <CheckCircle2 className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="font-display font-bold text-sm text-[#F4F4F5]">
+                        {getTierLabel(licenseTier)} Activa
+                      </div>
+                      <div className="text-xs text-[#9A9AA5]">Licencia perpetua verificada localmente</div>
+                    </div>
                   </div>
-                  <span className="text-2xs font-mono font-medium px-2 py-0.5 rounded-xs bg-emerald-950 border border-emerald-800 text-emerald-400">
+                  <span className="text-xs font-geist-mono font-semibold px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
                     {getTierSeats(licenseTier)} {getTierSeats(licenseTier) === 1 ? 'SEAT' : 'SEATS'}
                   </span>
                 </div>
 
-                <div className="space-y-1 font-mono text-2xs text-zinc-400 pt-1 border-t border-zinc-800/80">
+                <div className="space-y-2 font-geist-mono text-xs text-[#9A9AA5] pt-3 border-t border-[#26262C]">
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">License Key:</span>
-                    <span className="text-zinc-300">
-                      {licenseKey ? `${licenseKey.slice(0, 10)}••••••••` : 'Local Key'}
+                    <span>Clave activa:</span>
+                    <span className="text-[#F4F4F5]">
+                      {licenseKey ? `${licenseKey.slice(0, 10)}••••••••` : 'Clave Local'}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Cryptographic Status:</span>
+                    <span>Aislamiento:</span>
                     <span className="text-emerald-400">Air-Gapped Offline Verified</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Processing Limit:</span>
-                    <span className="text-zinc-300">Unlimited (No Size Cap)</span>
+                    <span>Límite de procesamiento:</span>
+                    <span className="text-[#F4F4F5]">Ilimitado (Sin tope de tamaño)</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2">
+              <div className="flex items-center justify-between pt-1">
                 <button
                   type="button"
                   onClick={handleDeactivate}
-                  className="flex items-center gap-1.5 text-2xs font-mono text-red-400 hover:text-red-300 transition-colors focus:outline-none"
+                  className="flex items-center gap-1.5 text-xs font-geist text-red-400 hover:text-red-300 transition-colors focus:outline-none"
                 >
-                  <RotateCcw className="w-3 h-3" />
-                  Deactivate / Switch License Key
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Desactivar / Cambiar clave</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowLicenseModal(false)}
-                  className="h-8 px-4 text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-zinc-100 transition-colors rounded-xs"
+                  className="h-10 px-5 text-xs font-geist font-semibold bg-white/[0.06] hover:bg-white/[0.1] text-[#F4F4F5] border border-[#26262C] transition-colors rounded-xl"
                 >
-                  Close Manager
+                  Cerrar
                 </button>
               </div>
             </div>
           ) : (
             /* ── FREE / ACTIVATION VIEW ──────────────────────────────── */
-            <div className="space-y-4">
-              {/* Plan Selection Tabs */}
-              <div className="grid grid-cols-3 gap-1.5 p-1.5 bg-zinc-950 border border-zinc-800 rounded-xs">
+            <div className="space-y-5">
+              {/* Plan Selection Cards (Spaceship Rounded Aesthetic) */}
+              <div className="grid grid-cols-3 gap-2.5">
+                {/* Individual Pro */}
                 <button
                   type="button"
                   onClick={() => {
@@ -243,22 +247,32 @@ export const ProLicenseModal: React.FC = () => {
                     }
                   }}
                   className={cn(
-                    'group relative flex flex-col items-center py-2.5 px-1.5 text-center transition-all rounded-xs border',
+                    'group relative flex flex-col justify-between p-3.5 rounded-2xl border text-left transition-all cursor-pointer',
                     selectedPlanTab === 'individual'
-                      ? 'bg-zinc-800/90 border-accent/60 text-white shadow-sm ring-1 ring-accent/40'
-                      : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900',
+                      ? 'bg-[#FF4F00]/10 border-[#FF4F00] shadow-[0_0_20px_rgba(255,79,0,0.25)]'
+                      : 'bg-[#09090B] border-[#26262C] hover:border-white/20',
                   )}
                 >
-                  <span className="text-2xs font-mono uppercase tracking-wider text-accent font-semibold">Pro Lifetime</span>
-                  <span className="text-sm font-bold font-mono text-zinc-100">$14 USD</span>
-                  <span className="text-3xs text-zinc-400">1 Developer</span>
+                  <div>
+                    <div className="text-[10px] font-geist-mono uppercase tracking-wider text-[#FF4F00] font-bold">
+                      Pro Lifetime
+                    </div>
+                    <div className="text-lg font-bold font-geist-mono text-[#F4F4F5] mt-1">
+                      $14 USD
+                    </div>
+                    <div className="text-[11px] font-geist text-[#9A9AA5] mt-0.5">
+                      1 Desarrollador
+                    </div>
+                  </div>
                   {selectedPlanTab === 'individual' && (
-                    <span className="mt-1 text-3xs font-mono text-accent flex items-center gap-0.5">
-                      Selected · Click to Pay ➔
-                    </span>
+                    <div className="mt-2 text-[10px] font-geist font-semibold text-[#FF4F00] flex items-center gap-1">
+                      <span>Seleccionado</span>
+                      <span>→</span>
+                    </div>
                   )}
                 </button>
 
+                {/* Team Pack */}
                 <button
                   type="button"
                   onClick={() => {
@@ -269,22 +283,32 @@ export const ProLicenseModal: React.FC = () => {
                     }
                   }}
                   className={cn(
-                    'group relative flex flex-col items-center py-2.5 px-1.5 text-center transition-all rounded-xs border',
+                    'group relative flex flex-col justify-between p-3.5 rounded-2xl border text-left transition-all cursor-pointer',
                     selectedPlanTab === 'team'
-                      ? 'bg-zinc-800/90 border-emerald-500/60 text-white shadow-sm ring-1 ring-emerald-500/40'
-                      : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900',
+                      ? 'bg-emerald-500/10 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.25)]'
+                      : 'bg-[#09090B] border-[#26262C] hover:border-white/20',
                   )}
                 >
-                  <span className="text-2xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">Team Pack</span>
-                  <span className="text-sm font-bold font-mono text-zinc-100">$79 USD</span>
-                  <span className="text-3xs text-zinc-400">5 Seats</span>
+                  <div>
+                    <div className="text-[10px] font-geist-mono uppercase tracking-wider text-emerald-400 font-bold">
+                      Team Pack
+                    </div>
+                    <div className="text-lg font-bold font-geist-mono text-[#F4F4F5] mt-1">
+                      $79 USD
+                    </div>
+                    <div className="text-[11px] font-geist text-[#9A9AA5] mt-0.5">
+                      5 Licencias
+                    </div>
+                  </div>
                   {selectedPlanTab === 'team' && (
-                    <span className="mt-1 text-3xs font-mono text-emerald-400 flex items-center gap-0.5">
-                      Selected · Click to Pay ➔
-                    </span>
+                    <div className="mt-2 text-[10px] font-geist font-semibold text-emerald-400 flex items-center gap-1">
+                      <span>Seleccionado</span>
+                      <span>→</span>
+                    </div>
                   )}
                 </button>
 
+                {/* Enterprise */}
                 <button
                   type="button"
                   onClick={() => {
@@ -295,37 +319,46 @@ export const ProLicenseModal: React.FC = () => {
                     }
                   }}
                   className={cn(
-                    'group relative flex flex-col items-center py-2.5 px-1.5 text-center transition-all rounded-xs border',
+                    'group relative flex flex-col justify-between p-3.5 rounded-2xl border text-left transition-all cursor-pointer',
                     selectedPlanTab === 'enterprise'
-                      ? 'bg-zinc-800/90 border-cyan-500/60 text-white shadow-sm ring-1 ring-cyan-500/40'
-                      : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900',
+                      ? 'bg-blue-500/10 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.25)]'
+                      : 'bg-[#09090B] border-[#26262C] hover:border-white/20',
                   )}
                 >
-                  <span className="text-2xs font-mono uppercase tracking-wider text-cyan-400 font-semibold">Enterprise</span>
-                  <span className="text-sm font-bold font-mono text-zinc-100">$199 USD</span>
-                  <span className="text-3xs text-zinc-400">Air-Gapped Intranet</span>
+                  <div>
+                    <div className="text-[10px] font-geist-mono uppercase tracking-wider text-blue-400 font-bold">
+                      Enterprise
+                    </div>
+                    <div className="text-lg font-bold font-geist-mono text-[#F4F4F5] mt-1">
+                      $199 USD
+                    </div>
+                    <div className="text-[11px] font-geist text-[#9A9AA5] mt-0.5">
+                      Air-Gapped Intranet
+                    </div>
+                  </div>
                   {selectedPlanTab === 'enterprise' && (
-                    <span className="mt-1 text-3xs font-mono text-cyan-400 flex items-center gap-0.5">
-                      Selected · Click to Pay ➔
-                    </span>
+                    <div className="mt-2 text-[10px] font-geist font-semibold text-blue-400 flex items-center gap-1">
+                      <span>Seleccionado</span>
+                      <span>→</span>
+                    </div>
                   )}
                 </button>
               </div>
 
-              {/* Feature Matrix Mini */}
-              <div className="border border-zinc-800 divide-y divide-zinc-800/80 bg-zinc-950/60 rounded-xs">
-                <div className="grid grid-cols-[1fr_50px_70px] h-6 items-center px-3 bg-zinc-800/40 text-2xs font-mono text-zinc-500 uppercase">
-                  <span>Capability</span>
+              {/* Feature Matrix Mini (Spaceship Table) */}
+              <div className="border border-[#26262C] divide-y divide-[#26262C] bg-[#09090B] rounded-2xl overflow-hidden">
+                <div className="grid grid-cols-[1fr_60px_80px] h-7 items-center px-4 bg-[#09090B] text-[11px] font-geist-mono text-[#9A9AA5] uppercase tracking-wider">
+                  <span>Capacidad</span>
                   <span className="text-center">Free</span>
-                  <span className="text-center text-accent">Active Plan</span>
+                  <span className="text-center text-[#FF4F00] font-semibold">Plan Activo</span>
                 </div>
-                {FEATURES.slice(0, 5).map((f) => (
-                  <div key={f.label} className="grid grid-cols-[1fr_50px_70px] h-6 items-center px-3 text-2xs">
-                    <span className="text-zinc-400 truncate">{f.label}</span>
-                    <span className="text-center font-mono text-zinc-600">
+                {FEATURES.map((f) => (
+                  <div key={f.label} className="grid grid-cols-[1fr_60px_80px] h-7 items-center px-4 text-xs font-geist">
+                    <span className="text-[#9A9AA5] truncate">{f.label}</span>
+                    <span className="text-center font-geist-mono text-zinc-600">
                       {typeof f.free === 'string' ? f.free : f.free ? '✓' : '—'}
                     </span>
-                    <span className="text-center font-mono text-emerald-400 font-medium">
+                    <span className="text-center font-geist-mono text-emerald-400 font-medium">
                       {selectedPlanTab === 'individual'
                         ? typeof f.pro === 'string'
                           ? f.pro
@@ -343,60 +376,60 @@ export const ProLicenseModal: React.FC = () => {
               </div>
 
               {/* Checkout CTA */}
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 <button
                   type="button"
                   disabled={isOpeningCheckout}
                   onClick={() => void handleOpenCheckout(selectedPlanTab)}
                   className={cn(
-                    'flex items-center justify-center gap-2 h-10 w-full text-white text-xs font-semibold tracking-tight transition-all rounded-xs shadow-md cursor-pointer disabled:opacity-75',
+                    'flex items-center justify-center gap-2 h-11 w-full text-white text-xs font-geist font-semibold tracking-tight transition-all rounded-xl shadow-lg cursor-pointer disabled:opacity-75',
                     selectedPlanTab === 'enterprise'
-                      ? 'bg-cyan-600 hover:bg-cyan-500 active:bg-cyan-700'
+                      ? 'bg-blue-600 hover:bg-blue-500 shadow-[0_0_24px_rgba(59,130,246,0.35)]'
                       : selectedPlanTab === 'team'
-                        ? 'bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700'
-                        : 'bg-accent hover:bg-accent-hover active:bg-orange-600',
+                        ? 'bg-emerald-600 hover:bg-emerald-500 shadow-[0_0_24px_rgba(16,185,129,0.35)]'
+                        : 'bg-[#FF4F00] hover:bg-[#FF6A20] shadow-[0_0_24px_rgba(255,79,0,0.35)]',
                   )}
                 >
                   {isOpeningCheckout ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin text-white" />
-                      <span>Opening Polar Checkout in Browser...</span>
+                      <span>Abriendo pasarela de pago Polar.sh en el navegador...</span>
                     </>
                   ) : (
                     <>
-                      <Zap className="w-3.5 h-3.5" strokeWidth={2.5} />
+                      <Zap className="w-4 h-4" />
                       <span>
                         Proceed to Polar Checkout — ${PRICING_PLANS[selectedPlanTab].priceUSD} USD Lifetime
                       </span>
-                      <ExternalLink className="w-3.5 h-3.5 opacity-80" strokeWidth={2} />
+                      <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                     </>
                   )}
                 </button>
 
-                <div className="flex items-center justify-between text-3xs font-mono px-1">
-                  <span className="text-zinc-500">Opens in system browser (Chrome/Edge/Firefox)</span>
+                <div className="flex items-center justify-between text-xs font-geist text-[#9A9AA5] px-1">
+                  <span>Se abre en tu navegador predeterminado (Chrome/Edge/Firefox)</span>
                   <button
                     type="button"
                     onClick={() => void handleCopyLink(selectedPlanTab)}
-                    className="flex items-center gap-1 text-zinc-400 hover:text-accent transition-colors focus:outline-none"
+                    className="flex items-center gap-1.5 text-[#9A9AA5] hover:text-[#FF4F00] transition-colors focus:outline-none"
                     title="Copy Polar checkout URL to clipboard"
                   >
-                    <Copy className="w-3 h-3" />
-                    <span>{copiedLink ? '✓ Polar URL Copied!' : 'Copy Direct Checkout Link'}</span>
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>{copiedLink ? '✓ Polar URL Copied!' : 'Copiar enlace directo'}</span>
                   </button>
                 </div>
               </div>
 
               {/* ── Key Input Section ─────────────────────────────────── */}
-              <div className="pt-2 border-t border-zinc-800 space-y-2">
+              <div className="pt-3 border-t border-[#26262C] space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-2xs font-mono text-zinc-400 uppercase tracking-wider">
-                    Enter License Key
+                  <span className="text-xs font-geist font-medium text-[#F4F4F5]">
+                    ¿Ya compraste tu licencia? Actívala aquí:
                   </span>
                   {detectedTier && (
-                    <span className="text-3xs font-mono text-emerald-400 flex items-center gap-1">
-                      <Check className="w-3 h-3" />
-                      Detected: {detectedTier.tierLabel}
+                    <span className="text-xs font-geist-mono text-emerald-400 flex items-center gap-1">
+                      <Check className="w-3.5 h-3.5" />
+                      Detectada: {detectedTier.tierLabel}
                     </span>
                   )}
                 </div>
@@ -415,55 +448,54 @@ export const ProLicenseModal: React.FC = () => {
                     autoComplete="off"
                     disabled={isValidating || activatedTier !== null}
                     className={cn(
-                      'flex-1 h-8 px-2.5 bg-zinc-950 border text-xs font-mono text-zinc-200 tracking-wider placeholder:text-zinc-700 rounded-xs',
-                      'focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent',
+                      'flex-1 h-10 px-3.5 bg-[#09090B] border text-xs font-geist-mono text-[#F4F4F5] tracking-wider placeholder:text-zinc-600 rounded-xl transition-colors',
+                      'focus:outline-none focus:border-[#FF4F00]',
                       'disabled:opacity-50 disabled:cursor-not-allowed',
                       error
-                        ? 'border-red-800 focus:ring-red-500'
+                        ? 'border-red-500'
                         : activatedTier
-                          ? 'border-emerald-800'
-                          : 'border-zinc-800',
+                          ? 'border-emerald-500'
+                          : 'border-[#26262C]',
                     )}
                   />
                   <button
                     onClick={() => void handleActivate()}
                     disabled={isValidating || activatedTier !== null || !keyInput.trim()}
                     className={cn(
-                      'h-8 px-3 text-xs font-semibold tracking-tight transition-colors rounded-xs',
-                      'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent',
+                      'h-10 px-5 text-xs font-geist font-semibold transition-all rounded-xl focus:outline-none',
                       'disabled:opacity-50 disabled:cursor-not-allowed',
                       activatedTier
-                        ? 'bg-emerald-900/50 text-emerald-400 border border-emerald-800'
-                        : 'bg-zinc-800 text-zinc-200 border border-zinc-700 hover:bg-zinc-700',
+                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                        : 'bg-white/[0.06] text-[#F4F4F5] border border-[#26262C] hover:bg-white/[0.12] hover:border-white/20',
                     )}
                   >
                     {isValidating ? (
-                      <Loader2 className="w-3.5 h-3.5 animate-spin" strokeWidth={2} />
+                      <Loader2 className="w-4 h-4 animate-spin" />
                     ) : activatedTier ? (
-                      <span className="flex items-center gap-1">
-                        <Check className="w-3 h-3" strokeWidth={2.5} />
-                        Activated
+                      <span className="flex items-center gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        Activada
                       </span>
                     ) : (
-                      'Activate'
+                      'Activar'
                     )}
                   </button>
                 </div>
 
-                {error && <p className="text-2xs text-red-400 font-mono">{error}</p>}
+                {error && <p className="text-xs text-red-400 font-geist">{error}</p>}
               </div>
 
               {/* Legal Links */}
-              <div className="flex justify-center gap-3 text-3xs text-zinc-500 pt-1">
+              <div className="flex justify-center items-center gap-3 text-xs font-geist text-[#9A9AA5] pt-1">
                 <button
                   type="button"
                   onClick={() => {
                     setShowLicenseModal(false);
                     setShowLegalModal(true);
                   }}
-                  className="hover:text-zinc-300 underline underline-offset-2 transition-colors"
+                  className="hover:text-[#F4F4F5] underline underline-offset-2 transition-colors"
                 >
-                  Terms of Service & EULA
+                  Términos y EULA
                 </button>
                 <span>·</span>
                 <button
@@ -472,9 +504,9 @@ export const ProLicenseModal: React.FC = () => {
                     setShowLicenseModal(false);
                     setShowLegalModal(true);
                   }}
-                  className="hover:text-zinc-300 underline underline-offset-2 transition-colors"
+                  className="hover:text-[#F4F4F5] underline underline-offset-2 transition-colors"
                 >
-                  Zero-Data Privacy Policy
+                  Política de Privacidad
                 </button>
                 <span>·</span>
                 <button
@@ -483,9 +515,9 @@ export const ProLicenseModal: React.FC = () => {
                     setShowLicenseModal(false);
                     setShowLegalModal(true);
                   }}
-                  className="hover:text-zinc-300 underline underline-offset-2 transition-colors"
+                  className="hover:text-[#F4F4F5] underline underline-offset-2 transition-colors"
                 >
-                  Enterprise DPA
+                  Garantía 14 Días
                 </button>
               </div>
             </div>
