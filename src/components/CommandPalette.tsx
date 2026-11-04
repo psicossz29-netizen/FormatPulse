@@ -285,15 +285,15 @@ export const CommandPalette: React.FC = () => {
     >
       {/* ── Backdrop ────────────────────────────────────────────────── */}
       <div
-        className="absolute inset-0 bg-zinc-950/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-[#09090B]/80 backdrop-blur-md transition-opacity"
         onClick={() => setShowCommandPalette(false)}
       />
 
       {/* ── Palette Dialog ──────────────────────────────────────────── */}
-      <div className="relative w-full max-w-xl bg-zinc-900 border border-zinc-800 shadow-2xl overflow-hidden flex flex-col">
+      <div className="relative w-full max-w-xl rounded-2xl bg-[#111114] border border-[#26262C] shadow-[0_32px_80px_rgba(0,0,0,0.85)] overflow-hidden flex flex-col font-sans backdrop-blur-xl animate-in fade-in zoom-in-95 duration-150">
         {/* Search Input Bar */}
-        <div className="h-11 px-3.5 flex items-center gap-2.5 border-b border-zinc-800 bg-surface-raised flex-none">
-          <Search className="w-4 h-4 text-zinc-500 flex-none" />
+        <div className="h-12 px-4 flex items-center gap-3 border-b border-[#26262C] bg-[#09090B]/60 flex-none">
+          <Search className="w-4 h-4 text-[#FF4F00] flex-none" />
           <input
             ref={inputRef}
             type="text"
@@ -303,18 +303,18 @@ export const CommandPalette: React.FC = () => {
               setSelectedIndex(0);
             }}
             placeholder="Type a command or search presets (e.g. 'TypeScript', 'CSV', 'PII')..."
-            className="flex-1 bg-transparent text-xs text-zinc-100 placeholder:text-zinc-600 focus:outline-none"
+            className="flex-1 bg-transparent text-xs text-[#F4F4F5] placeholder:text-[#52525B] focus:outline-none font-sans"
             spellCheck={false}
           />
-          <kbd className="px-1.5 py-0.5 text-2xs font-mono text-zinc-500 bg-zinc-800 border border-zinc-700 rounded-sm">
+          <kbd className="px-2 py-0.5 text-3xs font-mono text-[#9A9AA5] bg-[#18181B] border border-[#26262C] rounded-md">
             ESC
           </kbd>
         </div>
 
         {/* Command List */}
-        <div ref={listRef} className="max-h-80 overflow-y-auto p-1.5 divide-y divide-zinc-800/40">
+        <div ref={listRef} className="max-h-80 overflow-y-auto p-2 space-y-0.5">
           {filtered.length === 0 ? (
-            <div className="py-8 text-center text-xs text-zinc-500 font-mono">
+            <div className="py-8 text-center text-xs text-[#71717A] font-mono">
               No matching commands or presets found.
             </div>
           ) : (
@@ -327,29 +327,29 @@ export const CommandPalette: React.FC = () => {
                   onClick={() => handleExecute(item)}
                   onMouseEnter={() => setSelectedIndex(idx)}
                   className={cn(
-                    'px-2.5 py-2 flex items-center justify-between cursor-pointer rounded-sm transition-colors text-xs select-none',
+                    'px-3 py-2 flex items-center justify-between cursor-pointer rounded-xl transition-all text-xs select-none border',
                     isSelected
-                      ? 'bg-zinc-800 text-zinc-50'
-                      : 'text-zinc-300 hover:bg-zinc-800/50',
+                      ? 'bg-white/[0.08] text-[#F4F4F5] border-[#26262C] shadow-sm'
+                      : 'text-[#9A9AA5] hover:bg-white/[0.03] hover:text-[#F4F4F5] border-transparent',
                   )}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
                     <span className="flex-none">{item.icon}</span>
                     <div className="min-w-0">
-                      <div className="font-medium truncate flex items-center gap-1.5">
+                      <div className="font-semibold truncate flex items-center gap-1.5 text-[#F4F4F5]">
                         <span>{item.title}</span>
                         {item.badge && (
-                          <span className="text-2xs font-mono px-1 py-px bg-accent-muted text-accent rounded-sm">
+                          <span className="text-3xs font-mono px-1.5 py-0.5 bg-[#FF4F00]/15 text-[#FF4F00] border border-[#FF4F00]/30 rounded-md font-semibold">
                             {item.badge}
                           </span>
                         )}
                       </div>
                       {item.subtitle && (
-                        <div className="text-2xs text-zinc-500 truncate">{item.subtitle}</div>
+                        <div className="text-2xs text-[#71717A] truncate font-sans">{item.subtitle}</div>
                       )}
                     </div>
                   </div>
-                  <span className="text-2xs font-mono text-zinc-600 uppercase tracking-wider flex-none pl-2">
+                  <span className="text-3xs font-mono text-[#71717A] uppercase tracking-wider flex-none pl-2">
                     {item.category}
                   </span>
                 </div>
@@ -359,19 +359,19 @@ export const CommandPalette: React.FC = () => {
         </div>
 
         {/* Footer Hints */}
-        <div className="h-7 px-3 border-t border-zinc-800 bg-surface-raised flex items-center justify-between text-2xs font-mono text-zinc-500 flex-none">
+        <div className="h-8 px-4 border-t border-[#26262C] bg-[#09090B]/60 flex items-center justify-between text-3xs font-mono text-[#71717A] flex-none">
           <div className="flex items-center gap-3">
             <span>
-              <kbd className="text-zinc-400">↑↓</kbd> navigate
+              <kbd className="text-[#F4F4F5] font-semibold">↑↓</kbd> navigate
             </span>
             <span>
-              <kbd className="text-zinc-400">↵</kbd> select
+              <kbd className="text-[#F4F4F5] font-semibold">↵</kbd> select
             </span>
             <span>
-              <kbd className="text-zinc-400">esc</kbd> close
+              <kbd className="text-[#F4F4F5] font-semibold">esc</kbd> close
             </span>
           </div>
-          <span>FormatPulse Command Palette</span>
+          <span className="text-[#52525B]">FormatPulse Command Palette</span>
         </div>
       </div>
     </div>

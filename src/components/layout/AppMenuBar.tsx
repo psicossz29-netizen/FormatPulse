@@ -107,76 +107,76 @@ export const AppMenuBar: React.FC = () => {
   return (
     <div
       ref={menuBarRef}
-      className="h-6 flex-none bg-zinc-950 border-b border-zinc-900 flex items-center px-2 text-2xs font-mono text-zinc-400 select-none z-30"
+      className="h-7 flex-none bg-[#09090B] border-b border-[#26262C] flex items-center px-3 text-xs font-geist text-[#9A9AA5] select-none z-30"
     >
       {/* ── FILE MENU ── */}
       <div className="relative">
         <button
           onClick={() => setActiveMenu(activeMenu === 'file' ? null : 'file')}
           className={cn(
-            'px-2 py-0.5 rounded-xs hover:bg-zinc-800 hover:text-zinc-200 transition-colors',
-            activeMenu === 'file' && 'bg-zinc-800 text-zinc-100 font-semibold',
+            'px-2.5 py-0.5 rounded-lg hover:bg-white/[0.06] hover:text-[#F4F4F5] transition-colors',
+            activeMenu === 'file' && 'bg-white/[0.08] text-[#F4F4F5] font-semibold',
           )}
         >
           File
         </button>
         {activeMenu === 'file' && (
-          <div className="absolute top-full left-0 mt-0.5 w-56 bg-zinc-900 border border-zinc-800 shadow-xl rounded-xs py-1 z-40">
+          <div className="absolute top-full left-0 mt-1 w-60 bg-[#111114] border border-[#26262C] shadow-[0_20px_50px_rgba(0,0,0,0.85)] rounded-2xl py-1.5 z-40 backdrop-blur-xl animate-pop text-xs font-geist">
             <button
               onClick={() => {
                 clearWorkspace();
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Trash2 className="w-3.5 h-3.5 text-zinc-400" />
+                <Trash2 className="w-3.5 h-3.5 text-[#9A9AA5]" />
                 <span>New / Clear Canvas</span>
               </div>
-              <span className="text-3xs text-zinc-500">⌘N</span>
+              <span className="text-[10px] font-geist-mono text-[#9A9AA5] px-1.5 py-0.5 rounded bg-white/[0.04] border border-[#26262C]">⌘N</span>
             </button>
             <button
               onClick={handleFileLoad}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <div className="flex items-center gap-2">
-                <FileUp className="w-3.5 h-3.5 text-zinc-400" />
+                <FileUp className="w-3.5 h-3.5 text-[#9A9AA5]" />
                 <span>Open File...</span>
               </div>
-              <span className="text-3xs text-zinc-500">⌘O</span>
+              <span className="text-[10px] font-geist-mono text-[#9A9AA5] px-1.5 py-0.5 rounded bg-white/[0.04] border border-[#26262C]">⌘O</span>
             </button>
             <button
               onClick={() => {
                 loadPreset(PRESETS[0]?.id || 'json-to-typescript');
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5 text-accent" />
+                <Sparkles className="w-3.5 h-3.5 text-[#FF4F00]" />
                 <span>Load Sample Dataset</span>
               </div>
             </button>
-            <div className="my-1 border-t border-zinc-800" />
+            <div className="my-1.5 border-t border-[#26262C]" />
             <button
               onClick={handleExportFile}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Download className="w-3.5 h-3.5 text-zinc-400" />
+                <Download className="w-3.5 h-3.5 text-[#9A9AA5]" />
                 <span>Export Output As...</span>
               </div>
-              <span className="text-3xs text-zinc-500">⌘S</span>
+              <span className="text-[10px] font-geist-mono text-[#9A9AA5] px-1.5 py-0.5 rounded bg-white/[0.04] border border-[#26262C]">⌘S</span>
             </button>
             <button
               onClick={() => {
                 setShowBatchModal(true);
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Layers className="w-3.5 h-3.5 text-zinc-400" />
+                <Layers className="w-3.5 h-3.5 text-[#9A9AA5]" />
                 <span>Batch Multi-File (ZIP)</span>
               </div>
             </button>
@@ -189,43 +189,43 @@ export const AppMenuBar: React.FC = () => {
         <button
           onClick={() => setActiveMenu(activeMenu === 'edit' ? null : 'edit')}
           className={cn(
-            'px-2 py-0.5 rounded-xs hover:bg-zinc-800 hover:text-zinc-200 transition-colors',
-            activeMenu === 'edit' && 'bg-zinc-800 text-zinc-100 font-semibold',
+            'px-2.5 py-0.5 rounded-lg hover:bg-white/[0.06] hover:text-[#F4F4F5] transition-colors',
+            activeMenu === 'edit' && 'bg-white/[0.08] text-[#F4F4F5] font-semibold',
           )}
         >
           Edit
         </button>
         {activeMenu === 'edit' && (
-          <div className="absolute top-full left-0 mt-0.5 w-56 bg-zinc-900 border border-zinc-800 shadow-xl rounded-xs py-1 z-40">
+          <div className="absolute top-full left-0 mt-1 w-60 bg-[#111114] border border-[#26262C] shadow-[0_20px_50px_rgba(0,0,0,0.85)] rounded-2xl py-1.5 z-40 backdrop-blur-xl animate-pop text-xs font-geist">
             <button
               onClick={handleCopyOutput}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Copy className="w-3.5 h-3.5 text-zinc-400" />
+                <Copy className="w-3.5 h-3.5 text-[#9A9AA5]" />
                 <span>Copy Output to Clipboard</span>
               </div>
-              <span className="text-3xs text-zinc-500">⌘C</span>
+              <span className="text-[10px] font-geist-mono text-[#9A9AA5] px-1.5 py-0.5 rounded bg-white/[0.04] border border-[#26262C]">⌘C</span>
             </button>
             <button
               onClick={() => {
                 setShowHealthInspector(true);
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <div className="flex items-center gap-2">
                 <ShieldAlert className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Sanitize PII & Audit</span>
               </div>
             </button>
-            <div className="my-1 border-t border-zinc-800" />
+            <div className="my-1.5 border-t border-[#26262C]" />
             <button
               onClick={() => {
                 clearWorkspace();
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-red-400 text-left rounded-xl transition-colors"
             >
               <div className="flex items-center gap-2">
                 <Trash2 className="w-3.5 h-3.5 text-red-400" />
@@ -241,25 +241,25 @@ export const AppMenuBar: React.FC = () => {
         <button
           onClick={() => setActiveMenu(activeMenu === 'view' ? null : 'view')}
           className={cn(
-            'px-2 py-0.5 rounded-xs hover:bg-zinc-800 hover:text-zinc-200 transition-colors',
-            activeMenu === 'view' && 'bg-zinc-800 text-zinc-100 font-semibold',
+            'px-2.5 py-0.5 rounded-lg hover:bg-white/[0.06] hover:text-[#F4F4F5] transition-colors',
+            activeMenu === 'view' && 'bg-white/[0.08] text-[#F4F4F5] font-semibold',
           )}
         >
           View
         </button>
         {activeMenu === 'view' && (
-          <div className="absolute top-full left-0 mt-0.5 w-56 bg-zinc-900 border border-zinc-800 shadow-xl rounded-xs py-1 z-40">
+          <div className="absolute top-full left-0 mt-1 w-60 bg-[#111114] border border-[#26262C] shadow-[0_20px_50px_rgba(0,0,0,0.85)] rounded-2xl py-1.5 z-40 backdrop-blur-xl animate-pop text-xs font-geist">
             <button
               onClick={() => {
                 updateSettings({ wordWrap: !wordWrap });
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <span>Toggle Word Wrap</span>
-              {wordWrap && <Check className="w-3.5 h-3.5 text-accent" />}
+              {wordWrap && <Check className="w-3.5 h-3.5 text-[#FF4F00]" />}
             </button>
-            <div className="px-3 py-1 text-3xs text-zinc-500 uppercase tracking-wider">Font Size</div>
+            <div className="px-3 py-1.5 text-[10px] font-geist-mono text-[#9A9AA5] uppercase tracking-wider">Font Size</div>
             {[12, 13, 14, 16].map((sz) => (
               <button
                 key={sz}
@@ -267,21 +267,21 @@ export const AppMenuBar: React.FC = () => {
                   updateSettings({ fontSize: sz as any });
                   setActiveMenu(null);
                 }}
-                className="w-full flex items-center justify-between px-3 py-1 hover:bg-zinc-800 text-zinc-300 text-left"
+                className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
               >
                 <span>{sz}px</span>
-                {fontSize === sz && <Check className="w-3 h-3 text-accent" />}
+                {fontSize === sz && <Check className="w-3 h-3 text-[#FF4F00]" />}
               </button>
             ))}
-            <div className="my-1 border-t border-zinc-800" />
+            <div className="my-1.5 border-t border-[#26262C]" />
             <button
               onClick={() => {
                 setShowDiffModal(true);
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center gap-2 px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
-              <GitCompare className="w-3.5 h-3.5 text-accent" />
+              <GitCompare className="w-3.5 h-3.5 text-[#FF4F00]" />
               <span>Structural Schema Diff</span>
             </button>
             <button
@@ -289,7 +289,7 @@ export const AppMenuBar: React.FC = () => {
                 setShowHealthInspector(true);
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center gap-2 px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <ShieldAlert className="w-3.5 h-3.5 text-emerald-400" />
               <span>Security & PII Inspector</span>
@@ -303,21 +303,21 @@ export const AppMenuBar: React.FC = () => {
         <button
           onClick={() => setActiveMenu(activeMenu === 'tools' ? null : 'tools')}
           className={cn(
-            'px-2 py-0.5 rounded-xs hover:bg-zinc-800 hover:text-zinc-200 transition-colors',
-            activeMenu === 'tools' && 'bg-zinc-800 text-zinc-100 font-semibold',
+            'px-2.5 py-0.5 rounded-lg hover:bg-white/[0.06] hover:text-[#F4F4F5] transition-colors',
+            activeMenu === 'tools' && 'bg-white/[0.08] text-[#F4F4F5] font-semibold',
           )}
         >
           Tools
         </button>
         {activeMenu === 'tools' && (
-          <div className="absolute top-full left-0 mt-0.5 w-60 bg-zinc-900 border border-zinc-800 shadow-xl rounded-xs py-1 z-40">
-            <div className="px-3 py-1 text-3xs text-zinc-500 uppercase tracking-wider">Schema Synthesis</div>
+          <div className="absolute top-full left-0 mt-1 w-64 bg-[#111114] border border-[#26262C] shadow-[0_20px_50px_rgba(0,0,0,0.85)] rounded-2xl py-1.5 z-40 backdrop-blur-xl animate-pop text-xs font-geist">
+            <div className="px-3 py-1.5 text-[10px] font-geist-mono text-[#9A9AA5] uppercase tracking-wider">Schema Synthesis</div>
             <button
               onClick={() => {
                 setOutputFormat('typescript');
                 setActiveMenu(null);
               }}
-              className="w-full px-3 py-1 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full px-3 py-1.5 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               Generate TypeScript Interface
             </button>
@@ -326,7 +326,7 @@ export const AppMenuBar: React.FC = () => {
                 setOutputFormat('zod');
                 setActiveMenu(null);
               }}
-              className="w-full px-3 py-1 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full px-3 py-1.5 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               Generate Zod Validator
             </button>
@@ -335,7 +335,7 @@ export const AppMenuBar: React.FC = () => {
                 setOutputFormat('openapi');
                 setActiveMenu(null);
               }}
-              className="w-full px-3 py-1 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full px-3 py-1.5 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               Generate OpenAPI 3.1 Spec
             </button>
@@ -344,23 +344,23 @@ export const AppMenuBar: React.FC = () => {
                 setOutputFormat('prisma');
                 setActiveMenu(null);
               }}
-              className="w-full px-3 py-1 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full px-3 py-1.5 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               Generate Prisma ORM Model
             </button>
-            <div className="my-1 border-t border-zinc-800" />
+            <div className="my-1.5 border-t border-[#26262C]" />
             <button
               onClick={() => {
                 setShowCommandPalette(true);
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Search className="w-3.5 h-3.5 text-zinc-400" />
+                <Search className="w-3.5 h-3.5 text-[#9A9AA5]" />
                 <span>Command Palette...</span>
               </div>
-              <span className="text-3xs text-zinc-500">⌘K</span>
+              <span className="text-[10px] font-geist-mono text-[#9A9AA5] px-1.5 py-0.5 rounded bg-white/[0.04] border border-[#26262C]">⌘K</span>
             </button>
           </div>
         )}
@@ -371,31 +371,31 @@ export const AppMenuBar: React.FC = () => {
         <button
           onClick={() => setActiveMenu(activeMenu === 'settings' ? null : 'settings')}
           className={cn(
-            'px-2 py-0.5 rounded-xs hover:bg-zinc-800 hover:text-zinc-200 transition-colors',
-            activeMenu === 'settings' && 'bg-zinc-800 text-zinc-100 font-semibold',
+            'px-2.5 py-0.5 rounded-lg hover:bg-white/[0.06] hover:text-[#F4F4F5] transition-colors',
+            activeMenu === 'settings' && 'bg-white/[0.08] text-[#F4F4F5] font-semibold',
           )}
         >
           Preferences
         </button>
         {activeMenu === 'settings' && (
-          <div className="absolute top-full left-0 mt-0.5 w-60 bg-zinc-900 border border-zinc-800 shadow-xl rounded-xs py-1 z-40">
+          <div className="absolute top-full left-0 mt-1 w-64 bg-[#111114] border border-[#26262C] shadow-[0_20px_50px_rgba(0,0,0,0.85)] rounded-2xl py-1.5 z-40 backdrop-blur-xl animate-pop text-xs font-geist">
             <button
               onClick={() => {
                 setShowSettingsModal(true);
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left font-semibold"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left font-semibold rounded-xl transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Settings className="w-3.5 h-3.5 text-accent" />
+                <Settings className="w-3.5 h-3.5 text-[#FF4F00]" />
                 <span>Settings Dialog...</span>
               </div>
-              <span className="text-3xs text-zinc-500">⌘,</span>
+              <span className="text-[10px] font-geist-mono text-[#9A9AA5] px-1.5 py-0.5 rounded bg-white/[0.04] border border-[#26262C]">⌘,</span>
             </button>
-            <div className="my-1 border-t border-zinc-800" />
-            <div className="px-3 py-1 text-3xs text-zinc-500 uppercase tracking-wider">Accent Palette</div>
+            <div className="my-1.5 border-t border-[#26262C]" />
+            <div className="px-3 py-1.5 text-[10px] font-geist-mono text-[#9A9AA5] uppercase tracking-wider">Accent Palette</div>
             {[
-              { id: 'orange', label: 'Electric Pulse' },
+              { id: 'orange', label: 'Tactical Orange' },
               { id: 'emerald', label: 'Emerald Node' },
               { id: 'cyan', label: 'Cyber Cyan' },
               { id: 'zinc', label: 'Zinc Monochrome' },
@@ -406,21 +406,21 @@ export const AppMenuBar: React.FC = () => {
                   updateSettings({ themeAccent: th.id as ThemeAccent });
                   setActiveMenu(null);
                 }}
-                className="w-full flex items-center justify-between px-3 py-1 hover:bg-zinc-800 text-zinc-300 text-left"
+                className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
               >
                 <span>{th.label}</span>
-                {themeAccent === th.id && <Check className="w-3 h-3 text-accent" />}
+                {themeAccent === th.id && <Check className="w-3 h-3 text-[#FF4F00]" />}
               </button>
             ))}
-            <div className="my-1 border-t border-zinc-800" />
+            <div className="my-1.5 border-t border-[#26262C]" />
             <button
               onClick={() => {
                 setShowLicenseModal(true);
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center gap-2 px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
-              <Key className="w-3.5 h-3.5 text-accent" />
+              <Key className="w-3.5 h-3.5 text-[#FF4F00]" />
               <span>License & Plans...</span>
             </button>
           </div>
@@ -432,20 +432,20 @@ export const AppMenuBar: React.FC = () => {
         <button
           onClick={() => setActiveMenu(activeMenu === 'help' ? null : 'help')}
           className={cn(
-            'px-2 py-0.5 rounded-xs hover:bg-zinc-800 hover:text-zinc-200 transition-colors',
-            activeMenu === 'help' && 'bg-zinc-800 text-zinc-100 font-semibold',
+            'px-2.5 py-0.5 rounded-lg hover:bg-white/[0.06] hover:text-[#F4F4F5] transition-colors',
+            activeMenu === 'help' && 'bg-white/[0.08] text-[#F4F4F5] font-semibold',
           )}
         >
           Help
         </button>
         {activeMenu === 'help' && (
-          <div className="absolute top-full left-0 mt-0.5 w-60 bg-zinc-900 border border-zinc-800 shadow-xl rounded-xs py-1 z-40">
+          <div className="absolute top-full left-0 mt-1 w-64 bg-[#111114] border border-[#26262C] shadow-[0_20px_50px_rgba(0,0,0,0.85)] rounded-2xl py-1.5 z-40 backdrop-blur-xl animate-pop text-xs font-geist">
             <button
               onClick={() => {
                 setShowUpdateModal(true);
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <div className="flex items-center gap-2">
                 <RefreshCw className="w-3.5 h-3.5 text-blue-400" />
@@ -457,12 +457,12 @@ export const AppMenuBar: React.FC = () => {
                 setShowSettingsModal(true);
                 setActiveMenu(null);
               }}
-              className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center gap-2 px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
-              <HelpCircle className="w-3.5 h-3.5 text-zinc-400" />
+              <HelpCircle className="w-3.5 h-3.5 text-[#9A9AA5]" />
               <span>Keyboard Shortcuts</span>
             </button>
-            <div className="my-1 border-t border-zinc-800" />
+            <div className="my-1.5 border-t border-[#26262C]" />
             <a
               href={PRODUCTION_WEB_URL}
               target="_blank"
@@ -472,10 +472,10 @@ export const AppMenuBar: React.FC = () => {
                 setActiveMenu(null);
                 void openExternalUrl(PRODUCTION_WEB_URL);
               }}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <span>FormatPulse Website</span>
-              <ExternalLink className="w-3 h-3 text-zinc-500" />
+              <ExternalLink className="w-3 h-3 text-[#9A9AA5]" />
             </a>
             <a
               href={`mailto:${SUPPORT_EMAIL}?subject=FormatPulse%20Support`}
@@ -484,13 +484,13 @@ export const AppMenuBar: React.FC = () => {
                 setActiveMenu(null);
                 void openExternalUrl(`mailto:${SUPPORT_EMAIL}?subject=FormatPulse%20Support`);
               }}
-              className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-zinc-800 text-zinc-200 text-left"
+              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.06] text-[#F4F4F5] text-left rounded-xl transition-colors"
             >
               <span>Email Support</span>
-              <Mail className="w-3 h-3 text-zinc-500" />
+              <Mail className="w-3 h-3 text-[#9A9AA5]" />
             </a>
-            <div className="my-1 border-t border-zinc-800" />
-            <div className="px-3 py-1 text-3xs text-zinc-500">
+            <div className="my-1.5 border-t border-[#26262C]" />
+            <div className="px-3 py-1.5 text-[11px] font-geist-mono text-[#9A9AA5]">
               FormatPulse v{APP_VERSION} (64-bit Desktop)
             </div>
           </div>
@@ -501,7 +501,7 @@ export const AppMenuBar: React.FC = () => {
       <div className="flex-1" />
 
       {/* Desktop Quick Shortcuts Trigger */}
-      <div className="flex items-center gap-2 text-3xs text-zinc-600">
+      <div className="flex items-center gap-2.5 text-[11px] font-geist-mono text-[#9A9AA5]">
         <span>Preferences: ⌘,</span>
         <span>·</span>
         <span>Commands: ⌘K</span>

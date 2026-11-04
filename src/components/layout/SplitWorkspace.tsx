@@ -31,7 +31,6 @@ const CodePanel: React.FC<CodePanelProps> = ({
   const handleCopy = useCallback(async () => {
     if (!value) return;
     await navigator.clipboard.writeText(value);
-    // Feedback is handled at store level for the output panel
   }, [value]);
 
   const [isCompressing, setIsCompressing] = useState(false);
@@ -64,28 +63,28 @@ const CodePanel: React.FC<CodePanelProps> = ({
 
   const fontSize = useSettingsStore((s) => s.fontSize);
   const wordWrap = useSettingsStore((s) => s.wordWrap);
-  const lineHeightPx = Math.round(fontSize * 1.45);
+  const lineHeightPx = Math.round(fontSize * 1.5);
 
   // Generate line numbers
   const lines = Math.max(lineCount, 1);
-  const gutterWidth = String(lines).length * 8 + 24;
+  const gutterWidth = String(lines).length * 8 + 28;
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 h-full">
+    <div className="flex-1 flex flex-col min-w-0 h-full bg-[#09090B]">
       {/* ── Panel toolbar ─────────────────────────────────────────────── */}
-      <div className="h-7 flex-none flex items-center justify-between border-b border-zinc-800 bg-surface-raised px-2">
+      <div className="h-8 flex-none flex items-center justify-between border-b border-[#26262C] bg-[#09090B]/90 px-3">
         <div className="flex items-center gap-2">
-          <span className="text-2xs uppercase tracking-widest text-zinc-500 font-medium">
+          <span className="text-[11px] font-geist-mono uppercase tracking-wider text-[#9A9AA5] font-semibold">
             {label}
           </span>
-          <span className="text-2xs font-mono text-zinc-600">
+          <span className="text-[10px] font-geist-mono px-2 py-0.5 rounded-full bg-white/[0.04] border border-[#26262C] text-[#F4F4F5] font-medium">
             {formatLabel}
           </span>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center gap-1">
           {!readonly && (
             <ToolbarButton
-              icon={<Trash2 className="w-3 h-3" strokeWidth={2} />}
+              icon={<Trash2 className="w-3 h-3 text-[#9A9AA5]" strokeWidth={2} />}
               label="Clear"
               shortcut="⌫"
               onClick={handleClear}
@@ -93,7 +92,7 @@ const CodePanel: React.FC<CodePanelProps> = ({
             />
           )}
           <ToolbarButton
-            icon={<Copy className="w-3 h-3" strokeWidth={2} />}
+            icon={<Copy className="w-3 h-3 text-[#9A9AA5]" strokeWidth={2} />}
             label="Copy"
             shortcut="⌘C"
             onClick={handleCopy}
@@ -102,14 +101,14 @@ const CodePanel: React.FC<CodePanelProps> = ({
           {readonly && (
             <>
               <ToolbarButton
-                icon={<Download className="w-3 h-3" strokeWidth={2} />}
+                icon={<Download className="w-3 h-3 text-[#9A9AA5]" strokeWidth={2} />}
                 label="Download"
                 shortcut="⌘S"
                 onClick={handleDownload}
                 disabled={!value}
               />
               <ToolbarButton
-                icon={<Archive className="w-3 h-3" strokeWidth={2} />}
+                icon={<Archive className="w-3 h-3 text-[#9A9AA5]" strokeWidth={2} />}
                 label={isCompressing ? 'Compressing…' : '.GZ'}
                 shortcut="GZ"
                 onClick={handleGzipDownload}
@@ -121,17 +120,17 @@ const CodePanel: React.FC<CodePanelProps> = ({
       </div>
 
       {/* ── Editor area with gutter ───────────────────────────────────── */}
-      <div className="flex-1 relative overflow-hidden">
+      <div className="flex-1 relative overflow-hidden bg-[#09090B]">
         {/* Line gutter */}
         <div
-          className="absolute top-0 left-0 bottom-0 bg-surface-base border-r border-zinc-800/50 select-none pointer-events-none z-10 overflow-hidden"
+          className="absolute top-0 left-0 bottom-0 bg-[#09090B] border-r border-[#26262C] select-none pointer-events-none z-10 overflow-hidden"
           style={{ width: gutterWidth }}
         >
           <div className="pt-2 px-1">
             {Array.from({ length: lines }, (_, i) => (
               <div
                 key={i}
-                className="text-2xs font-mono text-zinc-700 text-right pr-2"
+                className="text-[11px] font-geist-mono text-[#9A9AA5]/40 text-right pr-2 select-none"
                 style={{ height: lineHeightPx, lineHeight: `${lineHeightPx}px` }}
               >
                 {i + 1}
@@ -144,17 +143,17 @@ const CodePanel: React.FC<CodePanelProps> = ({
         {readonly ? (
           <pre
             className={cn(
-              'h-full overflow-auto p-2 font-mono text-zinc-300',
+              'h-full overflow-auto p-2 font-geist-mono text-[#F4F4F5]',
               wordWrap ? 'whitespace-pre-wrap break-words' : 'whitespace-pre',
             )}
             style={{
-              paddingLeft: gutterWidth + 8,
+              paddingLeft: gutterWidth + 10,
               fontSize: `${fontSize}px`,
               lineHeight: `${lineHeightPx}px`,
             }}
           >
             {value || (
-              <span className="text-zinc-600 italic">Output will appear here…</span>
+              <span className="text-[#9A9AA5]/40 italic">Output will appear here…</span>
             )}
           </pre>
         ) : (
@@ -166,12 +165,12 @@ const CodePanel: React.FC<CodePanelProps> = ({
             autoComplete="off"
             autoCorrect="off"
             className={cn(
-              'absolute inset-0 w-full h-full resize-none bg-transparent p-2 font-mono text-zinc-200',
-              'placeholder:text-zinc-700 focus:outline-none caret-accent',
+              'absolute inset-0 w-full h-full resize-none bg-transparent p-2 font-geist-mono text-[#F4F4F5]',
+              'placeholder:text-[#9A9AA5]/30 focus:outline-none caret-[#FF4F00]',
               wordWrap ? 'whitespace-pre-wrap break-words' : 'whitespace-pre',
             )}
             style={{
-              paddingLeft: gutterWidth + 8,
+              paddingLeft: gutterWidth + 10,
               fontSize: `${fontSize}px`,
               lineHeight: `${lineHeightPx}px`,
             }}
@@ -207,19 +206,19 @@ const ToolbarButton: React.FC<ToolbarButtonProps> = ({
     disabled={disabled}
     title={`${label}${shortcut ? ` (${shortcut})` : ''}`}
     className={cn(
-      'h-5 px-1.5 flex items-center gap-1 text-2xs font-medium transition-colors rounded-sm',
-      'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent',
+      'h-6 px-2 flex items-center gap-1.5 text-xs font-geist rounded-md transition-colors',
+      'focus:outline-none',
       disabled
-        ? 'text-zinc-700 cursor-not-allowed'
+        ? 'text-[#9A9AA5]/30 cursor-not-allowed'
         : active
-          ? 'text-accent bg-accent-muted'
-          : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/80',
+          ? 'text-[#FF4F00] bg-[#FF4F00]/10 border border-[#FF4F00]/30'
+          : 'text-[#9A9AA5] hover:text-[#F4F4F5] hover:bg-white/[0.06]',
     )}
   >
     {icon}
     <span className="hidden sm:inline">{label}</span>
     {shortcut && (
-      <kbd className="text-2xs font-mono text-zinc-600 hidden lg:inline">
+      <kbd className="text-[10px] font-geist-mono text-[#9A9AA5]/60 hidden lg:inline">
         [{shortcut}]
       </kbd>
     )}
@@ -240,14 +239,14 @@ export const SplitWorkspace: React.FC = () => {
   const setInputValue = useAppStore((s) => s.setInputValue);
 
   return (
-    <div className="flex-1 flex flex-col min-h-0">
+    <div className="flex-1 flex flex-col min-h-0 bg-[#09090B]">
       {/* ── Error Banner ────────────────────────────────────────────────── */}
       {error && (
-        <div className="flex-none flex items-center gap-2 px-3 py-1.5 bg-red-950/40 border-b border-red-900/50">
-          <AlertTriangle className="w-3.5 h-3.5 text-red-400 flex-none" strokeWidth={2} />
-          <span className="text-xs text-red-300 font-mono truncate">
+        <div className="flex-none flex items-center gap-2.5 px-4 py-2 mx-3 my-2 bg-red-500/10 border border-red-500/30 rounded-xl shadow-lg">
+          <AlertTriangle className="w-4 h-4 text-red-400 flex-none" strokeWidth={2} />
+          <span className="text-xs text-red-300 font-geist truncate">
             {error.line !== null && (
-              <span className="text-red-500">Line {error.line}: </span>
+              <span className="text-red-400 font-geist-mono font-semibold">Line {error.line}: </span>
             )}
             {error.message}
           </span>
@@ -263,7 +262,7 @@ export const SplitWorkspace: React.FC = () => {
           label="Input"
           formatLabel={FORMAT_LABELS[inputFormat]}
         />
-        <div className="w-px bg-zinc-800 flex-none" />
+        <div className="w-px bg-[#26262C] flex-none" />
         <div className="flex-1 flex flex-col min-w-0 h-full">
           <CodePanel
             value={outputValue}
